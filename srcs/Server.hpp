@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/15 16:18:35 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:49:02 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ class Server {
 		bool	setPasswd (char *passwd);
 
 		void init ();
+
+		ssize_t Send(const char *data, unsigned int len);
+		int Receive(char *buffer, unsigned int len);
 };
 
 #endif

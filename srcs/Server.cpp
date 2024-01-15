@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/15 16:20:37 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:48:56 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,20 @@ void Server::init () {
 		// fprintf(stderr, "Could not bind\n");
         exit(EXIT_FAILURE);
 	}
-	std::cout << "Server is good!!!!!!! " << std::endl;
+	std::cout << rp->ai_addr << " is the address. " << std::endl;
+
+	if (listen(this->_socket_fd, SOMAXCONN) == -1){
+		std::cerr << "Server is not listening!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	std::cout << "Server is well initiated!!!!!!! " << std::endl;
+}
+
+ssize_t Server::Send(const char *data, unsigned int len){
+	return send(this->_socket_fd, data, len, 0);
+}
+
+int Server::Receive(char *buffer, unsigned int len){
+	return recv(this->_socket_fd, buffer, len, 0);
 }
