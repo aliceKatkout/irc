@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/15 16:49:02 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:39:41 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 # include <iostream>
 # include <sys/types.h>
 # include <sys/socket.h>
+# include <sys/epoll.h>
 # include <netdb.h>
 # include <cstring>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define MAX_EVENTS 10
 
 class Server {
 	private:
@@ -39,9 +42,11 @@ class Server {
 		bool	setPasswd (char *passwd);
 
 		void init ();
+		void createEpoll();
 
 		ssize_t Send(const char *data, unsigned int len);
 		int Receive(char *buffer, unsigned int len);
+
 };
 
 #endif

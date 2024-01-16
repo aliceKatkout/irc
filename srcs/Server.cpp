@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/15 16:48:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:37:40 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,23 @@ bool	Server::setPasswd (char *passwd){
 
 }
 
+/*int getaddrinfo(const char *restrict node,
+                       const char *restrict service,
+                       const struct addrinfo *restrict hints,
+                       struct addrinfo **restrict res);
+'node' = host;
+'service' = port;
+
+returns one or more addrinfo structures.
+					   */
+					   
 void Server::init () {
 	
 	this->_hints.ai_family = AF_UNSPEC;
 	this->_hints.ai_socktype = SOCK_STREAM;
 	this->_hints.ai_flags = AI_PASSIVE;
+	/*if AI_PASSIVE and 'node' is NULL: the returned socket addresses will be suitable for
+       binding a socket that will accept connections.*/
 	this->_hints.ai_protocol = IPPROTO_TCP;
 	this->_hints.ai_canonname = NULL;
     this->_hints.ai_addr = NULL;
@@ -85,6 +97,7 @@ void Server::init () {
         exit(EXIT_FAILURE);
 	}
 	std::cout << rp->ai_addr << " is the address. " << std::endl;
+	std::cout << this->_socket_fd << " is the socket fd. " << std::endl;
 
 	if (listen(this->_socket_fd, SOMAXCONN) == -1){
 		std::cerr << "Server is not listening!" << std::endl;
@@ -93,6 +106,65 @@ void Server::init () {
 	
 	std::cout << "Server is well initiated!!!!!!! " << std::endl;
 }
+
+void	Server::createEpoll(){
+	int epollFd;
+	struct epoll_event event;
+	struct epoll_event events[MAX_EVENTS];
+
+	/* create epoll instance */
+	epollFd = epoll_create1(0);
+	if (epollFd == -1) {
+		std::cerr << "Failed to create epoll instance" << std::endl;
+		close(this->_socket_fd);
+		exit(EXIT_FAILURE);
+	}
+
+	/* add server socket to epoll */
+	event.events = EPOLLIN;
+	event.data.fd = this->_socket_fd;
+	if (epoll_ctl(epollFd, EPOLL_CTL_ADD,
+		this->_socket_fd, &event) == -1){
+		std::cerr << "Failed to add server socket to epoll instance" << std::endl;
+		close (this->_socket_fd);
+		close (epollFd);
+		exit (EXIT_FAILURE);
+	}
+	std::cout << "Server started. Listening on port " << this->_port << std::endl;
+
+	while (true) {
+		int numEvents = epoll_wait(epollFd, events, MAX_EVENTS, -1);
+		if (numEvents == -1){
+			std::cerr << "Failed to wait for events" << std::endl;
+			break;
+		}
+
+		for (int i = 0; i < numEvents; ++i) {
+			if (events[i].data.fd == this->_socket_fd){
+				/* accept new client connection */
+				struct sockaddr_in clientAddress;
+				socklen_t clientAddressLenght = sizeof(clientAddress);
+				int clientFd = accept(this->_socket_fd,
+					(struct sockaddr *)&clientAddress, &clientAddressLenght);
+				if (clientFd == -1){
+					std::cerr << "Failed to accept client connection" << std::endl;
+					continue;
+				}
+				
+				/* Add client socket to epoll */
+				event.events = EPOLLIN;
+				event.data.fd = clientFd;
+				if(epoll_ctl(epollFd, EPOLL_CTL_ADD, clientFd, &event) == -1){
+					std::cerr << "Failed to add client socket to epoll instance" << std::endl;
+					close (clientFd);
+					continue;
+				}
+				
+			}			
+		}
+	}
+}
+
 
 ssize_t Server::Send(const char *data, unsigned int len){
 	return send(this->_socket_fd, data, len, 0);
