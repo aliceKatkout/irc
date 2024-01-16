@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/16 17:37:40 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:47:38 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,11 @@ void	Server::createEpoll(){
 			std::cerr << "Failed to wait for events" << std::endl;
 			break;
 		}
-
+		std::cout << "num event: " << numEvents << std::endl;
 		for (int i = 0; i < numEvents; ++i) {
 			if (events[i].data.fd == this->_socket_fd){
 				/* accept new client connection */
+				std::cout << "hey" << std::endl;
 				struct sockaddr_in clientAddress;
 				socklen_t clientAddressLenght = sizeof(clientAddress);
 				int clientFd = accept(this->_socket_fd,
@@ -159,8 +160,15 @@ void	Server::createEpoll(){
 					close (clientFd);
 					continue;
 				}
-				
-			}			
+			} else {
+				char buffer[5];
+				int clientFd = event.data.fd;
+				read(clientFd, buffer, sizeof(buffer));
+				buffer[4] = 0;
+				std::cout << "yo" << std::endl;
+				std::cout << buffer << std::endl;
+				write(clientFd, "shutup",8);
+			}		
 		}
 	}
 }
