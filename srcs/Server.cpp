@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/16 18:47:38 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:33:13 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	Server::createEpoll(){
 		for (int i = 0; i < numEvents; ++i) {
 			if (events[i].data.fd == this->_socket_fd){
 				/* accept new client connection */
-				std::cout << "hey" << std::endl;
+				std::cout << "server says: hey!" << std::endl;
 				struct sockaddr_in clientAddress;
 				socklen_t clientAddressLenght = sizeof(clientAddress);
 				int clientFd = accept(this->_socket_fd,
@@ -155,7 +155,7 @@ void	Server::createEpoll(){
 				/* Add client socket to epoll */
 				event.events = EPOLLIN;
 				event.data.fd = clientFd;
-				if(epoll_ctl(epollFd, EPOLL_CTL_ADD, clientFd, &event) == -1){
+				if (epoll_ctl(epollFd, EPOLL_CTL_ADD, clientFd, &event) == -1){
 					std::cerr << "Failed to add client socket to epoll instance" << std::endl;
 					close (clientFd);
 					continue;
@@ -164,11 +164,10 @@ void	Server::createEpoll(){
 				char buffer[5];
 				int clientFd = event.data.fd;
 				read(clientFd, buffer, sizeof(buffer));
-				buffer[4] = 0;
-				std::cout << "yo" << std::endl;
+				buffer[sizeof(buffer)] = 0;
 				std::cout << buffer << std::endl;
-				write(clientFd, "shutup",8);
-			}		
+				write(clientFd, "shutup", 8);
+			}
 		}
 	}
 }
