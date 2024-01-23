@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/23 15:30:55 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:46:25 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,20 @@
 # include <unistd.h>
 # include <vector>
 # include <fcntl.h>
+# include <map>
+// # include <pairs>
+# include <algorithm>
 
 # define MAX_EVENTS 10
 
 class Server {
 	private:
-		std::vector<User *>						connectedUsers;
-		std::vector<struct pollfd>				userFDs;
-		struct addrinfo	_hints;
+		std::map<int, User *>						connectedUsers;
+		// std::vector<struct pollfd>				userFDs;
+		// struct addrinfo	_hints;
+		struct sockaddr_in serv_addr;
+		int opt;
+		socklen_t size;
 		char *_str_port;
 		char *_str_passwd;
 		int _port;
@@ -55,6 +61,7 @@ class Server {
 
 		ssize_t Send(const char *data, unsigned int len);
 		int Receive(char *buffer, unsigned int len);
+		int find_user_fd(int fd);
 
 };
 

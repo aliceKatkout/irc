@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/23 18:24:44 by mrabourd         ###   ########.fr       */
+/*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
+/*   Updated: 2024/01/23 18:24:49 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_HPP
-# define USER_HPP
+#include "User.hpp"
 
-# include <iostream>
+User::User(int fd): _fd(fd){
+    
+}
 
-class User {
-	public :
-		User(int fd);
-		~User();
-	
-		int getFd() const;
+User::~User(){
+    
+}
 
-	private :
-		int _fd;
-		std::string _nickname;
-		// std::string _username;
-
-		// std::string _msg;
-
-};
-
-#endif
+int User::getFd() const {
+    return (this->_fd);
+}
