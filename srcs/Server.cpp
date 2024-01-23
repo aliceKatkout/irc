@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/20 16:17:31 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:23:02 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,44 +179,44 @@ void	Server::createEpoll(){
 				close(fd);
 			}
 			else {
-				// recv_and_forward_msg(fd);
-				int clientFd = events[i].data.fd;
-				char buffer[10];
-				// recv(fd, buffer, sizeof(buffer), 0);
-				int bytes = read(clientFd, buffer, sizeof(buffer));
-				// buffer[sizeof(buffer)] = 0;
-				std::cout << bytes << std::endl;
-				std::cout << "server's output: " << buffer << std::endl;
-				// send(this->_server_fd, buffer, sizeof(buffer), 0);
-				write(this->_server_fd, buffer, bytes);
-				while (bytes == read(this->_server_fd, buffer, sizeof(buffer))){
-					write(clientFd, buffer, bytes);
-				}
-				close(fd);
+				recv_and_forward_msg(fd);
+				// int clientFd = events[i].data.fd;
+				// char buffer[10];
+				// // recv(fd, buffer, sizeof(buffer), 0);
+				// int bytes = read(clientFd, buffer, sizeof(buffer));
+				// // buffer[sizeof(buffer)] = 0;
+				// std::cout << bytes << std::endl;
+				// std::cout << "server's output: " << buffer << std::endl;
+				// // send(this->_server_fd, buffer, sizeof(buffer), 0);
+				// write(this->_server_fd, buffer, bytes);
+				// while (bytes == read(this->_server_fd, buffer, sizeof(buffer))){
+				// 	write(clientFd, buffer, bytes);
+				// }
+				// close(fd);
 			}
 		}
 	}
 }
 
-// void Server::recv_and_forward_msg(int fd){
-// 	std::string remainder = "";
-// 	while (1){
-// 		char buffer[10];
-// 		int ret_data = recv(fd, buffer, sizeof(buffer), 0);
-// 		if (ret_data > 0){
-// 			std::string msg(buffer, buffer + ret_data);
-// 			msg = remainder + msg;
+void Server::recv_and_forward_msg(int fd){
+	std::string remainder = "";
+	while (1){
+		char buffer[10];
+		int ret_data = recv(fd, buffer, sizeof(buffer), 0);
+		if (ret_data > 0){
+			std::string msg(buffer, buffer + ret_data);
+			msg = remainder + msg;
 			
-// 			std::vector<std::string> parts = split(msg, "<EOM>");
-// 			remainder = msg;
+			std::vector<std::string> parts = split(msg, "<EOM>");
+			remainder = msg;
 
-// 			// forward_msg(parts);
-// 			std::cout << "Apres split: " << msg << std::endl;
-// 		}
-// 		else
-// 			break;
-// 	}
-// }
+			// forward_msg(parts);
+			std::cout << "Apres split: " << msg << std::endl;
+		}
+		else
+			break;
+	}
+}
 
 std::vector<std::string > Server::split(std::string &s, std::string del){
 	size_t pos = 0;
