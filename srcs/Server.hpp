@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/16 16:39:41 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:17:58 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_HPP
 # define SERVER_HPP
+
+# include "User.hpp"
 
 # include <iostream>
 # include <sys/types.h>
@@ -21,11 +23,14 @@
 # include <cstring>
 # include <stdlib.h>
 # include <unistd.h>
+# include <vector>
 
 # define MAX_EVENTS 10
 
 class Server {
 	private:
+		std::vector<User *>						connectedUsers;
+		std::vector<struct pollfd>				userFDs;
 		struct addrinfo	_hints;
 		char *_str_port;
 		char *_str_passwd;

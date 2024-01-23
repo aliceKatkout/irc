@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/19 12:33:13 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:26:14 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
 Server::Server() {
-    
+
 }
 
 Server::Server(char *port, char *passwd) {
@@ -24,7 +24,7 @@ Server::Server(char *port, char *passwd) {
 }
 
 Server::~Server() {
-    
+
 }
 
 bool	Server::setPort (char *port){
@@ -53,9 +53,9 @@ bool	Server::setPasswd (char *passwd){
 
 returns one or more addrinfo structures.
 					   */
-					   
+
 void Server::init () {
-	
+
 	this->_hints.ai_family = AF_UNSPEC;
 	this->_hints.ai_socktype = SOCK_STREAM;
 	this->_hints.ai_flags = AI_PASSIVE;
@@ -103,7 +103,7 @@ void Server::init () {
 		std::cerr << "Server is not listening!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	
+
 	std::cout << "Server is well initiated!!!!!!! " << std::endl;
 }
 
@@ -151,7 +151,7 @@ void	Server::createEpoll(){
 					std::cerr << "Failed to accept client connection" << std::endl;
 					continue;
 				}
-				
+
 				/* Add client socket to epoll */
 				event.events = EPOLLIN;
 				event.data.fd = clientFd;

@@ -5,7 +5,7 @@ SRCS = 	srcs/main.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
-INCLUDES = srcs/Server.hpp
+INCLUDES = srcs/Server.hpp SRCS/User.hpp
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -I$(INCLUDES)
 
