@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/23 18:46:25 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:03:24 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <iostream>
 # include <sys/types.h>
 # include <sys/socket.h>
+# include <sys/poll.h>
 # include <sys/epoll.h>
 # include <netdb.h>
 # include <cstring>
@@ -33,8 +34,8 @@
 
 class Server {
 	private:
-		std::map<int, User *>						connectedUsers;
-		// std::vector<struct pollfd>				userFDs;
+		std::map<int, User *>					_connectedUsers;
+		std::vector<struct pollfd>				_pollfds;
 		// struct addrinfo	_hints;
 		struct sockaddr_in serv_addr;
 		int opt;
@@ -55,12 +56,14 @@ class Server {
 		bool	setPasswd (char *passwd);
 
 		void init ();
+		void start();
 		void createEpoll();
 		void recv_and_forward_msg(int fd);
 		std::vector<std::string > split(std::string &s, std::string delimiter);
 
 		ssize_t Send(const char *data, unsigned int len);
 		int Receive(char *buffer, unsigned int len);
+		
 		int find_user_fd(int fd);
 
 };
