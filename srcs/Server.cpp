@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 17:02:08 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:35:15 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void Server::UserMessage(int userFd){
 
 void Server::start() {
 	pollfd server_fd = {_server_fd, POLLIN, 0};
+	server_fd.events = POLLIN | POLLHUP;
 	_userFDs.push_back(server_fd);
 
 	std::cout << "Server listening..." << std::endl;
@@ -84,7 +85,8 @@ void Server::start() {
 				continue;
 
 			if ((it->revents & POLLHUP) == POLLHUP) {
-				//UserDisconnect(it->fd);
+				std::cout << "--- NE PREND PAS EN COMPTE POLLHUP, le batard ---" << std::endl;
+				UserDisconnect(it->fd);
 				break;
 			}
 
@@ -99,6 +101,29 @@ void Server::start() {
 			}
 		}
 	}
+}
+
+/* Probleme: Ne rentre jamais la dedans: */
+void Server::UserDisconnect(int fd){
+	
+	// add remove from channel if in channel
+
+	User *userToDelete = _connectedUsers.at(fd);
+
+	_connectedUsers.erase(fd);
+
+	std::vector<pollfd>::iterator it = _userFDs.begin();
+	for (; it != _userFDs.end(); it++) 
+	{
+		if (it->fd == fd)
+		{
+			_userFDs.erase(it);
+			std::cout << "user " << fd << " erased" << std::endl;
+			close(fd);
+		}
+	}
+	delete userToDelete;
+		
 }
 
 void Server::UserConnect() {

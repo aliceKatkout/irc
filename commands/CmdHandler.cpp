@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 17:02:08 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:01:25 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,17 @@ CmdHandler::~CmdHandler () {
 void CmdHandler::parsing(std::string msg, User *user) {
     
     std::string cmd;
+    std::vector<std::string> args;
+
+    /* ARGS A PARSER !! */
+    args.push_back("chann");
+    
     cmd = msg.substr(0, msg.find(' '));
 
     if (cmd.length() > 0){
         if (_cmdMap.find(cmd) != _cmdMap.end()){
-            _cmdMap[cmd]->execute(user);
+            _cmdMap[cmd]->execute(user, args);
         }
     }
-    
-    // _cmdMap.find(cmd);
     
 }

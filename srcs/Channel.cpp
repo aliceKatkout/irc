@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/24 18:58:36 by mrabourd         ###   ########.fr       */
+/*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
+/*   Updated: 2024/01/24 19:00:00 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_HPP
-# define USER_HPP
+#include "../includes/Channel.hpp"
 
-# include <iostream>
+Channel::Channel(std::string name, std::string password) : _name(name), _password(password) {
+    
+}
 
-class User {
-	public :
-		User(int fd);
-		~User();
-	
-		int getFd() const;
+Channel::~Channel() {
+    
+}
 
-	private :
-		int _fd;
-		std::string _nickname;
-
-		/* ajouter a combien de channel le user a le droit de se connecter */
-
-};
-
-#endif
+std::string Channel::getName() const {
+    return (this->_name);
+}

@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/24 18:58:36 by mrabourd         ###   ########.fr       */
+/*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
+/*   Updated: 2024/01/24 18:57:05 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_HPP
-# define USER_HPP
+#ifndef CHANNEL_HPP
+
+# define CHANNEL_HPP
 
 # include <iostream>
 
-class User {
-	public :
-		User(int fd);
-		~User();
-	
-		int getFd() const;
+class Channel {
+    private:
+        std::string _name;
+        std::string _password;
 
-	private :
-		int _fd;
-		std::string _nickname;
+        /* ajouter le nb de users que le chann accepte */
 
-		/* ajouter a combien de channel le user a le droit de se connecter */
+    public:
+        Channel(std::string, std::string);
+        ~Channel();
 
+        std::string getName() const;
 };
 
 #endif

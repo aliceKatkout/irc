@@ -3,14 +3,17 @@ NAME = ircserv
 SRCS = 	main.cpp \
 		srcs/Server.cpp \
 		srcs/User.cpp \
+		srcs/Channel.cpp \
 		commands/CmdHandler.cpp \
 		commands/Command.cpp \
-		commands/Ping.cpp
+		commands/Ping.cpp \
+		commands/Join.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
 INCLUDES = includes/Server.hpp \
 		includes/User.hpp \
+		includes/Channel.hpp \
 		includes/Command.hpp \
 		includes/CmdHandler.hpp
 

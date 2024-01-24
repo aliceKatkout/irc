@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 16:57:35 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:47:47 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
+#include <vector>
 #include "User.hpp"
 
 class Command {
@@ -26,7 +27,7 @@ class Command {
 		Command();
 		virtual ~Command ();
 
-		virtual void execute(User *)  = 0;
+		virtual void execute(User *, std::vector<std::string> args)  = 0;
 };
 
 class PingCmd : public Command {
@@ -36,9 +37,17 @@ class PingCmd : public Command {
 		PingCmd(){}
 		~PingCmd () {}
 
-		void execute(User *) ;
+		void execute(User *, std::vector<std::string> args) ;
 };
 
+class Join : public Command {
+	private:
 
+	public:
+		Join(){}
+		~Join () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
 
 #endif
