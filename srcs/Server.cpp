@@ -6,11 +6,11 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 16:32:37 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:02:08 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include "../includes/Server.hpp"
 
 Server::Server() {
 
@@ -175,26 +175,4 @@ int Server::init() {
 		throw std::runtime_error("Error while listening on socket.");
 	_server_fd = sockfd;
 	return sockfd;
-}
-
-std::vector<std::string > Server::split(std::string &s, std::string del){
-	size_t pos = 0;
-	std::vector < std::string > parts;
-
-	while ((pos = s.find(del)) != std::string::npos){
-		std::string token = s.substr(0, pos);
-		if (token.size() > 0){
-			parts.push_back(token);
-		}
-		s.erase(0, pos + del.length());
-	}
-	return (parts);
-}
-
-ssize_t Server::Send(const char *data, unsigned int len){
-	return send(this->_server_fd, data, len, 0);
-}
-
-int Server::Receive(char *buffer, unsigned int len){
-	return recv(this->_server_fd, buffer, len, 0);
 }

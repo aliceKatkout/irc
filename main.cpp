@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Command.cpp                                        :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 14:27:45 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 16:18:51 by mrabourd         ###   ########.fr       */
+/*   Created: 2024/01/15 15:09:09 by mrabourd          #+#    #+#             */
+/*   Updated: 2024/01/24 17:02:15 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Command.hpp"
+#include "includes/Server.hpp"
 
-Command::Command() {
-    
-}
+int main(int ac, char **av) {
+	if (ac != 3){
+		std::cout << "Invalid number of arguments! ADIOS" << std::endl;
+		return (1);
+	}
 
-Command::~Command(){
-    
+	Server server(av[1], av[2]);
+	server.init();
+	server.start();
 }

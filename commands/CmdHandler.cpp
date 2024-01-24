@@ -6,11 +6,11 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 16:33:06 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:02:08 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "CmdHandler.hpp"
+#include "../includes/CmdHandler.hpp"
 
 CmdHandler::CmdHandler () {
     _cmdMap["PING"] = new PingCmd();

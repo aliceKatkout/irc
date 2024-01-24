@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 16:15:44 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:57:16 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,8 @@ class Server {
 		void start();
 		void UserConnect();
 		void UserMessage(int);
-		std::vector<std::string > split(std::string &s, std::string delimiter);
 
-		ssize_t Send(const char *data, unsigned int len);
-		int Receive(char *buffer, unsigned int len);
 		int find_user_fd(int fd);
-
 };
 
 #endif

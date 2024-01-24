@@ -1,18 +1,18 @@
 NAME = ircserv
 
-SRCS = 	srcs/main.cpp \
+SRCS = 	main.cpp \
 		srcs/Server.cpp \
 		srcs/User.cpp \
-		srcs/CmdHandler.cpp \
-		srcs/Command.cpp \
-		srcs/ExecCmd.cpp
+		commands/CmdHandler.cpp \
+		commands/Command.cpp \
+		commands/Ping.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
-INCLUDES = srcs/Server.hpp \
-		srcs/User.hpp \
-		srcs/Command.hpp \
-		srcs/CmdHandler.hpp
+INCLUDES = includes/Server.hpp \
+		includes/User.hpp \
+		includes/Command.hpp \
+		includes/CmdHandler.hpp
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 
 

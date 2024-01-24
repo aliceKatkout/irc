@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.cpp                                           :+:      :+:    :+:   */
+/*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 17:02:38 by mrabourd         ###   ########.fr       */
+/*   Created: 2024/01/24 14:27:45 by mrabourd          #+#    #+#             */
+/*   Updated: 2024/01/24 17:02:08 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/User.hpp"
+#include "../includes/Command.hpp"
 
-User::User(int fd): _fd(fd){
+Command::Command() {
     
 }
 
-User::~User(){
+Command::~Command(){
     
-}
-
-int User::getFd() const {
-    return (this->_fd);
 }
