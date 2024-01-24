@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 12:42:00 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:32:37 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,43 +43,65 @@ bool	Server::setPasswd (char *passwd){
 	return (true);
 
 }
+
+void Server::UserMessage(int userFd){
+
+	char buff[10];
+	bzero(buff, 10);
+	std::string msg;
+
+	while (!std::strstr(buff, "\n"))
+	{
+		bzero(buff, 10);
+
+		if (recv(userFd, buff, 10, 0) < 0)
+		{
+			if (errno != EWOULDBLOCK)
+				return;
+		}
+		msg.append(buff);
+	}
+	_handler.parsing(msg, _connectedUsers[userFd]);
+	
+}
+
 void Server::start() {
 	pollfd server_fd = {_server_fd, POLLIN, 0};
-	userFDs.push_back(server_fd);
+	_userFDs.push_back(server_fd);
 
 	std::cout << "Server listening..." << std::endl;
 
 	while (1) { // 1 can be changed to a boolean variable to stop the server
 
 		// Loop waiting for incoming connects or for incoming data on any of the connected sockets.
-		if (poll(userFDs.begin().base(), userFDs.size(), -1) < 0)
+		if (poll(_userFDs.begin().base(), _userFDs.size(), -1) < 0)
 			throw std::runtime_error("Error while polling from fd.");
 
 		// One or more descriptors are readable. Need to determine which ones they are.
-		for (std::vector<pollfd>::iterator  it = userFDs.begin(); it != userFDs.end(); it++) {
+		for (std::vector<pollfd>::iterator it = _userFDs.begin(); it != _userFDs.end(); it++) {
 
 			if (it->revents == 0)
 				continue;
 
 			if ((it->revents & POLLHUP) == POLLHUP) {
-				//onClientDisconnect(it->fd);
+				//UserDisconnect(it->fd);
 				break;
 			}
 
 			if ((it->revents & POLLIN) == POLLIN) {
 
 				if (it->fd == _server_fd) {
-					onClientConnect();
+					UserConnect();
 					break;
 				}
 
-				//onClientMessage(it->fd);
+				UserMessage(it->fd);
 			}
 		}
 	}
 }
 
-void Server::onClientConnect() {
+void Server::UserConnect() {
 
 	struct sockaddr_in client_address = {};
 	socklen_t client_address_len = sizeof(client_address);
@@ -103,7 +125,11 @@ void Server::onClientConnect() {
 	}
 
 	pollfd client = {client_fd, POLLIN, 0};
-	userFDs.push_back(client);
+	_userFDs.push_back(client);
+	
+	User *newUser = new User(client_fd); // create user;
+	this->_connectedUsers.insert(std::pair<int, User *>(client_fd, newUser));
+	
 
 	std::cout << "New client connected." << std::endl;
 }
@@ -149,40 +175,6 @@ int Server::init() {
 		throw std::runtime_error("Error while listening on socket.");
 	_server_fd = sockfd;
 	return sockfd;
-}
-
-
-
-
-
-void Server::recv_and_forward_msg(int fd){
-
-				/* A REVOIR */
-
-	std::string remainder = "";
-	std::vector<std::string> parts;
-	while (1){
-		char buffer[10];
-		int ret_data = recv(fd, buffer, 10, 0);
-		if (ret_data > 0){
-			std::string msg(buffer, buffer + ret_data);
-			msg = remainder + msg;
-
-			parts = split(msg, "\n");
-			remainder = msg;
-
-			// forward_msg(parts);
-			if (parts.empty() == true)
-				std::cout << "\'parts\' is empty" << std::endl;
-			else
-				std::cout << parts.back() << std::endl;
-			// std::cout << remainder << std::endl;
-		}
-		else{
-			std::cout << "client breaks;" << std::endl;
-			break;
-		}
-	}
 }
 
 std::vector<std::string > Server::split(std::string &s, std::string del){

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 12:33:23 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:15:44 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@
 # include <map>
 // # include <pairs>
 # include <algorithm>
+# include "User.hpp"
+# include "CmdHandler.hpp"
+# include <errno.h>
 
 # define MAX_EVENTS 10
 
+class CmdHandler;
+
 class Server {
 	private:
-		std::map<int, User *>						connectedUsers;
-		std::vector<struct pollfd>				userFDs;
+		std::map<int, User *>					_connectedUsers;
+		std::vector<struct pollfd>				_userFDs;
 		// struct addrinfo	_hints;
 		struct sockaddr_in serv_addr;
 		int opt;
@@ -46,6 +51,8 @@ class Server {
 		int _server_fd;
 		// char *_msg;
 
+		CmdHandler _handler;
+
 	public:
 		Server();
 		Server (char *port, char *passwd);
@@ -56,8 +63,8 @@ class Server {
 
 		int init ();
 		void start();
-		void onClientConnect();
-		void recv_and_forward_msg(int fd);
+		void UserConnect();
+		void UserMessage(int);
 		std::vector<std::string > split(std::string &s, std::string delimiter);
 
 		ssize_t Send(const char *data, unsigned int len);
