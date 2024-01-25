@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 15:05:58 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:25:20 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	Server::setPasswd (char *passwd){
 
 }
 
-void Server::UserMessage(int userFd){
+int Server::UserMessage(int userFd){
 
 	char buff[10];
 	bzero(buff, 10);
@@ -57,9 +57,9 @@ void Server::UserMessage(int userFd){
 		if (recv(userFd, buff, 10, 0) <= 0) // 0 = disconnected
 		{
 			if (errno != EWOULDBLOCK) {
-				std::cout << "User " << userFd << " not writ" << std::endl;
-
-				return ;
+				std::cout << "User " << userFd << " not right" << std::endl;
+				// UserDisconnect(userFd);
+				return (-1);
 			}
 		}
 		msg.append(buff);
@@ -70,6 +70,7 @@ void Server::UserMessage(int userFd){
 	std::cout << "msg: " << msg << std::endl;
 	if (!msg.empty())
 		_handler.parsing(msg, _connectedUsers[userFd]);
+	return (0);
 }
 
 void Server::start() {
@@ -90,8 +91,10 @@ void Server::start() {
 			if (it->revents == 0)
 				continue;
 
-			if ((it->revents & POLLHUP) == POLLHUP || (it->revents & POLLERR) == POLLERR){
-				std::cout << "--- NE PREND PAS EN COMPTE POLLHUP, le batard ---" << std::endl;
+			if (((it->revents & POLLHUP) == POLLHUP || (it->revents & POLLERR) == POLLERR)
+				&& !((it->revents & POLLIN) == POLLIN))
+			{
+				std::cout << "--- NE RENTRE JAMAIS LA DEDANS, ENTRE DANS l'AUTRE ---" << std::endl;
 				UserDisconnect(it->fd);
 				break;
 			}
@@ -103,7 +106,11 @@ void Server::start() {
 					break;
 				}
 
-				UserMessage(it->fd);
+				
+				if (UserMessage(it->fd) < 0){
+					UserDisconnect(it->fd);
+					break ;
+				}
 			}
 		}
 	}
@@ -126,10 +133,12 @@ void Server::UserDisconnect(int fd){
 			_userFDs.erase(it);
 			std::cout << "user " << fd << " erased" << std::endl;
 			close(fd);
+			break;
 		}
 	}
+	std::cout << userToDelete->getNickname();
 	delete userToDelete;
-
+	std::cout << " deleted successfully!" << std::endl;
 }
 
 void Server::UserConnect() {
@@ -156,6 +165,7 @@ void Server::UserConnect() {
 	}
 
 	pollfd client = {client_fd, POLLIN, 0};
+	client.events = POLLIN | POLLHUP | POLLERR;
 	_userFDs.push_back(client);
 
 	User *newUser = new User(client_fd); // create user;

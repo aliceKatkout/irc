@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Nick.cpp                                           :+:      :+:    :+:   */
+/*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 14:23:18 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/25 16:07:21 by mrabourd         ###   ########.fr       */
+/*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
+/*   Updated: 2024/01/25 17:52:27 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
-void NickCmd::execute(User *user, std::vector<std::string> args) {
-		user->setNickname(args[1]);
-		std::cout << "Nickname set to " << user->getNickname() << "END of nickname" << std::endl;
+void Invite::execute(User *user, std::vector<std::string> args) {
+    /* 
+        Si _l du channel n'est pas atteint
+        et que user n'est pas banned du channel ?
+    */
 }

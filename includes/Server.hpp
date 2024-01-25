@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 15:19:07 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:47:03 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "User.hpp"
 # include "CmdHandler.hpp"
 # include <errno.h>
-
+# include "Channel.hpp"
 
 
 # define MAX_EVENTS 10
@@ -55,6 +55,8 @@ class Server {
 
 		CmdHandler _handler;
 
+		std::vector<Channel *> _channels;
+
 	public:
 		Server();
 		Server (char *port, char *passwd);
@@ -66,7 +68,7 @@ class Server {
 		int init ();
 		void start();
 		void UserConnect();
-		void UserMessage(int);
+		int UserMessage(int);
 		void UserDisconnect(int);
 
 		int find_user_fd(int fd);
