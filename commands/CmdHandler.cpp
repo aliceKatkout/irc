@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 15:17:37 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:49:25 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,18 @@ void CmdHandler::parsing(std::string msg, User *user) {
     std::string cmd;
     std::vector<std::string> args;
 
-	args.push_back(msg.substr(msg.find(' ') + 1, msg.length()));
+    args = split(msg, "/n");
 
-    cmd = msg.substr(0, msg.find(' '));
+
+	for (int i = 0; i < (int) args.size(); i++)
+		std::cout << args[i] << std::endl;
 
     if (cmd.length() > 0){
         if (_cmdMap.find(cmd) != _cmdMap.end()){
-			args = split(msg, " ");
+            args = split(msg, " ");
             _cmdMap[cmd]->execute(user, args);
         }
     }
+
 
 }
