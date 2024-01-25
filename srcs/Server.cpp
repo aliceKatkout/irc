@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 18:35:15 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:05:58 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,31 @@ void Server::UserMessage(int userFd){
 	bzero(buff, 10);
 	std::string msg;
 
-	while (!std::strstr(buff, "\n"))
+	while (!std::strstr(buff, "\r\n"))
 	{
 		bzero(buff, 10);
 
-		if (recv(userFd, buff, 10, 0) < 0)
+		if (recv(userFd, buff, 10, 0) <= 0) // 0 = disconnected
 		{
-			if (errno != EWOULDBLOCK)
-				return;
+			if (errno != EWOULDBLOCK) {
+				std::cout << "User " << userFd << " not writ" << std::endl;
+
+				return ;
+			}
 		}
 		msg.append(buff);
+		std::cout << "buff: " << buff << std::endl;
+		// on disconnect reste bloque la dedans et on peut plus rien faire
+
 	}
-	_handler.parsing(msg, _connectedUsers[userFd]);
-	
+	std::cout << "msg: " << msg << std::endl;
+	if (!msg.empty())
+		_handler.parsing(msg, _connectedUsers[userFd]);
 }
 
 void Server::start() {
 	pollfd server_fd = {_server_fd, POLLIN, 0};
-	server_fd.events = POLLIN | POLLHUP;
+	server_fd.events = POLLIN | POLLHUP | POLLERR;
 	_userFDs.push_back(server_fd);
 
 	std::cout << "Server listening..." << std::endl;
@@ -80,11 +87,10 @@ void Server::start() {
 
 		// One or more descriptors are readable. Need to determine which ones they are.
 		for (std::vector<pollfd>::iterator it = _userFDs.begin(); it != _userFDs.end(); it++) {
-
 			if (it->revents == 0)
 				continue;
 
-			if ((it->revents & POLLHUP) == POLLHUP) {
+			if ((it->revents & POLLHUP) == POLLHUP || (it->revents & POLLERR) == POLLERR){
 				std::cout << "--- NE PREND PAS EN COMPTE POLLHUP, le batard ---" << std::endl;
 				UserDisconnect(it->fd);
 				break;
@@ -105,7 +111,7 @@ void Server::start() {
 
 /* Probleme: Ne rentre jamais la dedans: */
 void Server::UserDisconnect(int fd){
-	
+
 	// add remove from channel if in channel
 
 	User *userToDelete = _connectedUsers.at(fd);
@@ -113,7 +119,7 @@ void Server::UserDisconnect(int fd){
 	_connectedUsers.erase(fd);
 
 	std::vector<pollfd>::iterator it = _userFDs.begin();
-	for (; it != _userFDs.end(); it++) 
+	for (; it != _userFDs.end(); it++)
 	{
 		if (it->fd == fd)
 		{
@@ -123,7 +129,7 @@ void Server::UserDisconnect(int fd){
 		}
 	}
 	delete userToDelete;
-		
+
 }
 
 void Server::UserConnect() {
@@ -151,10 +157,10 @@ void Server::UserConnect() {
 
 	pollfd client = {client_fd, POLLIN, 0};
 	_userFDs.push_back(client);
-	
+
 	User *newUser = new User(client_fd); // create user;
 	this->_connectedUsers.insert(std::pair<int, User *>(client_fd, newUser));
-	
+
 
 	std::cout << "New client connected." << std::endl;
 }

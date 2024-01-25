@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 17:20:45 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:19:07 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include "User.hpp"
 # include "CmdHandler.hpp"
 # include <errno.h>
+
+
 
 # define MAX_EVENTS 10
 
@@ -69,5 +71,7 @@ class Server {
 
 		int find_user_fd(int fd);
 };
+
+std::vector<std::string> split(std::string s, std::string del);
 
 #endif

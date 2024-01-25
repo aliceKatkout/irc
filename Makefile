@@ -4,10 +4,15 @@ SRCS = 	main.cpp \
 		srcs/Server.cpp \
 		srcs/User.cpp \
 		srcs/Channel.cpp \
+		srcs/utils.cpp \
 		commands/CmdHandler.cpp \
 		commands/Command.cpp \
 		commands/Ping.cpp \
-		commands/Join.cpp
+		commands/Nick.cpp \
+		commands/UserCmd.cpp \
+		commands/Join.cpp \
+		commands/Pass.cpp \
+
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -17,7 +22,7 @@ INCLUDES = includes/Server.hpp \
 		includes/Command.hpp \
 		includes/CmdHandler.hpp
 
-FLAGS = -Wall -Wextra -Werror -std=c++98 
+FLAGS = -Wall -Wextra -Werror -std=c++98
 
 all : $(NAME)
 

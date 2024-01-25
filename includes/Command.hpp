@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 18:47:47 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:55:47 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,36 @@ class PingCmd : public Command {
 	public:
 		PingCmd(){}
 		~PingCmd () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
+
+class NickCmd : public Command {
+	private:
+
+	public:
+		NickCmd(){}
+		~NickCmd () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
+
+class PassCmd : public Command {
+	private:
+
+	public:
+		PassCmd(){}
+		~PassCmd () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
+
+class UserCmd : public Command {
+	private:
+
+	public:
+		UserCmd(){}
+		~UserCmd () {}
 
 		void execute(User *, std::vector<std::string> args) ;
 };
