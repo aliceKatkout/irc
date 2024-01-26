@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 16:12:19 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:23:19 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ std::string User::getUsername() const {
 
 bool User::getGoodPass() const {
 	return (this->_good_pass);
+}
+
+Server *User::getServer() const {
+	return (this->_server);
+}
+
+std::vector<Channel *> User::getChannel() {
+	return (this->_channel);
 }
 
 void User::setNickname(std::string nickname) {

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 16:37:36 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/26 18:20:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "User.hpp"
 # include "User.hpp"
 # include "CmdHandler.hpp"
-# include <errno.h>
 # include "Channel.hpp"
 
+# include <errno.h>
 
 # include <iostream>
 # include <sys/types.h>
@@ -77,6 +77,9 @@ class Server {
 		void UserDisconnect(int);
 
 		int find_user_fd(int fd);
+
+		void	createChannel(std::string &channelName);
+		std::vector<Channel *> getChannel();
 };
 
 std::vector<std::string> split(std::string s, std::string del);
