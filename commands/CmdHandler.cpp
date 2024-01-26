@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdHandler.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 16:12:52 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:39:06 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../includes/Server.hpp"
 
 CmdHandler::CmdHandler () {
+	std::cout << "CmdHandler constructor" << std::endl;
     _cmdMap["PING"] = new PingCmd();
 	_cmdMap["NICK"] = new NickCmd();
 	_cmdMap["PASS"] = new PassCmd();

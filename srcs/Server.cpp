@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 16:05:25 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:41:43 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
 
 Server::Server() {
-	_hostname = "BeachLifeStyle";
-	_handler = CmdHandler();
+	// _handler = CmdHandler();
 
 }
 
@@ -23,6 +22,9 @@ Server::Server(char *port, char *passwd) {
 		std::cerr << "The port is not valid!" << std::endl;
 	if (this->setPasswd(passwd) == false)
 		std::cerr << "The password is not valid!" << std::endl;
+	_hostname = "BeachLifeStyle";
+	std::cout << "Hellooooo" << std::endl;
+	_handler = new CmdHandler();
 }
 
 Server::~Server() {
@@ -71,7 +73,7 @@ int Server::UserMessage(int userFd){
 	}
 	std::cout << "msg: " << msg << std::endl;
 	if (!msg.empty())
-		_handler.parsing(msg, _connectedUsers[userFd]);
+		_handler->parsing(msg, _connectedUsers[userFd]);
 	return (0);
 }
 

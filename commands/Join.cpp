@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 19:01:53 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:47:30 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void Join::execute(User *user, std::vector<std::string> args){
         -si ne depasse pas la taille limit de users
          && le user n'est pas banned du channel
          && user a le droit de join (check les 'modes')
+         && user pas deja dans 10 autres channels
             -> server envoie msg aux autres users du channel avec prefix
             -> et envoie msg au user qui a joined
             -> envoie un 'MODE' msg avec les odes du chann
