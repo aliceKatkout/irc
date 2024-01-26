@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdHandler.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:51:10 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/24 16:14:11 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:44:32 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "Command.hpp"
 # include <iostream>
 
+class Command;
 
 class CmdHandler {
     private:
@@ -26,7 +27,7 @@ class CmdHandler {
     public:
         CmdHandler ();
         ~CmdHandler();
-        
+
         void parsing(std::string, User *);
 };
 

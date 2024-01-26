@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/25 17:05:14 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:42:10 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 
 # include <iostream>
 # include "Channel.hpp"
+# include "Server.hpp"
+
+class Server;
 
 class User {
 	public :
-		User(int fd);
+		User(int fd, Server *server);
 		~User();
+
+		std::string getPrefix() const;
+		void write(const std::string &message) const;
+		void reply(const std::string &reply);
 
 		int getFd() const;
 		std::string getNickname() const;
@@ -34,7 +41,11 @@ class User {
 		int _fd;
 		std::string _nickname;
 		std::string _username;
+		std::string _hostname;
+		bool 	_is_registered;
 		bool 	_good_pass;
+
+		Server *_server;
 
 		// std::vector<channel *> _channel; // les channels sur lesquels le users est connecte
 

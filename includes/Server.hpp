@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 16:47:03 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:32:42 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ class Server {
 		int _port;
 		std::string _passwd;
 		int _server_fd;
-		// char *_msg;
+		std::string _hostname;
 
 		CmdHandler _handler;
 
@@ -64,6 +64,8 @@ class Server {
 
 		bool	setPort (char *port);
 		bool	setPasswd (char *passwd);
+
+		std::string getHostname() const;
 
 		int init ();
 		void start();

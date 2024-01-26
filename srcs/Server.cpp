@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 18:25:20 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:33:24 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
 
 Server::Server() {
-
+	_hostname = "localhost";
 }
 
 Server::Server(char *port, char *passwd) {
@@ -46,15 +46,15 @@ bool	Server::setPasswd (char *passwd){
 
 int Server::UserMessage(int userFd){
 
-	char buff[10];
-	bzero(buff, 10);
+	char buff[100];
+	bzero(buff, 100);
 	std::string msg;
 
 	while (!std::strstr(buff, "\r\n"))
 	{
 		bzero(buff, 10);
 
-		if (recv(userFd, buff, 10, 0) <= 0) // 0 = disconnected
+		if (recv(userFd, buff, 100, 0) <= 0) // 0 = disconnected
 		{
 			if (errno != EWOULDBLOCK) {
 				std::cout << "User " << userFd << " not right" << std::endl;
@@ -106,7 +106,7 @@ void Server::start() {
 					break;
 				}
 
-				
+
 				if (UserMessage(it->fd) < 0){
 					UserDisconnect(it->fd);
 					break ;
@@ -168,8 +168,10 @@ void Server::UserConnect() {
 	client.events = POLLIN | POLLHUP | POLLERR;
 	_userFDs.push_back(client);
 
-	User *newUser = new User(client_fd); // create user;
+	User *newUser = new User(client_fd, this); // create user;
+
 	this->_connectedUsers.insert(std::pair<int, User *>(client_fd, newUser));
+
 
 
 	std::cout << "New client connected." << std::endl;
@@ -216,4 +218,8 @@ int Server::init() {
 		throw std::runtime_error("Error while listening on socket.");
 	_server_fd = sockfd;
 	return sockfd;
+}
+
+std::string Server::getHostname() const {
+	return _hostname;
 }
