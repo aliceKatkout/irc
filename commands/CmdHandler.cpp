@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 14:59:38 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:12:52 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ void CmdHandler::parsing(std::string msg, User *user) {
         if (_cmdMap.find(cmd) != _cmdMap.end()){
 			std::cout << "executing cmd " << cmd << "with args " << args[0] << std::endl;
             _cmdMap[cmd]->execute(user, args);
+			/* if (!user->getIsRegistered())
+				welcome
+ */
+
         }
     }
 

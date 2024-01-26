@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 13:53:23 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:05:25 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 Server::Server() {
 	_hostname = "BeachLifeStyle";
+	_handler = CmdHandler();
+
 }
 
 Server::Server(char *port, char *passwd) {

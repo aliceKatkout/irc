@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 12:30:59 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:12:19 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 		_hostname = _server->getHostname();
 	else
 		_hostname = "";
-	_hostname = "";
 	_is_registered = false;
 }
 
@@ -72,4 +71,12 @@ void User::setUsername(std::string username) {
 
 void User::setGoodPass(bool good_pass) {
 	this->_good_pass = good_pass;
+}
+
+bool User::getIsRegistered() const {
+	return (this->_is_registered);
+}
+
+void User::setIsRegistered(bool is_registered) {
+	this->_is_registered = is_registered;
 }

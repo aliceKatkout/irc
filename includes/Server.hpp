@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 15:00:53 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:13:46 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define SERVER_HPP
 
 # include "User.hpp"
+# include "User.hpp"
+# include "CmdHandler.hpp"
+# include <errno.h>
+# include "Channel.hpp"
+
 
 # include <iostream>
 # include <sys/types.h>
@@ -28,10 +33,6 @@
 # include <map>
 // # include <pairs>
 # include <algorithm>
-# include "User.hpp"
-# include "CmdHandler.hpp"
-# include <errno.h>
-# include "Channel.hpp"
 
 
 # define MAX_EVENTS 10

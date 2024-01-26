@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/26 12:42:10 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:12:04 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ class User {
 		std::string getNickname() const;
 		std::string getUsername() const;
 		bool getGoodPass() const;
+		bool getIsRegistered() const;
 
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);
 		void setGoodPass(bool good_pass);
+		void setIsRegistered(bool is_registered);
 
 	private :
 		int _fd;
