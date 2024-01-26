@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 17:54:10 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:15:48 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <unistd.h>
 #include <vector>
 #include "User.hpp"
+
+class User;
 
 class Command {
 	private:

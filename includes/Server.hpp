@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 12:32:42 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:53:40 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define MAX_EVENTS 10
 
 class CmdHandler;
+class User;
+class Channel;
 
 class Server {
 	private:

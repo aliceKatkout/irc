@@ -6,14 +6,14 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 12:33:24 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:53:23 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
 
 Server::Server() {
-	_hostname = "localhost";
+	_hostname = "BeachLifeStyle";
 }
 
 Server::Server(char *port, char *passwd) {
