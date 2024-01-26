@@ -1,13 +1,0 @@
-<< CAP LS
-<< NICK avedrenn
-<< USER avedrenn avedrenn localhost :Alice VEDRENNE
->> :avedrenn 001 avedrenn :Welcome to the Internet Relay Network mon ptit pote ❤️ avedrenn
-<< MODE avedrenn +i
-<< WHOIS avedrenn
->> :avedrenn!avedrenn 002 avedrenn!avedrenn: Username set to avedrenn
-<< PING avedrenn
->> 000 PONGavedrenn: Pong from avedrenn
-<< NICK bliblib
->> :bliblib!avedrenn 001 bliblib :Welcome to the Internet Relay Network mon ptit pote ❤️ bliblib!avedrenn
-<< MODE bliblib +i
-<< WHOIS avedrenn
