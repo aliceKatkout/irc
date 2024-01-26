@@ -4,5 +4,6 @@
 >> :avedrenn 001 avedrenn :Welcome to the Internet Relay Network mon ptit pote ❤️ avedrenn
 << MODE avedrenn +i
 << WHOIS avedrenn
+>> :avedrenn!avedrenn 002 avedrenn!avedrenn: Username set to avedrenn
 << PING avedrenn
->> PONGavedrenn : Pong from avedrenn
+>> 000 PONGavedrenn: Pong from avedrenn

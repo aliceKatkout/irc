@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:11:53 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 14:17:03 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:14:03 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void PingCmd::execute(User *user, std::vector<std::string> args){
     std::string ret;
 	std::cout << "args[0]" << args[0] << std::endl;
 
-	ret = "PONG" + args[0] + ": Pong from " + user->getNickname() + "\r\n";
+	ret = "000 PONG" + args[0] + ": Pong from " + user->getNickname() + "\r\n";
 
 	write(user->getFd(), ret.c_str(), ret.length());
     // fprintf(user->getFd(), ret);
