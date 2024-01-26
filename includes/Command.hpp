@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 14:55:47 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:54:10 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,15 @@ class Join : public Command {
 
 		void execute(User *, std::vector<std::string> args) ;
 };
+
+// class Invite : public Command {
+// 	private:
+
+// 	public:
+// 		Invite(){}
+// 		~Invite () {}
+
+// 		void execute(User *, std::vector<std::string> args) ;
+// };
 
 #endif
