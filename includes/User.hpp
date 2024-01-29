@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/26 18:23:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:05:29 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include "Server.hpp"
 
 class Server;
+
+enum UserState {
+	HANDSHAKE,
+	LOGIN,
+	ACTIVE,
+	DISCONNECTED
+};
 
 class User {
 	public :
@@ -38,18 +45,27 @@ class User {
 
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);
+		void setRealname(std::string realname);
 		void setGoodPass(bool good_pass);
 		void setIsRegistered(bool is_registered);
+		UserState getState() const;
+		UserState findState();
+		void setState(UserState state);
+		void	welcome();
+
 
 	private :
 		int _fd;
 		std::string _nickname;
 		std::string _username;
+		std::string _realname;
 		std::string _hostname;
 		bool 	_is_registered;
 		bool 	_good_pass;
 
 		Server *_server;
+
+		UserState _state;
 
 		std::vector<Channel *> _channel; // les channels sur lesquels le users est connecte
 

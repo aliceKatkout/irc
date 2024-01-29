@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 18:22:41 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:59:25 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Server::Server(char *port, char *passwd) {
 		std::cerr << "The port is not valid!" << std::endl;
 	if (this->setPasswd(passwd) == false)
 		std::cerr << "The password is not valid!" << std::endl;
-	_hostname = "BeachLifeStyle";
+	_hostname = "localhost";
 	std::cout << "Hellooooo" << std::endl;
 	_handler = new CmdHandler();
 }
@@ -174,6 +174,8 @@ void Server::UserConnect() {
 
 	User *newUser = new User(client_fd, this); // create user;
 
+	//newUser->askPasswd();
+
 	this->_connectedUsers.insert(std::pair<int, User *>(client_fd, newUser));
 
 
@@ -213,6 +215,7 @@ int Server::init() {
 	serv_address.sin_addr.s_addr = INADDR_ANY;
 	serv_address.sin_port = htons(atoi(_str_port));
 
+
 	// Bind the socket to the current IP address on selected port
 	if (bind(sockfd, (struct sockaddr *) &serv_address, sizeof(serv_address)) < 0)
 		throw std::runtime_error("Error while binding socket.");
@@ -249,4 +252,11 @@ void	Server::createChannel(std::string &channelName){
 
 std::vector<Channel *> Server::getChannel(){
 	return (_channels);
+}
+
+
+bool Server::checkPassword(std::string &passwd){
+	if (passwd == _passwd)
+		return (true);
+	return (false);
 }

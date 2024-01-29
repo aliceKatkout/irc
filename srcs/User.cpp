@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 18:23:19 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:05:42 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 User::User(int fd, Server *server): _fd(fd), _server(server) {
 	_nickname = "";
 	_username = "";
+	_realname = "";
 	_good_pass = false;
 	if (_server)
 		_hostname = _server->getHostname();
 	else
 		_hostname = "";
 	_is_registered = false;
+	_state = HANDSHAKE;
+
 }
 
 User::~User(){
@@ -77,6 +80,10 @@ void User::setUsername(std::string username) {
 	this->_username = username;
 }
 
+void User::setRealname(std::string realname) {
+	this->_realname = realname;
+}
+
 void User::setGoodPass(bool good_pass) {
 	this->_good_pass = good_pass;
 }
@@ -87,4 +94,35 @@ bool User::getIsRegistered() const {
 
 void User::setIsRegistered(bool is_registered) {
 	this->_is_registered = is_registered;
+}
+
+UserState User::findState() {
+	if (_nickname.empty() || _username.empty() || !_good_pass)
+		return HANDSHAKE;
+	if (_good_pass && !_is_registered)
+		return LOGIN;
+	if (_is_registered)
+		return ACTIVE;
+	return DISCONNECTED;
+
+}
+
+UserState User::getState() const {
+	return _state;
+}
+
+void User::setState(UserState state) {
+	_state = state;
+}
+
+void User::welcome() {
+	if (_state != LOGIN || _username.empty() || _realname.empty() || _nickname.empty())
+		return;
+	_state = ACTIVE;
+
+	reply("001 " + getNickname() + " :Welcome to the Internet Relay Network mon ptit pote ❤️ " + getPrefix());
+
+	//char message[100];
+	//sprintf(message, "%s:%d is now known as %s.", _hostname.c_str(), _port, _nickname.c_str());
+
 }

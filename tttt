@@ -1,0 +1,5 @@
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@localhost 464 :Password incorrect
