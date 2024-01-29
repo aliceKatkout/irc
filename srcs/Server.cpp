@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 17:21:02 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:50:31 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ Server::Server(char *port, char *passwd) {
 	if (this->setPasswd(passwd) == false)
 		std::cerr << "The password is not valid!" << std::endl;
 	_hostname = "localhost";
-	std::cout << "Hellooooo" << std::endl;
+	_hostname = "BeachLifeStyle";
+
 	_handler = new CmdHandler();
+
 }
 
 Server::~Server() {
@@ -231,29 +233,38 @@ std::string Server::getHostname() const {
 	return _hostname;
 }
 
-void	Server::createChannel(std::string &channelName){
-	std::vector<Channel *>::iterator it;
-
-	if (_channels.size() == 0)
-	{
-		Channel *newChannel = new Channel(channelName, NULL);
+void	Server::createChannel(std::string channelName){
+	
+	if (_channels.size() == 0) {
+		Channel *newChannel = new Channel(channelName, "");
 		_channels.push_back(newChannel);
+		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 	}
-	// for (it = _channels.begin(); it != _channels.end(); it++){
-	// 	if (it.getName() == channelName){
-	// 	    std::cout << "Channel " << it.getName() << " already exists!" << std::endl;
-	// 	}
-	// 	else{
-	// 		Channel * newChannel = new Channel(channelName, NULL);
-	// 		_channels.push_back(newChannel);
-	// 	}
-	// }
+
+	else {
+		std::vector<Channel *>::iterator it;
+		// std::cout << this->_channels.begin()->getName() << std::endl;
+		for (it = _channels.begin(); it != _channels.end(); it++){
+			if ((*it)->getName() == channelName){
+				std::cout << "Channel " << (*it)->getName() << " already exists!" << std::endl;
+			}
+			else{
+				Channel * newChannel = new Channel(channelName, "");
+				_channels.push_back(newChannel);
+				std::cout << "Creating: " << newChannel->getName() << " channel :)" << std::endl;
+			}
+		}
+	}
+	// _channels.back().introduce();
 }
 
 std::vector<Channel *> Server::getChannel(){
 	return (_channels);
 }
 
+Channel *Server::getLastChannel(){
+	return (_channels.back());
+}
 
 bool Server::checkPassword(std::string &passwd){
 	if (_passwd.compare(passwd.substr(0, passwd.size() - 1)) == 0) // -1 to remove \n

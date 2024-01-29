@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 14:58:57 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:36:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ class Server {
 
 		bool checkPassword(std::string &passwd);
 
-		void	createChannel(std::string &channelName);
+		void	createChannel(std::string channelName);
+		
 		std::vector<Channel *> getChannel();
+		Channel *getLastChannel();
 };
 
 std::vector<std::string> split(std::string s, std::string del);

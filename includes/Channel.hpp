@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 17:52:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:05:02 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class Channel {
 		std::string _k; // Définir/supprimer la clé du canal (mot de passe)
 		size_t _l; //definir / supprimer la limite d'users du chann
 
+		std::string _topic;
 		/* ajouter le nb de users que le chann accepte */
 
 	public:
@@ -51,6 +52,8 @@ class Channel {
 		bool    addUser(User *);
 		bool    kickUser(User *);
 		// void	sendMsg()
+
+		// void introduce();
 };
 
 #endif

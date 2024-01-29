@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 13:15:48 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:20:21 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ class UserCmd : public Command {
 		void execute(User *, std::vector<std::string> args) ;
 };
 
-class Join : public Command {
+class JoinCmd : public Command {
 	private:
 
 	public:
-		Join(){}
-		~Join () {}
+		JoinCmd(){}
+		~JoinCmd () {}
 
 		void execute(User *, std::vector<std::string> args) ;
 };
@@ -91,5 +91,15 @@ class Join : public Command {
 
 // 		void execute(User *, std::vector<std::string> args) ;
 // };
+
+class TopicCmd : public Command {
+	private:
+
+	public:
+		TopicCmd(){}
+		~TopicCmd () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
 
 #endif

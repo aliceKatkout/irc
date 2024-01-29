@@ -6,44 +6,52 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 19:44:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:12:32 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
 
-// static int ChannelExistsAlready(User *user, std::string name) {
-// 	Server *s = user->getServer();
-// 	std::vector<Channel *> c = s->getChannel();
-// 	std::vector<Channel *>::iterator it_s = c.begin();
-// 	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannel().begin() ;
-	
-// 	for (; it_s != user->getServer()->getChannel().end(); it_s++){
-// 		// if (it_s->getName() == name){
-// 			std::cout << "looking for channel with" << name << " as name in server" << std::endl;
-// 			// return (1);
-// 		}
+static int ChannelExistsAlready(User *user, std::string name) {
+	Server *s = user->getServer();
+	std::vector<Channel *> c = s->getChannel();
+	std::vector<Channel *>::iterator it_s = c.begin();
+	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannel().begin() ;
 
-// 	return (0);
-// }
+	std::cout << "looking for channel with " << name << " as name in server" << std::endl;
+	for (; it_s != c.end(); it_s++){
+		if ((*it_s)->getName() == name){
+			return (1);
+		}
+    }
+	return (0);
+}
 
-void Join::execute(User *user, std::vector<std::string> args){
-	
-
-	if (args.size() == 1)
-	{
-		std::cerr << "There is an argument missing" << std::endl;
-		return ;
-	}
-	// if (ChannelExistsAlready(user, args.back()) == 1){
-	// 	std::cout << "Channel found!" << std::endl;
+void JoinCmd::execute(User *user, std::vector<std::string> args){
+	std::cout << "enter join command !!! " << std::endl;
+    
+	// if (args.size() == 1)
+	// {
+	// 	std::cerr << "There is an argument missing" << std::endl;
+	// 	return ;
 	// }
-	std::string channelName = *(args.begin() + 1);
-	Channel *newChannel = new Channel(channelName, NULL);
-	user->getChannel().push_back(newChannel);	
+	if (ChannelExistsAlready(user, args.back()) == 1){
+		std::cout << "Channel found!" << std::endl;
+	}
+	
+    std::cout << "name of channel should be: " << *(args.begin()) << std::endl;
+	std::string channelName = *(args.begin());
+    std::string password = "";
+    if (args.size() > 2){
+        password = *(args.begin() + 2);
+    }
+    
+    user->getServer()->createChannel(channelName);
+	// Channel *newChannel = new Channel(channelName, NULL);
+	user->getChannel().push_back(user->getServer()->getChannel().back());	
 		
-	user->reply("001 " + user->getNickname() + " JOIN " + user->getPrefix());
+	user->reply("332 " + user->getChannel().back()->getName() + " :topic ");
 // CmdHandler::parsing -> a faire
     
     /*

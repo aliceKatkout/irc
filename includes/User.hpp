@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/29 15:05:29 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:32:41 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ class User {
 		void	welcome();
 
 
+		void addChannel(Channel *);
+
 	private :
 		int _fd;
 		std::string _nickname;
@@ -67,7 +69,7 @@ class User {
 
 		UserState _state;
 
-		std::vector<Channel *> _channel; // les channels sur lesquels le users est connecte
+		std::vector<Channel *> _channels; // les channels sur lesquels le users est connecte
 
 		/* ajouter a combien de channel le user a le droit de se connecter */
 

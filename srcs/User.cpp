@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 17:11:38 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:08:50 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,24 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 	_is_registered = false;
 	_state = HANDSHAKE;
 
+
+	if (server->getChannel().size() == 0){
+		server->createChannel("#general");
+
+		Channel *newChann = server->getLastChannel();
+		this->addChannel(newChann);
+		
+		// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannel().back()->getName());
+	}
+
 }
 
 User::~User(){
 
+}
+
+void User::addChannel(Channel *channel ){
+	_channels.push_back(channel);
 }
 
 std::string User::getPrefix() const {
@@ -69,7 +83,7 @@ Server *User::getServer() const {
 }
 
 std::vector<Channel *> User::getChannel() {
-	return (this->_channel);
+	return (this->_channels);
 }
 
 void User::setNickname(std::string nickname) {
