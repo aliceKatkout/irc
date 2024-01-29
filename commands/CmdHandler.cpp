@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 15:06:00 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:15:55 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void CmdHandler::parsing(std::string msg, User *user) {
     std::vector<std::string> args;
 
     args = split(msg, " \n");
+	if (user->getState() == DISCONNECTED)
+		return ;
 
     while ((int) args.size() > 0){
 		cmd = args[0];
@@ -45,8 +47,9 @@ void CmdHandler::parsing(std::string msg, User *user) {
 				user->welcome();
 			if (user->getState() == DISCONNECTED)
 				return ;
-			//else
-				//user->reply("421 " + cmd + " :Unknown command");
+
 		}
+		//else
+				//user->reply("421 " + cmd + " :Unknown command");
 	}
 }

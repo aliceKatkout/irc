@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 14:59:25 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:21:02 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void Server::start() {
 				}
 
 
-				if (UserMessage(it->fd) < 0){
+				if (UserMessage(it->fd) < 0 || _connectedUsers[it->fd]->getState() == DISCONNECTED){
 					UserDisconnect(it->fd);
 					break ;
 				}
@@ -256,7 +256,7 @@ std::vector<Channel *> Server::getChannel(){
 
 
 bool Server::checkPassword(std::string &passwd){
-	if (passwd == _passwd)
+	if (_passwd.compare(passwd.substr(0, passwd.size() - 1)) == 0) // -1 to remove \n
 		return (true);
 	return (false);
 }
