@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 16:39:06 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:22:44 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ CmdHandler::CmdHandler () {
 	_cmdMap["NICK"] = new NickCmd();
 	_cmdMap["PASS"] = new PassCmd();
 	_cmdMap["USER"] = new UserCmd();
+	_cmdMap["TOPIC"] = new UserCmd();
 
 	//_cmdMap["JOIN"] = new JoinCmd();
 }
@@ -39,7 +40,7 @@ void CmdHandler::parsing(std::string msg, User *user) {
 		std::cout << "cmd = " << cmd << std::endl;
 		args.erase(args.begin());
         if (_cmdMap.find(cmd) != _cmdMap.end()){
-			std::cout << "executing cmd " << cmd << "with args " << args[0] << std::endl;
+			std::cout << "executing cmd " << cmd << " with args " << args[0] << std::endl;
             _cmdMap[cmd]->execute(user, args);
 			/* if (!user->getIsRegistered())
 				welcome

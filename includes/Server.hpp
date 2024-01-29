@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 18:20:07 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:27:00 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ class Server {
 
 		int find_user_fd(int fd);
 
-		void	createChannel(std::string &channelName);
+		void	createChannel(std::string channelName);
 		std::vector<Channel *> getChannel();
+		Channel *getLastChannel();
 };
 
 std::vector<std::string> split(std::string s, std::string del);

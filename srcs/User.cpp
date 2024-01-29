@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 18:23:19 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:14:47 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,23 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 	else
 		_hostname = "";
 	_is_registered = false;
+	
+	if (server->getChannel().size() == 0){
+		server->createChannel("#general");
+
+		Channel *newChann = server->getLastChannel();
+		this->addChannel(newChann);
+		
+		// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannel().back()->getName());
+	}
 }
 
 User::~User(){
 
+}
+
+void User::addChannel(Channel *channel ){
+	_channels.push_back(channel);
 }
 
 std::string User::getPrefix() const {
@@ -66,7 +79,7 @@ Server *User::getServer() const {
 }
 
 std::vector<Channel *> User::getChannel() {
-	return (this->_channel);
+	return (this->_channels);
 }
 
 void User::setNickname(std::string nickname) {

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/25 17:53:39 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:49:26 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	Channel::setInviteOnly(bool b){
 }
 
 std::string Channel::getName() const {
+	std::cout << "channel name: " << this->_name << std::endl;
 	return (this->_name);
 }
 
