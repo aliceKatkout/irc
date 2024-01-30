@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 18:50:31 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:45:36 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ std::string Server::getHostname() const {
 }
 
 void	Server::createChannel(std::string channelName){
-	
+
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
 		_channels.push_back(newChannel);
@@ -267,7 +267,7 @@ Channel *Server::getLastChannel(){
 }
 
 bool Server::checkPassword(std::string &passwd){
-	if (_passwd.compare(passwd.substr(0, passwd.size() - 1)) == 0) // -1 to remove \n
+	if (_passwd.compare(passwd) == 0) // -1 to remove \n
 		return (true);
 	return (false);
 }

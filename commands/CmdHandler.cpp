@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 15:42:24 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:34:25 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,26 @@ void CmdHandler::parsing(std::string msg, User *user) {
 
     std::vector<std::string> cmds;
     std::vector<std::string> args;
+	int nb;
 
 	cmds = split(msg, "\n");
-	for (int i = 0; i < (int)cmds.size(); i++)
-			std::cout << "cmds[" << i << "] = " << cmds[i] << std::endl;
-
 	if (user->getState() == DISCONNECTED)
 		return ;
 
     while ((int) cmds.size() > 0){
 		args = split(cmds[0], " ");
-			for (int i = 0; i < (int)args.size(); i++)
-				std::cout << "arg[" << i << "] = " << args[i] << std::endl;
-		std::cout << "cmd = " << args[0] << std::endl;
+		nb = args.size() - 1;
 		cmds.erase(cmds.begin());
         if (_cmdMap.find(args[0]) != _cmdMap.end()){
 			std::cout << "executing cmd " << args[0] << std::endl;
-			for (int i = 0; i < (int)args.size(); i++)
-				std::cout << "arg[" << i << "] = " << args[i] << std::endl;
-
+			args[nb] = args[nb][args[nb].size() - 1] == '\r' ? args[nb].substr(0, args[nb].size() - 1) : args[nb];
             _cmdMap[args[0]]->execute(user, args);
 			if (!user->getIsRegistered())
 				user->welcome();
 			if (user->getState() == DISCONNECTED)
 				return ;
 		}
-
-	/* 	else
-			user->reply("421 " + args[0] + " :Unknown command"); */
+		else if (args[0] != "CAP")
+			user->reply("421 " + args[0] + " :Unknown command");
 	}
 }

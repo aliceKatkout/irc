@@ -1,0 +1,16 @@
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 421  :Unknown command
+>> :@BeachLifeStyle 000 PASS :Good password
+>> :avedrenn@BeachLifeStyle 002 avedrenn@BeachLifeStyle: Nickname set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 002 avedrenn!avedrenn@BeachLifeStyle: Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :Welcome to the Internet Relay Network mon ptit pote ❤️ 
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle 421  :Unknown command
+>> :avedrenn!avedrenn@BeachLifeStyle 421 MODE :Unknown command
+>> :avedrenn!avedrenn@BeachLifeStyle 421  :Unknown command
+<< PING avedrenn
+>> 000 PONGPING: Pong from avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 421  :Unknown command
