@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 18:50:31 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:25:55 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,12 +233,13 @@ std::string Server::getHostname() const {
 	return _hostname;
 }
 
-void	Server::createChannel(std::string channelName){
+Channel *	Server::createChannel(std::string channelName){
 	
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
 		_channels.push_back(newChannel);
 		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
+		return (newChannel);
 	}
 
 	else {
@@ -252,6 +253,7 @@ void	Server::createChannel(std::string channelName){
 				Channel * newChannel = new Channel(channelName, "");
 				_channels.push_back(newChannel);
 				std::cout << "Creating: " << newChannel->getName() << " channel :)" << std::endl;
+				return (newChannel);
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 15:35:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:29:26 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
     
     user->getServer()->createChannel(channelName);
 	// Channel *newChannel = new Channel(channelName, NULL);
-	user->getChannel().push_back(user->getServer()->getChannel().back());	
+	user->getChannel().push_back(user->getServer()->getChannel().back());
+	
+	//ajouter le user au channel -> _joinedUsers
 		
 	user->reply(user->getPrefix() + " :has joined " + channelName);
 
