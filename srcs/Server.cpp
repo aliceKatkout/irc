@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 16:25:55 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:35:18 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int Server::UserMessage(int userFd){
 
 	while (!std::strstr(buff, "\r\n"))
 	{
-		bzero(buff, 10);
+		bzero(buff, 100);
 
 		if (recv(userFd, buff, 100, 0) <= 0) // 0 = disconnected
 		{
@@ -68,6 +68,7 @@ int Server::UserMessage(int userFd){
 				return (-1);
 			}
 		}
+
 		msg.append(buff);
 		std::cout << "buff: " << buff << std::endl;
 		// on disconnect reste bloque la dedans et on peut plus rien faire
@@ -248,6 +249,7 @@ Channel *	Server::createChannel(std::string channelName){
 		for (it = _channels.begin(); it != _channels.end(); it++){
 			if ((*it)->getName() == channelName){
 				std::cout << "Channel " << (*it)->getName() << " already exists!" << std::endl;
+				return (*it);
 			}
 			else{
 				Channel * newChannel = new Channel(channelName, "");
@@ -257,6 +259,7 @@ Channel *	Server::createChannel(std::string channelName){
 			}
 		}
 	}
+	return (NULL);
 	// _channels.back().introduce();
 }
 
@@ -269,7 +272,7 @@ Channel *Server::getLastChannel(){
 }
 
 bool Server::checkPassword(std::string &passwd){
-	if (_passwd.compare(passwd.substr(0, passwd.size() - 1)) == 0) // -1 to remove \n
+	if (_passwd.compare(passwd) == 0) // -1 to remove \n
 		return (true);
 	return (false);
 }
