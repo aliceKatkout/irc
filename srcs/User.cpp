@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 19:08:50 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:17:59 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 	_state = HANDSHAKE;
 
 
-	if (server->getChannel().size() == 0){
-		server->createChannel("#general");
+	// if (server->getChannel().size() == 0){
+	// 	server->createChannel("#general");
 
-		Channel *newChann = server->getLastChannel();
-		this->addChannel(newChann);
+	// 	Channel *newChann = server->getLastChannel();
+	// 	this->addChannel(newChann);
 		
-		// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannel().back()->getName());
-	}
+	// 	// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannel().back()->getName());
+	// }
 
 }
 
