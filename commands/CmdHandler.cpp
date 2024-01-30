@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdHandler.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 19:20:03 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:42:24 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ CmdHandler::CmdHandler () {
 	_cmdMap["USER"] = new UserCmd();
 	_cmdMap["TOPIC"] = new TopicCmd();
 
+
 	_cmdMap["JOIN"] = new JoinCmd();
 }
 
@@ -30,27 +31,35 @@ CmdHandler::~CmdHandler () {
 
 void CmdHandler::parsing(std::string msg, User *user) {
 
-    std::string cmd;
+    std::vector<std::string> cmds;
     std::vector<std::string> args;
 
-    args = split(msg, " \n");
+	cmds = split(msg, "\n");
+	for (int i = 0; i < (int)cmds.size(); i++)
+			std::cout << "cmds[" << i << "] = " << cmds[i] << std::endl;
+
 	if (user->getState() == DISCONNECTED)
 		return ;
 
-    while ((int) args.size() > 0){
-		cmd = args[0];
-		std::cout << "cmd = " << cmd << std::endl;
-		args.erase(args.begin());
-        if (_cmdMap.find(cmd) != _cmdMap.end()){
-			std::cout << "executing cmd " << cmd << " with args " << args[0] << std::endl;
-            _cmdMap[cmd]->execute(user, args);
+    while ((int) cmds.size() > 0){
+		args = split(cmds[0], " ");
+			for (int i = 0; i < (int)args.size(); i++)
+				std::cout << "arg[" << i << "] = " << args[i] << std::endl;
+		std::cout << "cmd = " << args[0] << std::endl;
+		cmds.erase(cmds.begin());
+        if (_cmdMap.find(args[0]) != _cmdMap.end()){
+			std::cout << "executing cmd " << args[0] << std::endl;
+			for (int i = 0; i < (int)args.size(); i++)
+				std::cout << "arg[" << i << "] = " << args[i] << std::endl;
+
+            _cmdMap[args[0]]->execute(user, args);
 			if (!user->getIsRegistered())
 				user->welcome();
 			if (user->getState() == DISCONNECTED)
 				return ;
-
 		}
-		//else
-				//user->reply("421 " + cmd + " :Unknown command");
+
+	/* 	else
+			user->reply("421 " + args[0] + " :Unknown command"); */
 	}
 }
