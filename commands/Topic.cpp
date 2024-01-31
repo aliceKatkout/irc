@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 15:54:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:36:38 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
     std::cout << "arg2:" << *(args.begin() + 1) << std::endl;
 
     // if the user is the operator of the channel
-    user->reply("332 " + *(args.begin()) + " :" + *(args.begin()) );
+    user->reply("332 " + *(args.begin()) + " :" + *(args.begin()+1) + *(args.begin()+2) );
 
 // When the operator leaves but other clients are in,
 // no one becomes operator and no one can change the topic anymore.

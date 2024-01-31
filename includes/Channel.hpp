@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 18:05:02 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:10:21 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ class User;
 
 class Channel {
 	private:
-		std::string _name;
+		std::string 		_name;
 
-		User * _operator;
+		User * 				_operator;
 		std::vector<User *> _joinedUsers;
 
-		bool _i; // Set/remove Invite-only channel
+		bool 		_i; // Set/remove Invite-only channel. true = yes, false = no
 		std::string _k; // Définir/supprimer la clé du canal (mot de passe)
-		size_t _l; //definir / supprimer la limite d'users du chann
+		size_t 		_l; //definir / supprimer la limite d'users du chann
 
 		std::string _topic;
 		/* ajouter le nb de users que le chann accepte */
@@ -48,6 +48,7 @@ class Channel {
 		std::string getPassword() const;
 		size_t    getLimit() const;
 		bool getInviteOnly() const;
+		std::vector<User *> getUsers() ;
 		
 		bool    addUser(User *);
 		bool    kickUser(User *);

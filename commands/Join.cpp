@@ -6,14 +6,14 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 16:29:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:57:54 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
 
-static int ChannelExistsAlready(User *user, std::string name) {
+static Channel * ChannelExistsAlready(User *user, std::string name) {
 	Server *s = user->getServer();
 	std::vector<Channel *> c = s->getChannel();
 	std::vector<Channel *>::iterator it_s = c.begin();
@@ -22,38 +22,45 @@ static int ChannelExistsAlready(User *user, std::string name) {
 	for (; it_s != c.end(); it_s++){
 		if ((*it_s)->getName() == name){
 			std::cout << "looking for channel with " << name << " as name in server" << std::endl;
-			return (1);
+			return (*it_s);
 		}
     }
-	return (0);
+	return (NULL);
 }
 
 void JoinCmd::execute(User *user, std::vector<std::string> args){
     
+    std::cout << "name of channel should be: " << *(args.begin() + 1) << std::endl;
+	std::string channelName = *(args.begin() + 1);
+	
 	// if (args.size() == 1)
 	// {
 	// 	std::cerr << "There is an argument missing" << std::endl;
 	// 	return ;
 	// }
-	if (ChannelExistsAlready(user, args.back()) == 1){
-		std::cout << "Channel found!" << std::endl;
-	}
 	
-    std::cout << "name of channel should be: " << *(args.begin()) << std::endl;
-	std::string channelName = *(args.begin());
     // std::string password = "";
     // if (args.size() > 2){
     //     password = *(args.begin() + 2);
     // }
-    
-    user->getServer()->createChannel(channelName);
-	// Channel *newChannel = new Channel(channelName, NULL);
-	user->getChannel().push_back(user->getServer()->getChannel().back());
-	
-	//ajouter le user au channel -> _joinedUsers
-		
-	user->reply(user->getPrefix() + " :has joined " + channelName);
+    Channel *newChannel = NULL;
+	if (ChannelExistsAlready(user, args.back()) != NULL){
+		std::cout << "Channel found!" << std::endl;
+		newChannel = ChannelExistsAlready(user, args.back());
+	}
+	else {
+		std::cout << "Channel not found. Creating new channel..." << std::endl;
+		newChannel = user->getServer()->createChannel(channelName, user);
+	}
+	newChannel->addUser(user);
+	user->getChannel().push_back(newChannel);
 
+	std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
+	std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
+
+	// user->reply(user->getPrefix() + " :has joined " + channelName);
+	// user->reply("002 " + user->getPrefix() + ": Nickname set to " + user->getNickname());
+	user->write(user->getPrefix() + " has joined: " + channelName);
 // CmdHandler::parsing -> a faire
     
     /*

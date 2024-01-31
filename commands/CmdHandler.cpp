@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 19:00:55 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:46:21 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ CmdHandler::CmdHandler () {
 	_cmdMap["USER"] = new UserCmd();
 	_cmdMap["TOPIC"] = new TopicCmd();
 	_cmdMap["JOIN"] = new JoinCmd();
+	_cmdMap["PART"] = new PartCmd();
 	// _cmdMap["MODE"] = new ModeCmd();
 
 
@@ -53,6 +54,8 @@ void CmdHandler::parsing(std::string msg, User *user) {
 			if (user->getState() == DISCONNECTED)
 				return ;
 		}
+		else if (args[nb] == "")
+			nb++;
 		else if (args[0] != "CAP"){
 			user->reply("421 " + args[0] + " :Unknown command");
 		}

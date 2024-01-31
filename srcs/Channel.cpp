@@ -6,18 +6,20 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/29 19:13:24 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:38:29 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 Channel::Channel(std::string name, std::string password) : _name(name), _k(password) {
-    
+    _l = 10;
+	_i = false;
 }
 
 Channel::~Channel() {
-    
+	std::cout << "delete channel." << std::endl;
+    delete (this);
 }
 
 void    Channel::setOperator(User *user){
@@ -49,6 +51,10 @@ bool Channel::getInviteOnly() const {
 	return (this->_i);
 }
 
+std::vector<User *> Channel::getUsers() {
+	return (_joinedUsers);
+}
+
 bool	Channel::addUser(User *user) {
 	if (this->_joinedUsers.size() < this->_l){
 		this->_joinedUsers.push_back(user);
@@ -59,27 +65,35 @@ bool	Channel::addUser(User *user) {
 }
 
 bool	Channel::kickUser(User *user) {
-	// std::vector<User *>::iterator it = _joinedUsers.begin();
-	// for (; it != _joinedUsers.end(); it++) {
-	// 	if (*it == user){
-	// 		delete *it;
-	// 		if (_joinedUsers.size() == 0)
-	// 			delete this; // ?? ca marche ca ?
-	// 	}
-	// }
+
+	if (this->_operator == user) {
+		std::cout << "remove user from being operator" << std::endl;
+		this->_operator = NULL;
+	}
+	
+	std::vector<User *>::iterator it = _joinedUsers.begin();
+	for (; it != _joinedUsers.end(); it++) {
+		if (*it == user){
+			std::cout << "erase " << (*it)->getNickname() << " from list of users..." << std::endl;
+			_joinedUsers.erase(it);
+			break ;
+			// if (_joinedUsers.size() == 0)
+			// 	delete this; // ?? ca marche ca ?
+		}
+	}
 
 	/* remove: déplace les éléments indésirables à la fin de la chaîne,
 	puis retourne un itérateur pointant vers le début de la séquence 
 	contenant les éléments non supprimés.*/
 	
-	_joinedUsers.erase(std::remove(_joinedUsers.begin(), _joinedUsers.end(),
-		user), _joinedUsers.end());
+	// _joinedUsers.erase(std::remove(_joinedUsers.begin(), _joinedUsers.end(),
+	// 	user), _joinedUsers.end());
 	
-	if (this->_operator == user) {
-		// ou que: _joinedUsers.size() == 0
-		// supprimer le channel ?
-		return (true);
+	if (_joinedUsers.empty() == true){
+		std::cout << "There is no one left in this channel" << std::endl;
+		return (false); // remove the channel
 	}
+	
 	return (true);
 	
 }

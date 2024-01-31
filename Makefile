@@ -12,7 +12,8 @@ SRCS = 	main.cpp \
 		commands/UserCmd.cpp \
 		commands/Join.cpp \
 		commands/Pass.cpp \
-		commands/Topic.cpp
+		commands/Topic.cpp \
+		commands/Part.cpp
 		# commands/Mode.cpp
 		# commands/Invite.cpp
 

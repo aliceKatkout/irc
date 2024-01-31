@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/30 18:35:18 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:13:22 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,10 +234,11 @@ std::string Server::getHostname() const {
 	return _hostname;
 }
 
-Channel *	Server::createChannel(std::string channelName){
+Channel *	Server::createChannel(std::string channelName, User *user){
 	
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
+		newChannel->setOperator(user);
 		_channels.push_back(newChannel);
 		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 		return (newChannel);
