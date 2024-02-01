@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/31 16:38:29 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:14:59 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void    Channel::setLimit(size_t limit){
 
 void	Channel::setInviteOnly(bool b){
 	this->_i = b;
+}
+
+void	Channel::setTopic(std::string topic){
+	this->_topic = topic;
 }
 
 std::string Channel::getName() const {

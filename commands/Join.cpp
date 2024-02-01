@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 15:47:33 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:07:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	newChannel->addUser(user);
 	user->getChannel().push_back(newChannel);
 
-	// std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
-	// std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
+	std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
+	std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
 
 	user->reply("JOIN " + *(args.begin()+1));
 

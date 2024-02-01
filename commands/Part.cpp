@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 15:38:39 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:23:34 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 
 	std::string reason;
 	
-	if (args.size() > 0) {
-		std::vector<std::string>::iterator it = (args.begin()+2);
+	if (args.size() > 2) {
+		std::vector<std::string>::iterator it = (args.begin()+3);
 
 		for (; it != args.end(); it++){
 			reason = reason + (*it) + " ";
