@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/31 17:50:34 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:38:39 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,12 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 
 	std::string reason;
 	
-	if (args.size() > 2) {
-		std::vector<std::string>::iterator it = (args.begin()+3);
+	if (args.size() > 0) {
+		std::vector<std::string>::iterator it = (args.begin()+2);
 
 		for (; it != args.end(); it++){
 			reason = reason + (*it) + " ";
 		}
-		// std::cout << "Reason: " << reason << std::endl;
-		user->write(": " + reason);
 	}
-	user->write(user->getPrefix() + " has left: " + " " + reason);
-
-	// return _nickname + (_username.empty() ? "" : "!" + _username) + (_hostname.empty() ? "" : "@" + _hostname);
+	user->reply("PART " + *(args.begin()+1) + " " + reason);
 }

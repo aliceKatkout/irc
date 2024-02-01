@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:23:18 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/30 16:47:48 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:49:04 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void NickCmd::execute(User *user, std::vector<std::string> args) {
 	user->setNickname(args[1]);
 	std::cout << "Nickname set to " << user->getNickname() << std::endl;
 
-	user->reply("002 " + user->getPrefix() + ": Nickname set to " + user->getNickname());
+	user->reply("002 " + user->getPrefix() + " Nickname set to " + user->getNickname());
 }
