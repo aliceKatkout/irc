@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:23:18 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/01 15:49:04 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:49:26 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
 void NickCmd::execute(User *user, std::vector<std::string> args) {
-	std::string nickname;
+	std::string oldNick = user->getNickname();
 
 	if (args.size() < 2)
 	{
 		user->reply("431 :No nickname given");
 		return ;
 	}
-	user->setNickname(args[1]);
-	std::cout << "Nickname set to " << user->getNickname() << std::endl;
 
-	user->reply("002 " + user->getPrefix() + " Nickname set to " + user->getNickname());
+		user->reply("NICK " + args[1] +  " Nickname set to " + args[1]);
+		user->setNickname(args[1]);
 }
