@@ -6,16 +6,13 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/02 14:46:40 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:46:28 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
 void TopicCmd::execute(User *user, std::vector<std::string> args) {
-	std::cout << "Enter topic comd" << std::endl;
-	std::cout << "arg1:" << *(args.begin()) << std::endl;
-	std::cout << "arg2:" << *(args.begin() + 1) << std::endl;
 
 	std::string channelName = *(args.begin()+1);
 	std::string topic;
@@ -26,7 +23,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 		for (; it != args.end(); ++it){
 			topic = topic + (*it) + " ";
 		}
-		std::cout << "topic: " << topic << std::endl;
+		// std::cout << "topic: " << topic << std::endl;
 	}
 	else
 	{
@@ -43,17 +40,15 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 		if ((*it_c)->getName() == channelName){
 			if ((*it_c)->getOperator() == user){
 				/* change topic of channel */
-				// user->reply("332 " + *(args.begin()) + " :" + *(args.begin()+1) + *(args.begin()+2) );
 				(*it_c)->setTopic(topic);
-				std::cout << "topic st to : " << (*it_c)->getTopic() << std::endl;
-				user->reply(user->getPrefix() + " changed the topic of " + channelName + " to " + topic);
+				user->reply("TOPIC " + channelName + " " + topic);
 				// user->reply("332 " + channelName + " " + topic);
 				
 			}
 			else
 			{
 				user->reply("482 " + *(args.begin()+1) +  " :You're not channel operator\r\n");
-				// ERR_CHANOPRIVSNEEDED(user_id, channel) (": 482 " + user_id + " " + channel + " :You're not channel operator\r\n")
+				break ;
 			}
 			
 		}

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/02 14:37:36 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:42:19 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
 
 	user->reply("JOIN " + *(args.begin()+1));
-	user->reply("332 " + *(args.begin()+1) + newChannel->getTopic());
+	// user->reply("332 " + *(args.begin()+1) + newChannel->getTopic());
 
 // CmdHandler::parsing -> a faire
     
