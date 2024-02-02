@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 15:47:33 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:37:36 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
     
     std::cout << "name of channel should be: " << *(args.begin() + 1) << std::endl;
 	std::string channelName = *(args.begin() + 1);
+
+	std::cout << "channel name joined: " << channelName << std::endl;
 	
 	// if (args.size() == 1)
 	// {
@@ -53,12 +55,13 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 		newChannel = user->getServer()->createChannel(channelName, user);
 	}
 	newChannel->addUser(user);
-	user->getChannel().push_back(newChannel);
+	user->addChannel(newChannel);
 
-	// std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
-	// std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
+	std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
+	std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
 
 	user->reply("JOIN " + *(args.begin()+1));
+	user->reply("332 " + *(args.begin()+1) + newChannel->getTopic());
 
 // CmdHandler::parsing -> a faire
     

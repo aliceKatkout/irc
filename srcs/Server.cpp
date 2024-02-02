@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/31 16:13:22 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:26:35 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int Server::UserMessage(int userFd){
 		}
 
 		msg.append(buff);
-		std::cout << "buff: " << buff << std::endl;
+		// std::cout << "buff: " << buff << std::endl;
 		// on disconnect reste bloque la dedans et on peut plus rien faire
 
 	}
