@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 16:14:29 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:37:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ class Channel {
 
 		std::string getName() const;
 		std::string getPassword() const;
-		size_t    getLimit() const;
-		bool getInviteOnly() const;
+		size_t    	getLimit() const;
+		bool 		getInviteOnly() const;
 		std::vector<User *> getUsers() ;
+		User *		getOperator();
+		std::string getTopic();
 		
 		bool    addUser(User *);
 		bool    kickUser(User *);
+
+		bool	topicSet;
 		// void	sendMsg()
 
 		// void introduce();

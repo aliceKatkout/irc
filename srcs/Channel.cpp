@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 16:14:59 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/02 14:41:02 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 Channel::Channel(std::string name, std::string password) : _name(name), _k(password) {
     _l = 10;
 	_i = false;
+	topicSet = false;
 }
 
 Channel::~Channel() {
@@ -36,6 +37,7 @@ void	Channel::setInviteOnly(bool b){
 
 void	Channel::setTopic(std::string topic){
 	this->_topic = topic;
+	topicSet = true;
 }
 
 std::string Channel::getName() const {
@@ -57,6 +59,14 @@ bool Channel::getInviteOnly() const {
 
 std::vector<User *> Channel::getUsers() {
 	return (_joinedUsers);
+}
+
+User *		Channel::getOperator(){
+	return (this->_operator);
+}
+
+std::string Channel::getTopic() {
+	return (this->_topic);
 }
 
 bool	Channel::addUser(User *user) {
