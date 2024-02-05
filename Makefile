@@ -13,9 +13,9 @@ SRCS = 	main.cpp \
 		commands/Join.cpp \
 		commands/Pass.cpp \
 		commands/Topic.cpp \
-		commands/Part.cpp
+		commands/Part.cpp \
+		commands/Invite.cpp
 		# commands/Mode.cpp
-		# commands/Invite.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/31 12:46:21 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:19:16 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ CmdHandler::CmdHandler () {
 	_cmdMap["JOIN"] = new JoinCmd();
 	_cmdMap["PART"] = new PartCmd();
 	// _cmdMap["MODE"] = new ModeCmd();
+	_cmdMap["INVITE"] = new InviteCmd();
 
 
 }

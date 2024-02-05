@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/31 12:45:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:19:59 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,15 @@ class JoinCmd : public Command {
 		void execute(User *, std::vector<std::string> args) ;
 };
 
-// class InviteCmd : public Command {
-// 	private:
+class InviteCmd : public Command {
+	private:
 
-// 	public:
-// 		InviteCmd(){}
-// 		~InviteCmd () {}
+	public:
+		InviteCmd(){}
+		~InviteCmd () {}
 
-// 		void execute(User *, std::vector<std::string> args) ;
-// };
+		void execute(User *, std::vector<std::string> args) ;
+};
 
 class TopicCmd : public Command {
 	private:
