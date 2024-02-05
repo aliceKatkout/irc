@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 16:26:35 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:43:02 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ int Server::UserMessage(int userFd){
 				return (-1);
 			}
 		}
+		
+		char * i = strstr(buff, "\r\n");
+		if (i != NULL)
+			std::cout << "le retour charriot est bien la !" << std::endl;
+		else
+			std::cout << "le retour charriot n'est pas la !" << std::endl;
 
 		msg.append(buff);
 		// std::cout << "buff: " << buff << std::endl;

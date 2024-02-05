@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 12:17:31 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:04:38 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 
 	// std::cout << "args 1 " << (*args.begin()) <<std::endl;
 	std::string channelName = *(args.begin()+1);
+	// if (channelName[0] == '#'){
+	// 	std::cout << "remove #" << std::endl;
+	// 	channelName = channelName.substr(1, channelName.size() - 1 );
+	// 	std::cout << "new name: " << channelName << std::endl;
+	// }
 	std::string topic;
 	
 	if (args.size() > 1) {
@@ -46,23 +51,25 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 
 
 	if (chann != NULL){
-		if (chann->getOperator() == user && topic != ""){
+		if (topic == ""){
+			std::cout << "topic is null" << std::endl;
+			if (chann->getTopic() == ""){
+				user->reply("331 " + channelName +  " :No topic is set\r\n");
+				return ;
+			}
+			else
+				user->reply("TOPIC " + channelName + " " + chann->getTopic());
+		}
+		if (chann->getOperator() == user){
 			/* change topic of channel */
-			chann->setTopic(topic);
-			std::cout << "The topic is now: " << topic << std::endl;
-			user->reply("TOPIC " + channelName + " " + topic);
-			// user->reply("332 " + channelName + " " + topic);
+			if (topic != ""){
+				chann->setTopic(topic);
+				std::cout << "The topic is now: " << topic << std::endl;
+				user->reply("TOPIC " + channelName + " " + topic);
+				// user->reply("332 " + channelName + " " + topic);
+			}
 			
 		}
-		// else if (topic == ""){
-		// 	std::cout << "topic is null" << std::endl;
-		// 	if (chann->getTopic() == ""){
-		// 		user->reply("331 " + channelName +  " :No topic is set\r\n");
-		// 		return ;
-		// 	}
-		// 	else
-		// 		user->reply("TOPIC " + channelName + " " + topic);
-		// }
 		else
 		{
 			user->reply("482 " + *(args.begin()+1) +  " :You're not channel operator\r\n");
@@ -71,7 +78,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	}
 	else
 	{
-		std::cout << "Channel doesn't exist!" << std::endl;
+		std::cout << "Channel " << channelName << " doesn't exist!" << std::endl;
 	}
 	
 	// std::vector<Channel *> channel = user->getChannel();
