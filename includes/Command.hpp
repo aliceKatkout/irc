@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 12:19:59 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:46:36 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,17 @@ class TopicCmd : public Command {
 		void execute(User *, std::vector<std::string> args) ;
 };
 
-// class ModeCmd : public Command {
-// 	private:
+class ModeCmd : public Command {
+	private:
 
-// 	public:
-// 		ModeCmd(){}
-// 		~ModeCmd () {}
+	public:
+		ModeCmd(){}
+		~ModeCmd () {}
 
-// 		void execute(User *, std::vector<std::string> args) ;
-// };
+		void execute(User *, std::vector<std::string> args) ;
+		void setUserMode(User *, std::vector<std::string> args);
+		void setChannelMode(User *, std::vector<std::string> args);
+};
 
 class PartCmd : public Command {
 	private:
