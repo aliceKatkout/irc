@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/01 16:26:35 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:55:55 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ std::string Server::getHostname() const {
 }
 
 Channel *	Server::createChannel(std::string channelName, User *user){
-	
+
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
 		newChannel->setOperator(user);
@@ -276,4 +276,8 @@ bool Server::checkPassword(std::string &passwd){
 	if (_passwd.compare(passwd) == 0) // -1 to remove \n
 		return (true);
 	return (false);
+}
+
+std::map<int, User *> Server::getConnectedUsers(){
+	return (_connectedUsers);
 }
