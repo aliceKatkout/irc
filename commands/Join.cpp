@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 17:41:23 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:44:11 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,17 @@ static Channel * ChannelExistsAlready(User *user, std::string name) {
 }
 
 void JoinCmd::execute(User *user, std::vector<std::string> args){
-    
-    std::cout << "name of channel should be: " << *(args.begin() + 1) << std::endl;
-	std::string channelName = *(args.begin() + 1);
 
+    std::cout << "name of channel should be: " << *(args.begin() + 1) << std::endl;
+	if (args.size() < 2)
+	{
+		user->reply("461 JOIN :Not enough parameters");
+		return ;
+	}
+
+	std::string channelName = *(args.begin() + 1);
 	std::cout << "channel name joined: " << channelName << std::endl;
-	
-	// if (args.size() == 1)
-	// {
-	// 	std::cerr << "There is an argument missing" << std::endl;
-	// 	return ;
-	// }
-	
-    // std::string password = "";
-    // if (args.size() > 2){
-    //     password = *(args.begin() + 2);
-    // }
+
     Channel *newChannel = NULL;
 	if (ChannelExistsAlready(user, args.back()) != NULL){
 		std::cout << "Channel found!" << std::endl;
@@ -54,8 +49,11 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 		std::cout << "Channel not found. Creating new channel..." << std::endl;
 		newChannel = user->getServer()->createChannel(channelName, user);
 	}
-	newChannel->addUser(user);
-	user->addChannel(newChannel);
+	std::string password = "";
+	if (args.size() > 2)
+		password = *(args.begin() + 2);
+	if (newChannel->addUser(user, password))
+		user->addChannel(newChannel);
 
 	std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
 	std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
@@ -68,9 +66,9 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	// user->reply("332 " + *(args.begin()+1) + newChannel->getTopic());
 
 // CmdHandler::parsing -> a faire
-    
+
     /*
-    Si channel existe deja : 
+    Si channel existe deja :
         -si ne depasse pas la taille limit de users
          && le user n'est pas banned du channel
          && user a le droit de join (check les 'modes')
@@ -81,10 +79,10 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
             -> si topic, evoie RPL_TOPIC et RPL_TOPICTIME numerics
             -> envoie RPL_NAMREPLY
 
-        
+
 
 
     Si n'existe pas :
-        creer channel, avec ou sans password 
+        creer channel, avec ou sans password
     */
 }

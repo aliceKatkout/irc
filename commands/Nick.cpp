@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:23:18 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/05 13:13:05 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:34:04 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,16 @@ void NickCmd::execute(User *user, std::vector<std::string> args) {
 		user->reply("431 :No nickname given");
 		return ;
 	}
-
-		user->reply("NICK " + args[1] +  " Nickname set to " + args[1]);
-		user->setNickname(args[1]);
+	if (args[1].size() > 9)
+	{
+		user->reply("432 " + args[1] + " :Erroneous nickname");
+		return ;
+	}
+	if (args[1].find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") == std::string::npos)
+	{
+		user->reply("432 " + args[1] + " :Erroneous nickname");
+		return ;
+	}
+	user->reply("NICK " + args[1] +  " Nickname set to " + args[1]);
+	user->setNickname(args[1]);
 }

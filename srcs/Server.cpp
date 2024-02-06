@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 15:43:02 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:44:30 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int Server::UserMessage(int userFd){
 				return (-1);
 			}
 		}
-		
+
 		char * i = strstr(buff, "\r\n");
 		if (i != NULL)
 			std::cout << "le retour charriot est bien la !" << std::endl;
@@ -241,10 +241,10 @@ std::string Server::getHostname() const {
 }
 
 Channel *	Server::createChannel(std::string channelName, User *user){
-	
+
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
-		newChannel->setOperator(user);
+		newChannel->setOperator(user, true);
 		_channels.push_back(newChannel);
 		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 		return (newChannel);
@@ -282,4 +282,8 @@ bool Server::checkPassword(std::string &passwd){
 	if (_passwd.compare(passwd) == 0) // -1 to remove \n
 		return (true);
 	return (false);
+}
+
+std::map<int, User *> Server::getConnectedUsers(){
+	return (_connectedUsers);
 }
