@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/06 12:08:45 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:48:19 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ class User {
 		void	welcome();
 		void setInvisible(bool invisible);
 
+		User *getUserByNick(std::string nickname);
 
 		void addChannel(Channel *);
 

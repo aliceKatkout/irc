@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 17:34:39 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:52:22 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ CmdHandler::CmdHandler () {
 	_cmdMap["PART"] = new PartCmd();
 	_cmdMap["MODE"] = new ModeCmd();
 	_cmdMap["INVITE"] = new InviteCmd();
+	_cmdMap["PRIVMSG"] = new PrivMsgCmd();
+
 
 
 }

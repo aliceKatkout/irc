@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 12:38:55 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:22:17 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,29 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
 			break;
 		case 'l':
-			if (args.size() < 4)
+			if (args.size() < 3)
 			{
 				user->reply("461 MODE :Not enough parameters");
 				return ;
 			}
-			chan->setLimit(atoi(args[3].c_str()));
-			user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
+			if (args.size() == 3)
+			{
+				chan->setLimit(100);
+				user->reply("MODE " + channel + " " + args[2] + " Channel limit set to 100 (default)");
+			}
+			else
+			{
+				chan->setLimit(atoi(args[3].c_str()));
+				user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
+			}
 			break;
 		case 'o':
-			chan->setOperator(user);
-			user->reply("MODE " + channel + " " + args[2]);
+			chan->setOperator(user, (args[2] == "+o" ? true : false));
+			user->reply("MODE " + channel + " " + args[2] );
 			break;
 		case 'k':
 			chan->setPassword(args[3]);
-			user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
+			user->reply("MODE " + channel + " " + args[2] + " " + args[3] + " Channel password set");
 			break;
 		default:
 			user->reply("501 MODE :Unknown MODE flag");

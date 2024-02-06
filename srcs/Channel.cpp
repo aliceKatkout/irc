@@ -6,14 +6,14 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 12:31:01 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:35:56 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
 Channel::Channel(std::string name, std::string password) : _name(name), _k(password) {
-    _l = 10;
+    _l = 100;
 	_i = false;
 	topicSet = false;
 }
@@ -23,8 +23,11 @@ Channel::~Channel() {
     delete (this);
 }
 
-void    Channel::setOperator(User *user){
-	this->_operator = user;
+void    Channel::setOperator(User *user, bool b){
+	if (b == true)
+		this->_operator = user;
+	else
+		this->_operator = NULL;
 }
 
 void    Channel::setLimit(size_t limit){
@@ -69,12 +72,22 @@ std::string Channel::getTopic() {
 	return (this->_topic);
 }
 
-bool	Channel::addUser(User *user) {
-	if (this->_joinedUsers.size() < this->_l){
+bool	Channel::addUser(User *user, std::string password) {
+	if (this->_k.compare(password) != 0){
+		user->reply("475 " + _name + " :Cannot join channel (+k)");
+		return (false);
+	}
+	if (this->_i == true){
+		user->reply("473 " + _name + " :Cannot join channel (+i)");
+		return (false);
+	}
+
+	if (this->_joinedUsers.size() < this->_l && user->getChannel().size() < 10){
 		this->_joinedUsers.push_back(user);
 		this->_l++;
 		return true;
 	}
+	user->reply("471 " + _name + " :Cannot join channel (+l)");
 	return (false);
 }
 

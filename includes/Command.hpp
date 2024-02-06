@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 17:46:36 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:44:33 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,16 @@ class PartCmd : public Command {
 	public:
 		PartCmd(){}
 		~PartCmd () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
+
+class PrivMsgCmd : public Command {
+	private:
+
+	public:
+		PrivMsgCmd(){}
+		~PrivMsgCmd () {}
 
 		void execute(User *, std::vector<std::string> args) ;
 };

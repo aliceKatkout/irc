@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 12:30:17 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:33:25 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class Channel {
 		Channel(std::string, std::string);
 		~Channel();
 
-		void    setOperator(User *);
+		void    setOperator(User *, bool);
 		void    setLimit(size_t);
 		void    setInviteOnly(bool);
 		void	setTopic(std::string);
@@ -56,7 +56,7 @@ class Channel {
 		User *		getOperator();
 		std::string getTopic();
 
-		bool    addUser(User *);
+		bool    addUser(User *, std::string);
 		bool    kickUser(User *);
 
 		bool	topicSet;

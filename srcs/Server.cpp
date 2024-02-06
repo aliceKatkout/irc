@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/02 15:55:55 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:46:48 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
-		newChannel->setOperator(user);
+		newChannel->setOperator(user, true);
 		_channels.push_back(newChannel);
 		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 		return (newChannel);

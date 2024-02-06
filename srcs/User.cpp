@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 12:09:12 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:54:30 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,15 @@ Channel *User::getOneChannel(std::string name) {
 	for ( ; it != _channels.end(); it++) {
 		if ((*it)->getName() == name)
 			return (*it);
+	}
+	return (NULL);
+}
+
+User *User::getUserByNick(std::string nickname) {
+	std::map<int, User *> connectedUsers = getServer()->getConnectedUsers();
+	for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
+		if (it->second->getNickname() == nickname)
+			return (it->second);
 	}
 	return (NULL);
 }
