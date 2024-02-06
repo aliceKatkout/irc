@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/02 14:41:02 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:31:01 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ bool	Channel::kickUser(User *user) {
 		std::cout << "remove user from being operator" << std::endl;
 		this->_operator = NULL;
 	}
-	
+
 	std::vector<User *>::iterator it = _joinedUsers.begin();
 	for (; it != _joinedUsers.end(); it++) {
 		if (*it == user){
@@ -97,17 +97,25 @@ bool	Channel::kickUser(User *user) {
 	}
 
 	/* remove: déplace les éléments indésirables à la fin de la chaîne,
-	puis retourne un itérateur pointant vers le début de la séquence 
+	puis retourne un itérateur pointant vers le début de la séquence
 	contenant les éléments non supprimés.*/
-	
+
 	// _joinedUsers.erase(std::remove(_joinedUsers.begin(), _joinedUsers.end(),
 	// 	user), _joinedUsers.end());
-	
+
 	if (_joinedUsers.empty() == true){
 		std::cout << "There is no one left in this channel" << std::endl;
 		return (false); // remove the channel
 	}
-	
+
 	return (true);
-	
+
+}
+
+void	Channel::setName(std::string name){
+	this->_name = name;
+}
+
+void	Channel::setPassword(std::string password){
+	this->_k = password;
 }

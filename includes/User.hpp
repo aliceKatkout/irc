@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/29 18:32:41 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:08:45 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class User {
 		bool getIsRegistered() const;
 		Server *getServer() const;
 		std::vector<Channel *> getChannel() ;
+		Channel *getOneChannel(std::string name);
 
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);
@@ -52,6 +53,7 @@ class User {
 		UserState findState();
 		void setState(UserState state);
 		void	welcome();
+		void setInvisible(bool invisible);
 
 
 		void addChannel(Channel *);
@@ -64,6 +66,7 @@ class User {
 		std::string _hostname;
 		bool 	_is_registered;
 		bool 	_good_pass;
+		bool 	_invisible;
 
 		Server *_server;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/02 13:56:36 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:09:12 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 
 	// 	Channel *newChann = server->getLastChannel();
 	// 	this->addChannel(newChann);
-		
+
 	// 	// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannel().back()->getName());
 	// }
 
@@ -140,4 +140,17 @@ void User::welcome() {
 	//char message[100];
 	//sprintf(message, "%s:%d is now known as %s.", _hostname.c_str(), _port, _nickname.c_str());
 
+}
+
+void User::setInvisible(bool invisible) {
+	_invisible = invisible;
+}
+
+Channel *User::getOneChannel(std::string name) {
+	std::vector<Channel *>::iterator it = _channels.begin();
+	for ( ; it != _channels.end(); it++) {
+		if ((*it)->getName() == name)
+			return (*it);
+	}
+	return (NULL);
 }
