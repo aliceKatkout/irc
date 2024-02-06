@@ -1,0 +1,24 @@
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :Good password
+>> :@BeachLifeStyle NICK avedrenn Nickname set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :Welcome to the Internet Relay Network mon ptit pote ❤️ 
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle MODE avedrenn +i
+<< PING avedrenn
+>> 000 PONGPING: Pong from avedrenn
+<< NICK ban
+>> :avedrenn!avedrenn@BeachLifeStyle NICK ban Nickname set to ban
+<< JOIN #hey
+>> :ban!avedrenn@BeachLifeStyle JOIN #hey
+>> :ban!avedrenn@BeachLifeStyle 353 #hey :ban
+>> :pom!avedrenn@BeachLifeStyle PRIVMSG #hey ::coucou
+<< PRIVMSG #hey :salut pom
+<< PRIVMSG #hey :ah enfin une bonne reponse
+>> :pom!avedrenn@BeachLifeStyle PRIVMSG #hey ::oui ça fait du bien
+<< PRIVMSG #hey :set le topic
+>> :pom!avedrenn@BeachLifeStyle PRIVMSG #hey ::ok
+<< PRIVMSG #hey :putain
