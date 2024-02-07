@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 15:43:58 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:43:08 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ CmdHandler::CmdHandler () {
 	_cmdMap["MODE"] = new ModeCmd();
 	_cmdMap["INVITE"] = new InviteCmd();
 	_cmdMap["PRIVMSG"] = new PrivMsgCmd();
+	//_cmdMap["KICK"] = new KickCmd();
 
 
 
@@ -40,6 +41,7 @@ void CmdHandler::parsing(std::string msg, User *user) {
     std::vector<std::string> args;
 	int nb;
 
+	args.clear();
 	cmds = split(msg, "\n");
 	if (user->getState() == DISCONNECTED)
 		return ;

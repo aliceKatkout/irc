@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 14:35:56 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:27:19 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,12 @@ void	Channel::setName(std::string name){
 
 void	Channel::setPassword(std::string password){
 	this->_k = password;
+}
+
+void	Channel::broadcastChan(std::string message, User *user){
+	for (size_t i = 0; i < getUsers().size(); i++)
+	{
+		if (getUsers()[i] != user)
+			getUsers()[i]->write(":" + user->getPrefix() + " " + message);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 16:35:20 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:23:01 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static Channel *channelExists(std::string channelName, User *user) {
 void TopicCmd::execute(User *user, std::vector<std::string> args) {
 
 	// std::cout << "args 1 " << (*args.begin()) <<std::endl;
-	std::string channelName = *(args.begin()+1);
+	std::string channelName = *(args.begin() + 1);
 	// if (channelName[0] == '#'){
 	// 	std::cout << "remove #" << std::endl;
 	// 	channelName = channelName.substr(1, channelName.size() - 1 );
@@ -38,14 +38,18 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	// }
 	std::string topic;
 
-	if (args.size() > 1) {
-		std::vector<std::string>::iterator it = (args.begin()+2);
+	if (args.size() > 2) {
+		std::vector<std::string>::iterator it = (args.begin() + 2);
 
 		for (; it != args.end(); ++it){
 			topic = topic + (*it) + " ";
 		}
 	}
 	std::cout << "topic: " << topic << std::endl;
+	std::cout << "channelName: " << channelName << std::endl;
+	if (topic[0] == ':'){
+		topic = topic.substr(1, topic.size() - 1);
+	}
 
 	Channel *chann = channelExists(channelName, user);
 	//(":localhost 332 " + user + " #" + channel +  " :" + topic + "\r\n")
@@ -59,13 +63,14 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 				return ;
 			}
 			else
-				user->reply("TOPIC " + user->getNickname() + "# " + channelName + " :" + chann->getTopic());
+				user->reply("TOPIC " + user->getNickname() + " " + channelName + " " + chann->getTopic());
 		}
 		if (chann->getOperator() == user){
 			/* change topic of channel */
 			if (topic != ""){
 				chann->setTopic(topic);
 				std::cout << "The topic is now: " << topic << std::endl;
+				chann->broadcastChan("TOPIC " + channelName + " " + topic, user);
 				user->reply("TOPIC " + channelName + " " + topic);
 				// user->reply("332 " + channelName + " " + topic);
 			}

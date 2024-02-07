@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 14:33:25 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:22:38 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ class Channel {
 
 		bool    addUser(User *, std::string);
 		bool    kickUser(User *);
+
+		void	broadcastChan(std::string, User *); // (msg, user)
 
 		bool	topicSet;
 		// void	sendMsg()

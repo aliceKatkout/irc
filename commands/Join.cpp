@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 15:44:11 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:42:57 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,11 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	if (newChannel->addUser(user, password))
 		user->addChannel(newChannel);
 
-	std::cout << "There are " << user->getChannel().size() << " channels for this user" << std::endl;
-	std::cout << "There are " << newChannel->getUsers().size() << " users in this channel" << std::endl;
 
 	user->reply("JOIN " + *(args.begin()+1));
 	if (newChannel->getUsers().size() > 1){
-		std::cout << "more than 1 person in this channle" << std::endl;
 		user->reply("353 " + channelName + " :" + user->getNickname());
+		newChannel->broadcastChan("JOIN " + channelName + " " + user->getNickname(), user);
 	}
 	// user->reply("332 " + *(args.begin()+1) + newChannel->getTopic());
 
