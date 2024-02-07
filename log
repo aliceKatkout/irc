@@ -1,0 +1,65 @@
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :✅ Good password
+>> :@BeachLifeStyle NICK avedrenn Nickname set to avedrenn✨
+>> :avedrenn!avedrenn@BeachLifeStyle 💯 Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :✨ Welcome to the Internet Relay Network mon ptit pote ✨
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle MODE avedrenn +i
+<< PING avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle PONG avedrenn: Pong from avedrenn
+--> lag pong
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :✅ Good password
+>> :@BeachLifeStyle NICK avedrenn Nickname set to avedrenn✨
+>> :avedrenn!avedrenn@BeachLifeStyle 💯 Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :✨ Welcome to the Internet Relay Network mon ptit pote ✨
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle MODE avedrenn +i
+<< PING avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 000 PONG avedrenn
+<< JOIN #cou
+>> :avedrenn!avedrenn@BeachLifeStyle JOIN #cou
+<< PART #cou
+>> :avedrenn!avedrenn@BeachLifeStyle PART #cou 
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :✅ Good password
+>> :@BeachLifeStyle NICK avedrenn Nickname set to avedrenn✨
+>> :avedrenn!avedrenn@BeachLifeStyle 💯 Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :✨ Welcome to the Internet Relay Network mon ptit pote ✨
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle MODE avedrenn +i
+<< PING avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 000 PONG
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :✅ Good password
+>> :@BeachLifeStyle NICK avedrenn Nickname set to avedrenn✨
+>> :avedrenn!avedrenn@BeachLifeStyle 💯 Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :✨ Welcome to the Internet Relay Network mon ptit pote ✨
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle MODE avedrenn +i
+<< PING avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 000 PONG
+<< CAP LS
+<< PASS blou
+<< NICK avedrenn
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :✅ Good password
+>> :@BeachLifeStyle NICK avedrenn Nickname set to avedrenn✨
+>> :avedrenn!avedrenn@BeachLifeStyle 💯 Username set to avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 001 avedrenn :✨ Welcome to the Internet Relay Network mon ptit pote ✨
+<< MODE avedrenn +i
+>> :avedrenn!avedrenn@BeachLifeStyle MODE avedrenn +i
+<< PING avedrenn
+>> :avedrenn!avedrenn@BeachLifeStyle 000 PONG

@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 15:44:40 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 10:29:05 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void User::welcome() {
 	_state = ACTIVE;
 	_is_registered = true;
 
-	reply("001 " + getNickname() + " :Welcome to the Internet Relay Network mon ptit pote ❤️ ");
+	reply("001 " + getNickname() + " :✨ Welcome to the Internet Relay Network mon ptit pote ✨");
 
 	//char message[100];
 	//sprintf(message, "%s:%d is now known as %s.", _hostname.c_str(), _port, _nickname.c_str());

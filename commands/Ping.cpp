@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:11:53 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 15:14:03 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 10:53:32 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ PONG csd.bu.edu tolsun.oulu.fi ; message PONG de csd.bu.edu à tolsun.oulu.fi */
 
 void PingCmd::execute(User *user, std::vector<std::string> args){
     std::string ret;
-	std::cout << "args[0]" << args[0] << std::endl;
+	std::cout << "args[1]" << args[1] << std::endl;
+	if (args.size() < 2)
+		ret = "000 PONG";
+	else
+		ret = "000 PONG " + args[1];
 
-	ret = "000 PONG" + args[0] + ": Pong from " + user->getNickname() + "\r\n";
-
-	write(user->getFd(), ret.c_str(), ret.length());
+	user->write(ret);
     // fprintf(user->getFd(), ret);
 }
