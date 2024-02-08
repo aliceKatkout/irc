@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/07 14:27:19 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:33:17 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	Channel::setTopic(std::string topic){
 	topicSet = true;
 }
 
+void	Channel::setInvitedUsers(std::string username){
+	this->_invitedUsers.push_back(username);
+}
+
 std::string Channel::getName() const {
 	// std::cout << this->_name << std::endl;
 	return (this->_name);
@@ -72,24 +76,73 @@ std::string Channel::getTopic() {
 	return (this->_topic);
 }
 
+std::vector<std::string> Channel::getInvitedUsers(){
+	return (this->_invitedUsers);
+}
+
+// bool	Channel::addUser(User *user, std::string password) {
+// 	if (this->_k.compare(password) != 0){
+// 		user->reply("475 " + _name + " :Cannot join channel (+k)");
+// 		return (false);
+// 	}
+// 	if (this->_i == true){
+// 		return (false);
+// 	}
+
+// 	// check si user fait partie des invited du channel
+// 	std::vector<std::string> u;
+// 	std::vector<std::string>::iterator it = u.begin();
+
+// 	if (this->_joinedUsers.size() < this->_l && user->getChannel().size() < 10){
+// 		// si channel est en invite only
+// 		if (this->getInviteOnly() == true){
+// 			// si user fait partie des users invited
+// 			for ( ; it != u.end() ; it++){
+// 				if ((*it) == user->getNickname()){
+// 					this->_joinedUsers.push_back(user);
+// 		user->reply("473 " + _name + " :Cannot join channel (+i)");
+// 					this->_l++;
+// 					return true;
+// 				}
+// 			}
+// 		}
+// 		else{
+// 			this->_joinedUsers.push_back(user);
+// 			this->_l++;
+// 			return true;
+// 		}
+// 	}
+// 	user->reply("471 " + _name + " :Cannot join channel (+l)");
+// 	return (false);
+// }
+
 bool	Channel::addUser(User *user, std::string password) {
-	if (this->_k.compare(password) != 0){
+	if (!this->_k.empty() && this->_k.compare(password) != 0){
 		user->reply("475 " + _name + " :Cannot join channel (+k)");
 		return (false);
 	}
-	if (this->_i == true){
-		user->reply("473 " + _name + " :Cannot join channel (+i)");
-		return (false);
+
+	std::vector<std::string> u = this->getInvitedUsers();
+	if (this->getInviteOnly() == true){
+		// si user fait partie des users invited
+		if (std::find(u.begin(), u.end(), user->getNickname()) == u.end()) {
+			user->reply("473 " + _name + " :Cannot join channel (+i)");
+			return (false);
+		}
 	}
 
-	if (this->_joinedUsers.size() < this->_l && user->getChannel().size() < 10){
-		this->_joinedUsers.push_back(user);
-		this->_l++;
-		return true;
+	if (this->_joinedUsers.size() >= this->_l && user->getChannel().size() >= 10){
+		user->reply("471 " + _name + " :Cannot join channel (+l)");
+		return (false);
 	}
-	user->reply("471 " + _name + " :Cannot join channel (+l)");
-	return (false);
+	
+	this->_joinedUsers.push_back(user);
+	this->_l++;
+	return (true);
+	
 }
+	
+
 
 bool	Channel::kickUser(User *user) {
 

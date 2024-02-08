@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/08 15:34:16 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:24:39 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ static User * invitedUser(User *inviting, std::string invited){
 }
 
 static bool userIsAlreadyOnChannel(Channel *channel, User *user){
+	if (user == NULL)
+		return (false);
+
 	std::vector<User *> u = channel->getUsers();
 	std::vector<User *>::iterator it = u.begin();
 
@@ -96,9 +99,11 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 	
 	if (chann != NULL){
 		if (userIsMemberOfChannel(chann, user) == true){
-			if (userIsAlreadyOnChannel(chann, invited) == true)
+			if (userIsAlreadyOnChannel(chann, invited) == true){
 				user->reply("443 " + invited->getNickname() + " " + chann->getName() + " :is already on channel");
-			else if (invited != NULL){
+				return ;
+			}
+			if (invited != NULL){
 				std::cout << "inviting " << invited->getNickname() << std::endl;
 				user->reply("INVITE " + invited->getNickname() + " "  + channelName );
 				// user->reply("431 " + channelName + " " + user->getUsername());

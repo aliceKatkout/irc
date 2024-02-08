@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/08 15:22:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:37:44 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static Channel * ChannelExistsAlready(User *user, std::string name) {
 
 // ADD RESTRICTION MODE +i
 void JoinCmd::execute(User *user, std::vector<std::string> args){
-
-    std::cout << "name of channel should be: " << *(args.begin() + 1) << std::endl;
 	if (args.size() < 2)
 	{
 		user->reply("461 JOIN :Not enough parameters");
@@ -39,7 +37,6 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	}
 
 	std::string channelName = *(args.begin() + 1);
-	std::cout << "channel name joined: " << channelName << std::endl;
 
     Channel *newChannel = NULL;
 	if (ChannelExistsAlready(user, args.back()) != NULL){
@@ -53,10 +50,10 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	std::string password = "";
 	if (args.size() > 2)
 		password = *(args.begin() + 2);
-	if (newChannel->addUser(user, password))
-		user->addChannel(newChannel);
-
-
+	if (!newChannel->addUser(user, password))
+		return ;
+	std::cout << "user added" << std::endl;
+	user->addChannel(newChannel);
 	user->reply("JOIN " + *(args.begin()+1));
 	if (newChannel->getUsers().size() > 1){
 		user->reply("353 " + channelName + " :" + user->getNickname());
