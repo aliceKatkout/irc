@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/07 14:42:57 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:22:26 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static Channel * ChannelExistsAlready(User *user, std::string name) {
 	return (NULL);
 }
 
+// ADD RESTRICTION MODE +i
 void JoinCmd::execute(User *user, std::vector<std::string> args){
 
     std::cout << "name of channel should be: " << *(args.begin() + 1) << std::endl;

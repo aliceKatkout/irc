@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/05 13:16:48 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:20:16 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,52 @@ static bool userIsMemberOfChannel(Channel *channel, User *user){
 
 	for ( ; it_u != users.end(); it_u++) {
 		if ((*it_u) == user){
+			
+			// if the channel is an invite only channel
+			if (channel->getInviteOnly() == true)
+			{
+				std::cout << "the channel is an invite only" << std::endl;
+				if (channel->getOperator() == user){
+					std::cout << "the user is the operator" << std::endl;
+					return (true);
+				}
+				else{
+					// 473    ERR_INVITEONLYCHAN
+					// "<channel> :Cannot join channel (+i)"
+					std::cout << "the user is not the operator" << std::endl;
+					user->reply("473 " + channel->getName() + " :Cannot join channel");
+					return (false);
+				}
+			}
+			// if not, anyone can invite
+			else{
+				// std::cout << "the channel is not an invite only" << std::endl;
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
+
+static User * invitedUser(User *inviting, std::string invited){
+
+	Server *s = inviting->getServer();
+	std::map<int, User *> connectedUsers = s->getConnectedUsers();
+	for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
+		if (it->second->getNickname() == invited)
+			return (it->second);
+	}
+
+	return (NULL);
+}
+
+static bool userIsAlreadyOnChannel(Channel *channel, User *user){
+	std::vector<User *> u = channel->getUsers();
+	std::vector<User *>::iterator it = u.begin();
+
+	for ( ; it != u.end() ; it++) {
+		if ((*it) == user){
+			// if is already on channel : 443 mrabourd bouldeneige #trivia :is already on channel
 			return (true);
 		}
 	}
@@ -46,12 +92,24 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 	std::string channelName = *(args.begin()+2);
 
 	Channel *chann = channelExists(channelName, user);
-
+	User *invited = invitedUser(user, userInvited);
+	
+	if (userIsAlreadyOnChannel(chann, invited) == true)
+		user->reply("443 " + invited->getNickname() + " " + chann->getName() + " :is already on channel");
 	if (chann != NULL){
 		if (userIsMemberOfChannel(chann, user) == true){
-			user->reply("INVITE " + userInvited + " "  + channelName );
-			user->reply("431 " + channelName + " " + user->getUsername());
-		}		
+			if (invited != NULL){
+				std::cout << "inviting " << invited->getNickname() << std::endl;
+				user->reply("INVITE " + invited->getNickname() + " "  + channelName );
+				// user->reply("431 " + channelName + " " + user->getUsername());
+				invited->write(":" + user->getPrefix() + " INVITE " + invited->getNickname() + " :"  + chann->getName() );
+
+				// chann->broadcastChan("INVITE " + invited->getNickname() + " " + channelName, user);
+			}
+			else {
+				user->reply("401 " + userInvited + " :No such nick/channel");
+			}
+		}
 	}
 	
 }
