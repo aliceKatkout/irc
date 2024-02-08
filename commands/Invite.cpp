@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/08 15:20:16 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:34:16 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 	Channel *chann = channelExists(channelName, user);
 	User *invited = invitedUser(user, userInvited);
 	
-	if (userIsAlreadyOnChannel(chann, invited) == true)
-		user->reply("443 " + invited->getNickname() + " " + chann->getName() + " :is already on channel");
 	if (chann != NULL){
 		if (userIsMemberOfChannel(chann, user) == true){
-			if (invited != NULL){
+			if (userIsAlreadyOnChannel(chann, invited) == true)
+				user->reply("443 " + invited->getNickname() + " " + chann->getName() + " :is already on channel");
+			else if (invited != NULL){
 				std::cout << "inviting " << invited->getNickname() << std::endl;
 				user->reply("INVITE " + invited->getNickname() + " "  + channelName );
 				// user->reply("431 " + channelName + " " + user->getUsername());
@@ -111,5 +111,8 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 			}
 		}
 	}
-	
+	else {
+		std::cout << "the channel doesn't exist!" << std::endl;
+		return ;
+	}
 }
