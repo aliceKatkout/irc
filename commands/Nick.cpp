@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:23:18 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/07 10:28:08 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:13:09 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void NickCmd::execute(User *user, std::vector<std::string> args) {
 		user->reply("432 " + args[1] + " :Erroneous nickname");
 		return ;
 	}
-	user->reply("NICK " + args[1] +  " Nickname set to " + args[1] + "✨");
+	user->reply("NICK " + args[1] +  " Nickname set to " + args[1] );
 	user->setNickname(args[1]);
 }

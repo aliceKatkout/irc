@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:42 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/07 14:48:01 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:08:55 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void PrivMsgCmd::execute(User *user, std::vector<std::string> args) {
 			user->reply("401 " + target + " :No such nick/channel");
 			return ;
 		}
-		targetUser->write(":" + user->getPrefix() + " PRIVMSG " + target + " :" + message);
+		targetUser->write(":" + user->getPrefix() + " PRIVMSG " + target + " " + message);
 	}
 
 }

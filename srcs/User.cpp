@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/08 16:58:57 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:48:13 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void User::setNickname(std::string nickname) {
 }
 
 void User::setUsername(std::string username) {
+	if (username.empty())
+		return;
 	this->_username = username;
 }
 

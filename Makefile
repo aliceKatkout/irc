@@ -16,7 +16,8 @@ SRCS = 	main.cpp \
 		commands/Part.cpp \
 		commands/Invite.cpp \
 		commands/Mode.cpp \
-		commands/PrivMsg.cpp
+		commands/PrivMsg.cpp \
+		commands/Kick.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
