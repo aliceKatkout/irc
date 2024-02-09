@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 15:22:47 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:18:25 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static bool userIsMemberOfChannel(Channel *channel, User *user){
 					// 473    ERR_INVITEONLYCHAN
 					// "<channel> :Cannot join channel (+i)"
 					std::cout << "the user is not the operator" << std::endl;
-					user->reply("473 " + channel->getName() + " :Cannot join channel");
+					user->reply("473 " + channel->getName() + " :Cannot join channel (invite only)");
 					return (false);
 				}
 			}
@@ -108,13 +108,14 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 			if (invited != NULL){
 				std::cout << "inviting " << invited->getNickname() << std::endl;
 				user->reply("INVITE " + invited->getNickname() + " "  + channelName );
+				user->reply("341 " + user->getNickname() + " " + userInvited + " :" + chann->getName());
 				// user->reply("431 " + channelName + " " + user->getUsername());
 				invited->write(":" + user->getPrefix() + " INVITE " + invited->getNickname() + " :"  + chann->getName() );
-
+				chann->setInvitedUsers(userInvited);
 				// chann->broadcastChan("INVITE " + invited->getNickname() + " " + channelName, user);
 			}
 			else {
-				user->reply("401 " + userInvited + " :No such nick/channel");
+				user->reply("401 " + user->getNickname() + " " + userInvited + " :No such nick/channel");
 			}
 		}
 	}

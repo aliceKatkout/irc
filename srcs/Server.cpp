@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/07 13:05:05 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/09 19:07:03 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,8 +264,8 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 	// _channels.back().introduce();
 }
 
-std::vector<Channel *> Server::getChannel(){
-	return (_channels);
+std::vector<Channel *> *Server::getChannel(){
+	return (&_channels);
 }
 
 Channel *Server::getLastChannel(){

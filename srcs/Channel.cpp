@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 15:04:31 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:06:31 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ std::vector<std::string> Channel::getInvitedUsers(){
 	return (this->_invitedUsers);
 }
 
+
 bool	Channel::addUser(User *user, std::string password) {
 	if (!this->_k.empty() && this->_k.compare(password) != 0){
 		user->reply("475 " + _name + " :Cannot join channel (+k)");
@@ -89,7 +90,7 @@ bool	Channel::addUser(User *user, std::string password) {
 	std::vector<std::string> u = this->getInvitedUsers();
 	if (this->getInviteOnly() == true){
 		if (std::find(u.begin(), u.end(), user->getNickname()) == u.end()) {
-			user->reply(":localhost 473 " + _name + " :Cannot join channel (+i)");
+			user->reply("473 " + user->getNickname() + " " + _name + " :Cannot join channel (+i)");
 			//user->write(":" + user->getNick() + " 473 " + _name + " :Cannot join channel (+i)\r\n");
 			//(":localhost 473 " + user + " #" + channel +  " :Cannot join channel (+i)\r\n")
 
@@ -97,8 +98,13 @@ bool	Channel::addUser(User *user, std::string password) {
 		}
 	}
 
-	if (this->_joinedUsers.size() >= this->_l && user->getChannel().size() >= 10){
+	if (this->_joinedUsers.size() >= this->_l ){
 		user->reply("471 " + _name + " :Cannot join channel (+l)");
+		return (false);
+	}
+
+	if (user->getChannel().size() >= 10) {
+		user->reply("405 " + _name + " :Cannot join channel (+l)");
 		return (false);
 	}
 

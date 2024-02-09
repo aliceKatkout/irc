@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/08 17:24:45 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:50:23 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <vector>
 # include <algorithm>
 # include "User.hpp"
+# include <csignal>
 
 class User;
 

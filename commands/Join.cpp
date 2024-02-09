@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/08 17:37:44 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/09 19:08:12 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 static Channel * ChannelExistsAlready(User *user, std::string name) {
 	Server *s = user->getServer();
-	std::vector<Channel *> c = s->getChannel();
-	std::vector<Channel *>::iterator it_s = c.begin();
+	std::vector<Channel *> *c = s->getChannel();
+	std::vector<Channel *>::iterator it_s = c->begin();
 	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannel().begin() ;
 
-	for (; it_s != c.end(); it_s++){
+	for (; it_s != c->end(); it_s++){
 		if ((*it_s)->getName() == name){
 			std::cout << "looking for channel with " << name << " as name in server" << std::endl;
 			return (*it_s);
@@ -38,10 +38,9 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 
 	std::string channelName = *(args.begin() + 1);
 
-    Channel *newChannel = NULL;
-	if (ChannelExistsAlready(user, args.back()) != NULL){
+    Channel *newChannel = ChannelExistsAlready(user, args.back());
+	if (newChannel != NULL){
 		std::cout << "Channel found!" << std::endl;
-		newChannel = ChannelExistsAlready(user, args.back());
 	}
 	else {
 		std::cout << "Channel not found. Creating new channel..." << std::endl;
@@ -50,8 +49,11 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	std::string password = "";
 	if (args.size() > 2)
 		password = *(args.begin() + 2);
-	if (!newChannel->addUser(user, password))
+	if (!newChannel->addUser(user, password)){
+		std::cout << "User not added to chan" << std::endl;
+		// user->reply("PART " + *(args.begin()+1) + " " + "Impossible to join channel");
 		return ;
+	}
 	std::cout << "user added" << std::endl;
 	user->addChannel(newChannel);
 	user->reply("JOIN " + *(args.begin()+1));
