@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/07 14:22:38 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:24:45 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class Channel {
 
 
 		std::string _topic;
+		std::vector<std::string> _invitedUsers;
 		/* ajouter le nb de users que le chann accepte */
 
 	public:
@@ -47,6 +48,7 @@ class Channel {
 		void	setTopic(std::string);
 		void	setName(std::string);
 		void	setPassword(std::string);
+		void	setInvitedUsers(std::string);
 
 		std::string getName() const;
 		std::string getPassword() const;
@@ -55,6 +57,7 @@ class Channel {
 		std::vector<User *> getUsers() ;
 		User *		getOperator();
 		std::string getTopic();
+		std::vector<std::string> getInvitedUsers();
 
 		bool    addUser(User *, std::string);
 		bool    kickUser(User *);
@@ -62,6 +65,7 @@ class Channel {
 		void	broadcastChan(std::string, User *); // (msg, user)
 
 		bool	topicSet;
+
 		// void	sendMsg()
 
 		// void introduce();
