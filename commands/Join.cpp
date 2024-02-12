@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 16:47:59 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:14:28 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 		std::cout << "Channel found!" << std::endl;
 	}
 	else {
-		std::cout << "Channel not found. Creating new channel..." << std::endl;
 		newChannel = user->getServer()->createChannel(channelName, user);
 	}
 	std::string password = "";
@@ -35,19 +34,15 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 		password = *(args.begin() + 2);
 	if (!newChannel->addUser(user, password)){
 		std::cout << "User not added to chan" << std::endl;
-		// user->reply("PART " + *(args.begin()+1) + " " + "Impossible to join channel");
 		return ;
 	}
-	std::cout << "user added" << std::endl;
 	user->addChannel(newChannel);
 	user->reply("JOIN :" + channelName);
 	if (newChannel->getUsers().size() > 1){
-		user->reply("332 " + user->getNickname() + " " + channelName + " :" + newChannel->getTopic());
-		// newChannel->broadcastChan("332 " + channelName + " :" + newChannel->getTopic(), user);
-		user->reply("353 " + user->getNickname() + " = " + channelName + " :@" + user->getNickname());
+		if (newChannel->getTopic() != "")
+			user->reply("332 " + user->getNickname() + " " + channelName + " :" + newChannel->getTopic());
+		user->reply("353 " + user->getNickname() + " = " + channelName + user->getNickname() + " :@" + user->getUsername());
 		newChannel->broadcastChan("JOIN " + channelName + " " + user->getNickname(), user);
-		// user->reply("332 " + newChannel->getName() + " :" +  newChannel->getTopic());
-		std::cout << "Topic is :"<<  newChannel->getTopic() << std::endl;
 	}
 	// user->reply("332 " + *(args.begin()+1) + newChannel->getTopic());
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 15:28:30 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:15:58 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void displayChannels(std::vector<Channel *> c){
 void PartCmd::execute(User *user, std::vector<std::string> args) {
 
 	std::string channelName = *(args.begin()+1);
-	std::cout << "channel to get out from: " << channelName << std::endl;
 
 	// Server *s = user->getServer();
 	std::vector<Channel *> *c = user->getServer()->getChannel();
@@ -44,10 +43,8 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 		if ((*its)->getName() == channelName){
 			std::cout << channelName << " has to kick " << user->getNickname() << " from its list" << std::endl;
 			if ((*its)->partUser(user) == false){
-				std::cout << " channel to erase: " << (*its)->getName() << std::endl;
 				c->erase(its);
 				c->clear();
-				std::cout << "Channel " << (*its)->getName()  << " deleted successfully " << std::endl;
 				break;
 			}
 		}

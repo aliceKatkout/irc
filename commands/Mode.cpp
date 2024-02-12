@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 15:30:55 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:50:20 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,18 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 		user->reply("403 " + channel + " :No such channel");
 		return ;
 	}
-
+	
+	User *toAdd ;
+	if (args.size() > 2)
+	{
+		//CHECK D ABORD SI USER TOADD IS IN THE CHANNEL, SINON CA NE FAIT RIeN DU Out
+		toAdd = chan->getUserByNick(args[3]);
+	}
+	else
+		toAdd = NULL;
+		
 	char mode = args[2][1];
+	
 	switch (mode) {
 		case 'i':
 			chan->setInviteOnly(args[2][0] == '+');
@@ -79,14 +89,19 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			}
 			break;
 		case 'o':
-			chan->setOperators(user, (args[2] == "+o" ? true : false));
-			user->reply("MODE " + channel + " " + args[2] );
+			// User *toAdd = chan->getUserByNick(args[3]);
+			chan->setOperators(user, toAdd, (args[2] == "+o" ? true : false));
+			user->reply("MODE " + chan->getName() + " " + args[2] + " :" + toAdd->getNickname());
+			// std::cout << "inside case o" << std::endl;
+			chan->broadcastChan("MODE " + chan->getName() + " " + args[2] + " :" + toAdd->getNickname(), user);
+			// user->reply("324 " + user->getUsername() + " " + channel + " :+nt");
 			break;
 		case 'k':
 			chan->setPassword(args[3]);
 			user->reply("MODE " + channel + " " + args[2] + " " + args[3] + " Channel password set");
 			break;
 		default:
+			// (void)toAdd;
 			user->reply("501 MODE :Unknown MODE flag");
 			break;
 	}

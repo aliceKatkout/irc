@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 15:50:25 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:43:17 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 
 	if (_channels.size() == 0) {
 		Channel *newChannel = new Channel(channelName, "");
-		newChannel->setOperators(user, true);
+		newChannel->setOperators(user, user, true);
 		_channels.push_back(newChannel);
 		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 		return (newChannel);

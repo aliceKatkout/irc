@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 16:47:45 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:14:59 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 			topic = topic + (*it) + " ";
 		}
 	}
-	std::cout << "topic: " << topic << std::endl;
-	std::cout << "channelName: " << channelName << std::endl;
 	if (topic[0] == ':'){
 		topic = topic.substr(1, topic.size() - 1);
 	}
@@ -57,7 +55,6 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	if (chann != NULL){
 		if (topic.empty()){
 			// RENTRE JAMAIS LA DEDANS, essaye de print tpic
-			std::cout << "topic is null" << std::endl;
 			if (chann->getTopic() == ""){
 				user->reply("331 " + channelName +  " :No topic is set\r\n");
 				return ;
@@ -69,7 +66,6 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 			/* change topic of channel */
 			if (topic != ""){
 				chann->setTopic(topic);
-				std::cout << "The topic is now: " << topic << std::endl;
 				chann->broadcastChan("TOPIC " + channelName + " :" + topic, user);
 				user->reply("TOPIC " + channelName + " :" + topic);
 				// chann->broadcastChan("332 " + user->getNickname() + " " + channelName + " " + chann->getTopic(), user);

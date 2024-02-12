@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 16:20:51 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:35:34 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ bool	Channel::isUserOperator(User * user) {
 	return (true);
 }
 
-void    Channel::setOperators(User *user, bool b){
+void    Channel::setOperators(User *user, User *toAdd, bool b){
 	if (b == true && !isUserOperator(user))
-		_operators.push_back(user);
+		_operators.push_back(toAdd);
 	else if (b == false && isUserOperator(user))
-		_operators.erase(std::find(_operators.begin(), _operators.end(), user));
+		_operators.erase(std::find(_operators.begin(), _operators.end(), toAdd));
 }
 
 void   Channel::removeUser(User *user){
@@ -139,12 +139,11 @@ bool	Channel::addUser(User *user, std::string password) {
 
 bool	Channel::partUser(User *user) {
 
-	setOperators(user, false);
+	setOperators(user, user, false);
 
 	std::vector<User *>::iterator it = _joinedUsers.begin();
 	for (; it != _joinedUsers.end(); it++) {
 		if (*it == user){
-			std::cout << "erase " << (*it)->getNickname() << " from list of users..." << std::endl;
 			_joinedUsers.erase(it);
 			break ;
 			// if (_joinedUsers.size() == 0)
@@ -160,7 +159,6 @@ bool	Channel::partUser(User *user) {
 	// 	user), _joinedUsers.end());
 
 	if (_joinedUsers.empty() == true){
-		std::cout << "There is no one left in this channel" << std::endl;
 		return (false); // remove the channel
 	}
 
