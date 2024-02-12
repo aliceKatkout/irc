@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 15:11:40 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:46:58 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	// 	channelName = channelName.substr(1, channelName.size() - 1 );
 	// 	std::cout << "new name: " << channelName << std::endl;
 	// }
-	std::string topic;
+	std::string topic = "";
 
 	if (args.size() > 2) {
 		std::vector<std::string>::iterator it = (args.begin() + 2);
