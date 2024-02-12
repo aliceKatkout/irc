@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 13:46:58 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:14:44 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	// 	channelName = channelName.substr(1, channelName.size() - 1 );
 	// 	std::cout << "new name: " << channelName << std::endl;
 	// }
-	std::string topic = "";
+	std::string topic;
 
-	if (args.size() > 2) {
+	if (args.size() > 1) {
 		std::vector<std::string>::iterator it = (args.begin() + 2);
 
 		for (; it != args.end(); ++it){
@@ -55,7 +55,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	//(":localhost 332 " + user + " #" + channel +  " :" + topic + "\r\n")
 
 	if (chann != NULL){
-		if (topic == ""){
+		if (topic.empty()){
 			// RENTRE JAMAIS LA DEDANS, essaye de print tpic
 			std::cout << "topic is null" << std::endl;
 			if (chann->getTopic() == ""){
@@ -63,7 +63,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 				return ;
 			}
 			else
-				user->reply("TOPIC " + user->getNickname() + " " + channelName + " " + chann->getTopic());
+				user->reply("TOPIC " + user->getNickname() + "# " + channelName + " :" + chann->getTopic());
 		}
 		if (chann->getOperator() == user){
 			/* change topic of channel */
@@ -72,6 +72,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 				std::cout << "The topic is now: " << topic << std::endl;
 				chann->broadcastChan("TOPIC " + channelName + " " + topic, user);
 				user->reply("TOPIC " + channelName + " " + topic);
+				chann->broadcastChan("332 " + channelName + " :" + chann->getTopic(), user);
 				// user->reply("332 " + channelName + " " + topic);
 			}
 
