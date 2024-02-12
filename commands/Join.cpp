@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 14:14:09 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:55:38 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 	}
 	std::cout << "user added" << std::endl;
 	user->addChannel(newChannel);
-	user->reply("JOIN " + *(args.begin()+1));
+	user->reply("JOIN :" + channelName);
 	if (newChannel->getUsers().size() > 1){
+		user->reply("332 " + user->getNickname() + " " + channelName + " :" + newChannel->getTopic());
 		// newChannel->broadcastChan("332 " + channelName + " :" + newChannel->getTopic(), user);
-		user->reply("353 " + channelName + " :" + user->getNickname());
+		user->reply("353 " + user->getNickname() + " = " + channelName + " :@" + user->getNickname());
 		newChannel->broadcastChan("JOIN " + channelName + " " + user->getNickname(), user);
 		// user->reply("332 " + newChannel->getName() + " :" +  newChannel->getTopic());
 		std::cout << "Topic is :"<<  newChannel->getTopic() << std::endl;
