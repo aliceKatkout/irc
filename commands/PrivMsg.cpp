@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:42 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/07 15:08:55 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:29:36 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,11 @@ void PrivMsgCmd::execute(User *user, std::vector<std::string> args) {
 	{
 		Channel *chan = user->getOneChannel(target);
 		if (chan == NULL)
-		{
-			user->reply("401 " + target + " :No such nick/channel");
-			return ;
-		}
+			return (user->reply("401 " + target + " :No such nick/channel"));
 		if (chan->getUsers().size() == 0)
-		{
-			user->reply("411 PRIVMSG :No recipient given (PRIVMSG)");
-			return ;
-		}
+			return (user->reply("411 PRIVMSG :No recipient given (PRIVMSG)"));
+		if (!chan->getUserByNick(user->getNickname()))
+			return (user->reply("404 " + target + " :Cannot send to channel"));
 		chan->broadcastChan("PRIVMSG " + target + " " + message, user);
 	}
 	else

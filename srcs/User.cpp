@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 11:48:13 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:04:05 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 
 User::~User(){
 
+}
+
+bool User::operator==(const User &rhs) const {
+	return _fd == rhs._fd;
 }
 
 void User::addChannel(Channel *channel ){

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 17:18:25 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:07:40 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ static Channel *channelExists(std::string channelName, User *user) {
 }
 
 static bool userIsMemberOfChannel(Channel *channel, User *user){
-	
+
 	std::vector<User *> users = channel->getUsers();
 	std::vector<User *>::iterator it_u = users.begin();
 
 	for ( ; it_u != users.end(); it_u++) {
 		if ((*it_u) == user){
-			
+
 			// if the channel is an invite only channel
 			if (channel->getInviteOnly() == true)
 			{
 				std::cout << "the channel is an invite only" << std::endl;
-				if (channel->getOperator() == user){
+				if (channel->isUserOperator(user) == true){
 					std::cout << "the user is the operator" << std::endl;
 					return (true);
 				}
@@ -92,13 +92,13 @@ static bool userIsAlreadyOnChannel(Channel *channel, User *user){
 }
 
 void InviteCmd::execute(User *user, std::vector<std::string> args) {
-	
+
 	std::string userInvited = *(args.begin()+1);
 	std::string channelName = *(args.begin()+2);
 
 	Channel *chann = channelExists(channelName, user);
 	User *invited = invitedUser(user, userInvited);
-	
+
 	if (chann != NULL){
 		if (userIsMemberOfChannel(chann, user) == true){
 			if (userIsAlreadyOnChannel(chann, invited) == true){

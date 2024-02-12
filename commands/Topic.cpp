@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 14:14:44 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:06:27 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 			else
 				user->reply("TOPIC " + user->getNickname() + "# " + channelName + " :" + chann->getTopic());
 		}
-		if (chann->getOperator() == user){
+		if (chann->isUserOperator(user)){
 			/* change topic of channel */
 			if (topic != ""){
 				chann->setTopic(topic);

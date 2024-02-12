@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/06 14:22:17 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:30:55 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			}
 			break;
 		case 'o':
-			chan->setOperator(user, (args[2] == "+o" ? true : false));
+			chan->setOperators(user, (args[2] == "+o" ? true : false));
 			user->reply("MODE " + channel + " " + args[2] );
 			break;
 		case 'k':

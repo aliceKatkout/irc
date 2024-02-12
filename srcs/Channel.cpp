@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 17:06:31 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:20:51 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,32 @@ Channel::~Channel() {
     delete (this);
 }
 
-void    Channel::setOperator(User *user, bool b){
-	if (b == true)
-		this->_operator = user;
-	else
-		this->_operator = NULL;
+bool	Channel::isUserOperator(User * user) {
+	if (std::find(_operators.begin(), _operators.end(), user) == _operators.end())
+		return (false);
+	return (true);
+}
+
+void    Channel::setOperators(User *user, bool b){
+	if (b == true && !isUserOperator(user))
+		_operators.push_back(user);
+	else if (b == false && isUserOperator(user))
+		_operators.erase(std::find(_operators.begin(), _operators.end(), user));
+}
+
+void   Channel::removeUser(User *user){
+	std::vector<User *>::iterator it = std::find(_joinedUsers.begin(), _joinedUsers.end(), user);
+	if (it != _joinedUsers.end())
+		_joinedUsers.erase(it);
+}
+
+User	*Channel::getUserByNick(std::string nickname){
+	std::vector<User *>::iterator it = _joinedUsers.begin();
+	for (; it != _joinedUsers.end(); it++){
+		if ((*it)->getNickname() == nickname)
+			return (*it);
+	}
+	return (NULL);
 }
 
 void    Channel::setLimit(size_t limit){
@@ -68,8 +89,8 @@ std::vector<User *> Channel::getUsers() {
 	return (_joinedUsers);
 }
 
-User *		Channel::getOperator(){
-	return (this->_operator);
+std::vector<User *>		Channel::getOperators(){
+	return (this->_operators);
 }
 
 std::string Channel::getTopic() {
@@ -116,12 +137,9 @@ bool	Channel::addUser(User *user, std::string password) {
 
 
 
-bool	Channel::kickUser(User *user) {
+bool	Channel::partUser(User *user) {
 
-	if (this->_operator == user) {
-		std::cout << "remove user from being operator" << std::endl;
-		this->_operator = NULL;
-	}
+	setOperators(user, false);
 
 	std::vector<User *>::iterator it = _joinedUsers.begin();
 	for (; it != _joinedUsers.end(); it++) {

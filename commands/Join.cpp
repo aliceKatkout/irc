@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 14:14:09 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:43:49 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
-
-
-static Channel * ChannelExistsAlready(User *user, std::string name) {
-	Server *s = user->getServer();
-	std::vector<Channel *> *c = s->getChannel();
-	std::vector<Channel *>::iterator it_s = c->begin();
-	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannel().begin() ;
-
-	for (; it_s != c->end(); it_s++){
-		if ((*it_s)->getName() == name){
-			std::cout << "looking for channel with " << name << " as name in server" << std::endl;
-			return (*it_s);
-		}
-    }
-	return (NULL);
-}
 
 // ADD RESTRICTION MODE +i
 void JoinCmd::execute(User *user, std::vector<std::string> args){

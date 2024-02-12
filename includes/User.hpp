@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/08 16:54:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:03:20 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class User {
 	public :
 		User(int fd, Server *server);
 		~User();
+		bool operator==(const User &rhs) const;
 
 		std::string getPrefix() const;
 		void write(const std::string &message) const;

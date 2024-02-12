@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 19:07:12 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:43:36 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ class Server {
 };
 
 std::vector<std::string> split(std::string s, std::string del);
+Channel * ChannelExistsAlready(User *user, std::string name);
 
 #endif

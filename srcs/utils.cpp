@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:13:01 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/01/30 16:43:28 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:43:18 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,19 @@ std::vector<std::string > split(std::string s, std::string del){
     res.push_back(s.substr(0, end));
 	return res;
 }
+
+Channel * ChannelExistsAlready(User *user, std::string name) {
+	Server *s = user->getServer();
+	std::vector<Channel *> *c = s->getChannel();
+	std::vector<Channel *>::iterator it_s = c->begin();
+	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannel().begin() ;
+
+	for (; it_s != c->end(); it_s++){
+		if ((*it_s)->getName() == name){
+			std::cout << "looking for channel with " << name << " as name in server" << std::endl;
+			return (*it_s);
+		}
+    }
+	return (NULL);
+}
+
