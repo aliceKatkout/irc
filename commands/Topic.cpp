@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 16:06:27 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:47:45 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 			if (topic != ""){
 				chann->setTopic(topic);
 				std::cout << "The topic is now: " << topic << std::endl;
-				chann->broadcastChan("TOPIC " + channelName + " " + topic, user);
-				user->reply("TOPIC " + channelName + " " + topic);
-				chann->broadcastChan("332 " + channelName + " :" + chann->getTopic(), user);
-				// user->reply("332 " + channelName + " " + topic);
+				chann->broadcastChan("TOPIC " + channelName + " :" + topic, user);
+				user->reply("TOPIC " + channelName + " :" + topic);
+				// chann->broadcastChan("332 " + user->getNickname() + " " + channelName + " " + chann->getTopic(), user);
+				
 			}
 
 		}
