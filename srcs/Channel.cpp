@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 18:35:34 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:55:29 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ bool	Channel::isUserOperator(User * user) {
 	return (true);
 }
 
-void    Channel::setOperators(User *user, User *toAdd, bool b){
-	if (b == true && !isUserOperator(user))
+void    Channel::setOperators(User *toAdd, bool b){
+	if (b == true && isUserOperator(toAdd) == false)
 		_operators.push_back(toAdd);
-	else if (b == false && isUserOperator(user))
+	else if (b == false && isUserOperator(toAdd))
 		_operators.erase(std::find(_operators.begin(), _operators.end(), toAdd));
 }
 
@@ -139,7 +139,8 @@ bool	Channel::addUser(User *user, std::string password) {
 
 bool	Channel::partUser(User *user) {
 
-	setOperators(user, user, false);
+	if (isUserOperator(user) == true)
+		setOperators(user, false);
 
 	std::vector<User *>::iterator it = _joinedUsers.begin();
 	for (; it != _joinedUsers.end(); it++) {

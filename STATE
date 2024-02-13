@@ -1,0 +1,23 @@
+<< CAP LS
+<< PASS blou
+<< NICK boulde
+<< USER avedrenn avedrenn localhost :Alice VEDRENNE
+>> :@BeachLifeStyle 000 PASS :✅ Good password
+>> :@BeachLifeStyle NICK boulde Nickname set to boulde
+>> :boulde!avedrenn@BeachLifeStyle 💯 Username set to avedrenn
+>> :boulde!avedrenn@BeachLifeStyle 001 boulde :✨ Welcome to the Internet Relay Network mon ptit pote ✨
+<< MODE boulde +i
+>> :boulde!avedrenn@BeachLifeStyle MODE boulde +i
+<< PING boulde
+>> 000 PONG
+<< NICK lil
+>> :boulde!avedrenn@BeachLifeStyle NICK lil Nickname set to lil
+<< JOIN #c
+>> :lil!avedrenn@BeachLifeStyle JOIN :#c
+>> :lil!avedrenn@BeachLifeStyle 353 lil = #clil :@avedrenn
+<< MODE #c +o lil
+>> :lil!avedrenn@BeachLifeStyle MODE #c +o :You're not an operator
+<< MODE #c -o boulde
+>> :lil!avedrenn@BeachLifeStyle MODE #c -o :You're not an operator
+<< KICK #c boulde :
+>> :lil!avedrenn@BeachLifeStyle KICK :You are not an operator

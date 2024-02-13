@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 18:33:38 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:52:40 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ class Channel {
 		Channel(std::string, std::string);
 		~Channel();
 
-		void    setOperators(User *, User *, bool);
+		void    setOperators(User *, bool);
 		void    setLimit(size_t);
 		void    setInviteOnly(bool);
 		void	setTopic(std::string);
