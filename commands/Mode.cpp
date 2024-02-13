@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/13 14:35:59 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:15:26 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 	std::cout << "mode: " << mode << std::endl;
 	switch (mode) {
 		case 'i':
+		// si le user est un operator il peut set le 'invite only' flag to true
+		// sinon : '482 user #channel :You must have channel halfop access or above to set channel mode i'
+			if (!chan->isUserOperator(user))
+				return (user->reply("482 " + user->getNickname() + " " + chan->getName() +
+					" :You must have channel halfop access or above to set channel mode i"));
 			chan->setInviteOnly(args[2][0] == '+');
 			user->reply("MODE " + channel + " " + args[2]);
 			break;
@@ -82,7 +87,7 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			if (args.size() < 4 || args[3].empty())
 				return (user->reply("461 MODE :Not enough parameters"));
 			if (toAdd == NULL)
-				return (user->reply("441 " + args[3] + " " + channel + " :They aren't on that channel"));
+				return (user->reply("441 MODE " + args[3] + " " + channel + " :They aren't on that channel"));
 			if (!chan->isUserOperator(user))
 				return (user->reply("MODE " + channel + " " + args[2] + " :You're not an operator"));
 
