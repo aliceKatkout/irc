@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 16:07:40 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:21:04 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static Channel *channelExists(std::string channelName, User *user) {
 		return NULL;
 	std::vector<Channel *> channel = user->getChannel();
 	std::vector<Channel *>::iterator it_c = channel.begin();
-
-	// std::cout << (*it_c)->getName() << std::endl;
 
 	for ( ; it_c != channel.end(); ++it_c) {
 		if ((*it_c)->getName() == channelName){

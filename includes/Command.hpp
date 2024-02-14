@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 14:03:57 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:20:31 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,16 @@ class KickCmd : public Command {
 	public:
 		KickCmd(){}
 		~KickCmd () {}
+
+		void execute(User *, std::vector<std::string> args) ;
+};
+
+class QuitCmd : public Command {
+	private:
+
+	public:
+		QuitCmd(){}
+		~QuitCmd () {}
 
 		void execute(User *, std::vector<std::string> args) ;
 };

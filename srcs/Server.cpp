@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/14 14:43:55 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:43:15 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int Server::UserMessage(int userFd){
 		{
 			if (errno != EWOULDBLOCK) {
 				std::cout << "User " << userFd << " not right" << std::endl;
-				// UserDisconnect(userFd);
+				UserDisconnect(userFd);
 				return (-1);
 			}
 		}
@@ -98,8 +98,7 @@ void Server::start() {
 			if (it->revents == 0)
 				continue;
 
-			if (((it->revents & POLLHUP) == POLLHUP || (it->revents & POLLERR) == POLLERR)
-				&& !((it->revents & POLLIN) == POLLIN))
+			if ((it->revents & POLLHUP) == POLLHUP)
 			{
 				std::cout << "--- NE RENTRE JAMAIS LA DEDANS, ENTRE DANS l'AUTRE ---" << std::endl;
 				UserDisconnect(it->fd);
@@ -113,11 +112,13 @@ void Server::start() {
 					break;
 				}
 
-
-				if (UserMessage(it->fd) < 0 || _connectedUsers[it->fd]->getState() == DISCONNECTED){
+				if (UserMessage(it->fd) == -1 && _connectedUsers.size() > 0)
 					UserDisconnect(it->fd);
-					break ;
-				}
+
+				// if (UserMessage(it->fd) < 0 || _connectedUsers[it->fd]->getState() == DISCONNECTED){
+				// 	UserDisconnect(it->fd);
+				// 	break ;
+				// }
 			}
 		}
 	}
@@ -127,9 +128,14 @@ void Server::start() {
 void Server::UserDisconnect(int fd){
 
 	// add remove from channel if in channel
-
+	std::cout << "Entering user disconnect..." << std::endl;
+	
+	if (_connectedUsers.size() <= 0){
+		std::cout << "no more connected user in the server" << std::endl;
+		return ;
+	}
+	
 	User *userToDelete = _connectedUsers.at(fd);
-
 	_connectedUsers.erase(fd);
 
 	std::vector<pollfd>::iterator it = _userFDs.begin();
@@ -138,12 +144,10 @@ void Server::UserDisconnect(int fd){
 		if (it->fd == fd)
 		{
 			_userFDs.erase(it);
-			std::cout << "user " << fd << " erased" << std::endl;
 			close(fd);
 			break;
 		}
 	}
-	std::cout << userToDelete->getNickname();
 	delete userToDelete;
 	std::cout << " deleted successfully!" << std::endl;
 }

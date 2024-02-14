@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdHandler.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/09 14:31:57 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:54:40 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ CmdHandler::CmdHandler () {
 	_cmdMap["INVITE"] = new InviteCmd();
 	_cmdMap["PRIVMSG"] = new PrivMsgCmd();
 	_cmdMap["KICK"] = new KickCmd();
-
-
+	_cmdMap["QUIT"] = new QuitCmd();
 
 }
 

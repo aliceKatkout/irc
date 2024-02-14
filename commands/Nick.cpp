@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:23:18 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/14 15:37:59 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:52:14 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void NickCmd::execute(User *user, std::vector<std::string> args) {
 		return (user->reply("432 NICK " + newNick + " :Erroneous nickname (too long)"));
 	if (newNick.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") == std::string::npos)
 		return (user->reply("432 NICK " + newNick + " :Erroneous nickname (invalid character)"));
-	while (isDupNick(newNick, user->getServer()->getConnectedUsers())){
+	if (isDupNick(newNick, user->getServer()->getConnectedUsers())){
 		std::cout << "newNick: " << newNick << std::endl;
-		user->reply("433 NICK " + newNick +  " :Nickname is owned by " + user->getServer()->findUserNick(newNick)->getUsername());
+		// user->reply("433 NICK " + newNick +  " :Nickname is owned by " + user->getServer()->findUserNick(newNick)->getUsername());
 		newNick += "_";
 	}
 	user->reply("NICK :" + newNick );
