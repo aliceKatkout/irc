@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/12 14:43:36 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:14:21 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ class Server {
 		void UserDisconnect(int);
 
 		int find_user_fd(int fd);
+		User *findUserNick(std::string nick);
 
 		bool checkPassword(std::string &passwd);
 

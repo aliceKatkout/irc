@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:11:53 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/07 11:38:39 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:22:50 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ Exemples:
 PONG csd.bu.edu tolsun.oulu.fi ; message PONG de csd.bu.edu à tolsun.oulu.fi */
 
 void PingCmd::execute(User *user, std::vector<std::string> args){
-	(void) args;
-	user->write("000 PONG");
+	if (args.size() < 3)
+		return (user->reply("000 PONG "));
+	user->reply("000 PONG " + args[1]);
     // fprintf(user->getFd(), ret);
 }

@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/13 13:55:15 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:43:55 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,3 +281,14 @@ bool Server::checkPassword(std::string &passwd){
 std::map<int, User *> Server::getConnectedUsers(){
 	return (_connectedUsers);
 }
+
+User *Server::findUserNick(std::string nick){
+	std::map<int, User *>::iterator it = _connectedUsers.begin();
+	for (; it != _connectedUsers.end(); it++){
+		if (it->second->getNickname() == nick)
+			return (it->second);
+	}
+	return (NULL);
+}
+
+
