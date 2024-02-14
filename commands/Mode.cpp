@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/13 15:15:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:48:35 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			user->reply("MODE " + channel + " " + args[2] + " " + args[3] + " Channel password set");
 			break;
 		default:
-			// (void)toAdd;
-			user->reply("501 MODE :Unknown MODE flag");
+			user->reply("472 " + args[2] + " :is unknown mode char to me");
 			break;
 	}
 }
