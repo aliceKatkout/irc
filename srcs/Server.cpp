@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/14 18:43:15 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:02:56 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ void Server::UserDisconnect(int fd){
 	{
 		if (it->fd == fd)
 		{
-			_userFDs.erase(it);
 			close(fd);
+			_userFDs.erase(it);
 			break;
 		}
 	}
