@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 15:28:03 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:53:55 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ int Server::UserMessage(int userFd){
 
 		if (recv(userFd, buff, 100, 0) <= 0) // 0 = disconnected
 		{
-			if (errno != EWOULDBLOCK && userIsConnected(userFd)) {
+			if (errno != EWOULDBLOCK ) {
 				std::cout << "User " << userFd << " not right" << std::endl;
 				UserDisconnect(userFd);
 				return (-1);
 			}
-			else if (userIsConnected(userFd) == false){
-				std::cout << "User already disconnected" << std::endl;
-				return (0);
-			}
+			// else if (userIsConnected(userFd) == false){
+			// 	std::cout << "User already disconnected" << std::endl;
+			// 	return (0);
+			// }
 		}
 
 		msg.append(buff);
@@ -122,7 +122,7 @@ void Server::start() {
 					break;
 				}
 
-				if (UserMessage(it->fd) == -1 && _connectedUsers.size() > 0){
+				if (UserMessage(it->fd) == -1 ){
 					std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
 					UserDisconnect(it->fd);
 				}

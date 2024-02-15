@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 17:29:21 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:51:56 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,7 @@ static void displayChannels(std::vector<Channel *> c){
 void PartCmd::execute(User *user, std::vector<std::string> args) {
 
 	std::string channelName = *(args.begin()+1);
-
 	Channel *channel;
-
-	// Server *s = user->getServer();
-	std::vector<Channel *> *c = user->getServer()->getChannel();
-	std::vector<Channel *>::iterator its = c->begin();
-	// std::vector<Channel *>::iterator it = user->getServer()->getChannel().begin() ;
-
 	std::string reason;
 
 	if (args.size() > 2) {
@@ -51,20 +44,24 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 		}
 	}
 
+	// Server *s = user->getServer();
+	std::vector<Channel *> *c = user->getServer()->getChannel();
+	std::vector<Channel *>::iterator its = c->begin();
+	// std::vector<Channel *>::iterator it = user->getServer()->getChannel().begin() ;
+	
 	for (; its != c->end(); its++){
 		if ((*its)->getName() == channelName){
 			std::cout << channelName << " has to kick " << user->getNickname() << " from its list" << std::endl;
 			channel = (*its);
 			user->reply("PART " + channel->getName() + " " + reason);
-			std::cout << "reply ok" << std::endl;
-			if (channel->getUsers().size() > 1){
-				std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
-				channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
-				std::cout << "broadcast ok" << std::endl;
-			}
+			// if (channel->getUsers().size() > 1){
+			// 	std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
+			// 	channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
+			// 	std::cout << "broadcast ok" << std::endl;
+			// }
 			if (channel->partUser(user) == false){
 				c->erase(its);
-				c->clear();
+				// c->clear();
 				break;
 			}
 		}
