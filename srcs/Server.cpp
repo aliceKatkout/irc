@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 14:02:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:28:03 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,14 @@ int Server::UserMessage(int userFd){
 
 		if (recv(userFd, buff, 100, 0) <= 0) // 0 = disconnected
 		{
-			if (errno != EWOULDBLOCK) {
+			if (errno != EWOULDBLOCK && userIsConnected(userFd)) {
 				std::cout << "User " << userFd << " not right" << std::endl;
 				UserDisconnect(userFd);
 				return (-1);
+			}
+			else if (userIsConnected(userFd) == false){
+				std::cout << "User already disconnected" << std::endl;
+				return (0);
 			}
 		}
 
@@ -78,6 +82,12 @@ int Server::UserMessage(int userFd){
 	if (!msg.empty())
 		_handler->parsing(msg, _connectedUsers[userFd]);
 	return (0);
+}
+
+bool Server::userIsConnected(int fd){
+	if (_connectedUsers[fd] != NULL)
+		return (true);
+	return (false);
 }
 
 void Server::start() {
@@ -100,7 +110,7 @@ void Server::start() {
 
 			if ((it->revents & POLLHUP) == POLLHUP)
 			{
-				std::cout << "--- NE RENTRE JAMAIS LA DEDANS, ENTRE DANS l'AUTRE ---" << std::endl;
+				std::cout << "Disconnect from POLLHUP" << std::endl;
 				UserDisconnect(it->fd);
 				break;
 			}
@@ -112,8 +122,10 @@ void Server::start() {
 					break;
 				}
 
-				if (UserMessage(it->fd) == -1 && _connectedUsers.size() > 0)
+				if (UserMessage(it->fd) == -1 && _connectedUsers.size() > 0){
+					std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
 					UserDisconnect(it->fd);
+				}
 
 				// if (UserMessage(it->fd) < 0 || _connectedUsers[it->fd]->getState() == DISCONNECTED){
 				// 	UserDisconnect(it->fd);
@@ -134,17 +146,22 @@ void Server::UserDisconnect(int fd){
 		std::cout << "no more connected user in the server" << std::endl;
 		return ;
 	}
+	if (userIsConnected(fd) == false){
+		std::cout << "the user is already disconnected" << std::endl;
+		return;
+	}
 	
 	User *userToDelete = _connectedUsers.at(fd);
 	_connectedUsers.erase(fd);
+	std::cout << "User erased from connected users" << std::endl;
 
 	std::vector<pollfd>::iterator it = _userFDs.begin();
 	for (; it != _userFDs.end(); it++)
 	{
 		if (it->fd == fd)
 		{
-			close(fd);
 			_userFDs.erase(it);
+			close(fd);
 			break;
 		}
 	}
@@ -184,8 +201,6 @@ void Server::UserConnect() {
 	//newUser->askPasswd();
 
 	this->_connectedUsers.insert(std::pair<int, User *>(client_fd, newUser));
-
-
 
 	std::cout << "New client connected." << std::endl;
 }

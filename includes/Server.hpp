@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/14 13:14:21 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:09:36 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ class Server {
 		void UserConnect();
 		int UserMessage(int);
 		void UserDisconnect(int);
+		bool userIsConnected(int fd);
 
 		int find_user_fd(int fd);
 		User *findUserNick(std::string nick);

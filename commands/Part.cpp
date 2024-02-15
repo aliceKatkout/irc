@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 13:59:16 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:29:21 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 			std::cout << channelName << " has to kick " << user->getNickname() << " from its list" << std::endl;
 			channel = (*its);
 			user->reply("PART " + channel->getName() + " " + reason);
-			channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
+			std::cout << "reply ok" << std::endl;
+			if (channel->getUsers().size() > 1){
+				std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
+				channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
+				std::cout << "broadcast ok" << std::endl;
+			}
 			if (channel->partUser(user) == false){
 				c->erase(its);
 				c->clear();
