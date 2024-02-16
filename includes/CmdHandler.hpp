@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdHandler.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:51:10 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/01/26 12:44:32 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:02:00 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <map>
 # include "Command.hpp"
 # include <iostream>
+
+# define ERR_NEEDMOREPARAMS(user, command) "461 " + user + " " + command + " :Not enough parameters"
+# define ERR_NOSUCHCHANNEL(user, command) "403 " + user + " " + command + " :No such channel"
 
 class Command;
 

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 18:51:56 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:06:46 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 	std::string channelName = *(args.begin()+1);
 	Channel *channel;
 	std::string reason;
+
+	if (channelName.empty()){
+		user->reply(ERR_NEEDMOREPARAMS(user->getNickname(), "PART"));
+	}
 
 	if (args.size() > 2) {
 		std::vector<std::string>::iterator it = (args.begin()+2);
@@ -65,7 +69,26 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 				break;
 			}
 		}
+		else if (its == c->end()){ // devrait rentrer la dedans
+			std::cout << "this channel doesn't exist" << std::endl;
+			user->reply(ERR_NOSUCHCHANNEL(user->getNickname(), channelName));
+		}
 	}
+
+
+	// VIRER le channel de la lite des channels dans le user, mais ca fait segfault :
+	
+	// Channel *toRemove = user->getOneChannel(channelName);
+	// std::vector<Channel *> cha = user->getChannel();
+	// std::vector<Channel *>::iterator itc = cha.begin();
+	
+	// for ( ; itc != cha.end() ; ++itc){
+	// 	if ((*itc) == channel){
+	// 		std::cout << "removing " << (*itc)->getName() << " from list of channels in the user" << std::endl;
+	// 		// displayChannels(cha);
+	// 		cha.erase(itc);
+	// 	}
+	// }
 
 	if (c->empty() == true)
 		std::cout << "There is no channel left in this server" << std::endl;
