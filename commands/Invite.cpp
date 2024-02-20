@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 14:23:32 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:07:17 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ static bool userIsMemberOfChannel(Channel *channel, User *user){
 static User * invitedUser(User *inviting, std::string invited){
 
 	Server *s = inviting->getServer();
-	std::map<int, User *> connectedUsers = s->getConnectedUsers();
-	for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
+	std::map<int, User *> *connectedUsers = s->getConnectedUsers();
+	for (std::map<int, User *>::iterator it = connectedUsers->begin(); it != connectedUsers->end(); it++) {
 		if (it->second->getNickname() == invited)
 			return (it->second);
 	}

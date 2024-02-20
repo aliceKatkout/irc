@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 16:53:42 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:43:32 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void Server::UserDisconnect(int fd){
 
 	// add remove from channel if in channel
 	std::cout << "Entering user disconnect..." << std::endl;
+	std::cout << "nb of people in the server int the beginning of disconnect funtion: " << _connectedUsers.size() << std::endl;
 
 	if (_connectedUsers.size() <= 0){
 		std::cout << "no more connected user in the server" << std::endl;
@@ -188,7 +189,8 @@ void Server::UserDisconnect(int fd){
 		}
 	}
 	delete userToDelete;
-	std::cout << " deleted successfully!" << std::endl;
+	std::cout << "nb of people in the server int the end of disconnect funtion: " << _connectedUsers.size() << std::endl;
+	std::cout << "deleted successfully!" << std::endl;
 }
 
 void Server::UserConnect() {
@@ -319,8 +321,8 @@ bool Server::checkPassword(std::string &passwd){
 	return (false);
 }
 
-std::map<int, User *> Server::getConnectedUsers(){
-	return (_connectedUsers);
+std::map<int, User *> *Server::getConnectedUsers(){
+	return (&_connectedUsers);
 }
 
 User *Server::findUserNick(std::string nick){

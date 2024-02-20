@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:16:46 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 17:24:58 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:47:41 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,32 @@ void QuitCmd::execute(User *user, std::vector<std::string> args) {
     user->reply("QUIT :" + reason + "\r\n");
 
 	//c'est de la merde
+	std::cout << "connected users nb: " << server->getConnectedUsers()->size() << std::endl;
 
-	/* std::map<int, User *> connectedUsers = server->getConnectedUsers();
-	if (server->getConnectedUsers().size() == 0)
+	if (server->getConnectedUsers()->size() == 0)
 		return ;
-	for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
-		if (it->second->getFd() != user->getFd())
-       		it->second->reply("QUIT :" + reason);
-    } */
-	server->UserDisconnect(user->getFd());
 
+	std::cout << "reason: " << reason << std::endl;
+
+	if (reason != ""){
+		broadcastQuit(reason, user);
+	}
+	
+	server->UserDisconnect(user->getFd());
+}
+
+void	QuitCmd::broadcastQuit(std::string message, User *user){
+	Server *server = user->getServer();
+	std::map<int, User *> *connectedUsers = server->getConnectedUsers();
+	std::map<int, User *>::iterator it = connectedUsers->begin();
+
+	std::cout << "size of connected users: " << (*connectedUsers).size() << std::endl;
+	// RECUPERE LE MAUVAIS NOMBRE DE USERS DANS LE SERVEUR, ENCORE UN PROBLEME DE POINTEURS ?
+	
+	for ( ; it != connectedUsers->end(); it++) {
+	
+		if (it->first != user->getFd()){
+			it->second->reply("QUIT " + message);
+		}
+	}
 }

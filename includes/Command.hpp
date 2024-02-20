@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/14 19:20:31 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:06:20 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <vector>
 #include "User.hpp"
+#include "Server.hpp"
 
 class User;
 
@@ -151,7 +152,8 @@ class QuitCmd : public Command {
 		QuitCmd(){}
 		~QuitCmd () {}
 
-		void execute(User *, std::vector<std::string> args) ;
+		void execute(User *, std::vector<std::string>args) ;
+		void broadcastQuit(std::string message, User *user);
 };
 
 #endif

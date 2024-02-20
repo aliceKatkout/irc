@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 14:20:42 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:03:03 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,8 @@ Channel *User::getOneChannel(std::string name) {
 }
 
 User *User::getUserByNick(std::string nickname) {
-	std::map<int, User *> connectedUsers = getServer()->getConnectedUsers();
-	for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
+	std::map<int, User *> *connectedUsers = getServer()->getConnectedUsers();
+	for (std::map<int, User *>::iterator it = connectedUsers->begin(); it != connectedUsers->end(); it++) {
 		if (it->second->getNickname() == nickname)
 			return (it->second);
 	}
