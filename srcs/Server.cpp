@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 14:48:02 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:29:38 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int Server::UserMessage(int userFd){
 		{
 			if (errno != EWOULDBLOCK ) {
 				std::cout << "User " << userFd << " not right" << std::endl;
-				UserDisconnect(userFd);
+				//UserDisconnect(userFd);
 				return (-1);
 			}
 			// else if (userIsConnected(userFd) == false){
