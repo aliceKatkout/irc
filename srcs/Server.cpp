@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 15:29:38 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:53:42 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,11 @@ int Server::UserMessage(int userFd){
 				//UserDisconnect(userFd);
 				return (-1);
 			}
-			// else if (userIsConnected(userFd) == false){
-			// 	std::cout << "User already disconnected" << std::endl;
-			// 	return (0);
-			// }
+			break ;
 		}
-
+		std::cout << "buff: " << buff << std::endl;
 		msg.append(buff);
+
 		// std::cout << "buff: " << buff << std::endl;
 		// on disconnect reste bloque la dedans et on peut plus rien faire
 
@@ -81,6 +79,9 @@ int Server::UserMessage(int userFd){
 	std::cout << "msg: " << msg << std::endl;
 	if (!msg.empty())
 		_handler->parsing(msg, _connectedUsers[userFd]);
+	else {
+		return (-1);
+	}
 	return (0);
 }
 
@@ -107,6 +108,13 @@ void Server::start() {
 		for (std::vector<pollfd>::iterator it = _userFDs.begin(); it != _userFDs.end(); it++) {
 			if (it->revents == 0)
 				continue;
+
+			if ((it->revents & POLLERR) == POLLERR)
+			{
+				std::cout << "Disconnect from POLLERR" << std::endl;
+				UserDisconnect(it->fd);
+				break;
+			}
 
 			if ((it->revents & POLLHUP) == POLLHUP)
 			{
@@ -137,10 +145,10 @@ void Server::start() {
 }
 
 void Server::userQuitAllChan(User *user){
-	
+
 	std::vector<Channel *> *channels = getChannel();
 
-	 
+
 	std::vector<Channel *>::iterator it = channels->begin();
 
 	for ( ; it != channels->end() ; it++){
@@ -153,7 +161,7 @@ void Server::UserDisconnect(int fd){
 
 	// add remove from channel if in channel
 	std::cout << "Entering user disconnect..." << std::endl;
-	
+
 	if (_connectedUsers.size() <= 0){
 		std::cout << "no more connected user in the server" << std::endl;
 		return ;
@@ -162,7 +170,7 @@ void Server::UserDisconnect(int fd){
 		std::cout << "the user is already disconnected" << std::endl;
 		return;
 	}
-	
+
 	userQuitAllChan(_connectedUsers.at(fd));
 
 	User *userToDelete = _connectedUsers.at(fd);
@@ -323,5 +331,3 @@ User *Server::findUserNick(std::string nick){
 	}
 	return (NULL);
 }
-
-

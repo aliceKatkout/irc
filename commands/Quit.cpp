@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:16:46 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 14:50:28 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:24:58 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,17 @@ void QuitCmd::execute(User *user, std::vector<std::string> args) {
 		reason = "";
 
 
-    user->reply("QUIT :" + reason);
-    
-    server->UserDisconnect(user->getFd());
+    user->reply("QUIT :" + reason + "\r\n");
 
-	// std::map<int, User *> connectedUsers = server->getConnectedUsers();
-	// for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
-    //     it->second->reply("QUIT :" + reason);
-    // }
+	//c'est de la merde
+
+	/* std::map<int, User *> connectedUsers = server->getConnectedUsers();
+	if (server->getConnectedUsers().size() == 0)
+		return ;
+	for (std::map<int, User *>::iterator it = connectedUsers.begin(); it != connectedUsers.end(); it++) {
+		if (it->second->getFd() != user->getFd())
+       		it->second->reply("QUIT :" + reason);
+    } */
+	server->UserDisconnect(user->getFd());
 
 }

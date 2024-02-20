@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 16:18:52 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:01:49 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ void CmdHandler::parsing(std::string msg, User *user) {
             _cmdMap[args[0]]->execute(user, args);
 			if (!user->getIsRegistered())
 				user->welcome();
-			if (user->getState() == DISCONNECTED)
+			if (user->getState() == DISCONNECTED) {
+				user->reply("ERROR :Closing Link");
+				user->getServer()->UserDisconnect(user->getFd());
 				return ;
+			}
 		}
 		else if (args[nb] == "")
 			nb++;
