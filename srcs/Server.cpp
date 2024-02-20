@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 18:53:55 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:48:02 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,18 @@ void Server::start() {
 	}
 }
 
+void Server::userQuitAllChan(User *user){
+	
+	std::vector<Channel *> *channels = getChannel();
+
+	 
+	std::vector<Channel *>::iterator it = channels->begin();
+
+	for ( ; it != channels->end() ; it++){
+		(*it)->removeUser(user);
+	}
+}
+
 /* Probleme: Ne rentre jamais la dedans: */
 void Server::UserDisconnect(int fd){
 
@@ -151,6 +163,8 @@ void Server::UserDisconnect(int fd){
 		return;
 	}
 	
+	userQuitAllChan(_connectedUsers.at(fd));
+
 	User *userToDelete = _connectedUsers.at(fd);
 	_connectedUsers.erase(fd);
 	std::cout << "User erased from connected users" << std::endl;

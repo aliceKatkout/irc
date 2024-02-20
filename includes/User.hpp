@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/12 16:03:20 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:19:44 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class User {
 		bool getGoodPass() const;
 		bool getIsRegistered() const;
 		Server *getServer() const;
-		std::vector<Channel *> getChannel() ;
+		std::vector<Channel *> *getChannel() ;
 		Channel *getOneChannel(std::string name);
 
 		void setNickname(std::string nickname);

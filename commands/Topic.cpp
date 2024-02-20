@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/14 19:12:59 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:23:06 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static Channel *channelExists(std::string channelName, User *user) {
 
-	std::vector<Channel *> channel = user->getChannel();
-	std::vector<Channel *>::iterator it_c = channel.begin();
+	std::vector<Channel *> *channel = user->getChannel();
+	std::vector<Channel *>::iterator it_c = channel->begin();
 
 	// std::cout << (*it_c)->getName() << std::endl;
 
-	for ( ; it_c != channel.end(); ++it_c) {
+	for ( ; it_c != channel->end(); ++it_c) {
 		if ((*it_c)->getName() == channelName){
 			return (*it_c);
 		}

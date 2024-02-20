@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/16 10:56:55 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:48:26 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,14 @@ bool	Channel::addUser(User *user, std::string password) {
 		return (false);
 	}
 
-	if (user->getChannel().size() >= 10) {
+	std::vector<Channel *> *vecChan = user->getChannel();
+	std::cout << "coucou " << std::endl;
+	std::cout << "size: " << (*vecChan).size() <<std::endl;
+	if ((*vecChan).size() >= 10) {
 		user->reply("405 " + _name + " :Cannot join channel (+l)");
 		return (false);
 	}
+	std::cout << "non, c'est la" << std::endl;
 
 	this->_joinedUsers.push_back(user);
 	this->_l++;

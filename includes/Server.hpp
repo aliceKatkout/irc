@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/15 15:09:36 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:47:41 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ class Server {
 		std::vector<Channel *> *getChannel();
 		Channel *getLastChannel();
 		std::map<int, User *> getConnectedUsers();
+
+		void userQuitAllChan(User *user);
 };
 
 std::vector<std::string> split(std::string s, std::string del);

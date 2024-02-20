@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/16 13:05:01 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:20:42 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ User::~User(){
 	// if (_fd != -1)
 	// 	close (_fd);
 	// delete (this);
+	// delete _channels;
 }
 
 bool User::operator==(const User &rhs) const {
@@ -88,8 +89,8 @@ Server *User::getServer() const {
 	return (this->_server);
 }
 
-std::vector<Channel *> User::getChannel() {
-	return (this->_channels);
+std::vector<Channel *> *User::getChannel() {
+	return (&_channels);
 }
 
 void User::setNickname(std::string nickname) {
