@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:58:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 18:20:50 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:45:56 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 class CmdHandler;
 class User;
 class Channel;
+
+extern bool g_isRunning;
 
 class Server {
 	private:
@@ -76,7 +78,7 @@ class Server {
 		int UserMessage(int);
 		void UserDisconnect(int);
 		bool userIsConnected(int fd);
-
+		void broadcastQuit(std::string message, User *user);
 		int find_user_fd(int fd);
 		User *findUserNick(std::string nick);
 

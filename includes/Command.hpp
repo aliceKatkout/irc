@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:25:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 18:06:20 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:14:33 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ class QuitCmd : public Command {
 		~QuitCmd () {}
 
 		void execute(User *, std::vector<std::string>args) ;
-		void broadcastQuit(std::string message, User *user);
 };
 
 #endif

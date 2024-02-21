@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 18:43:32 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:02:02 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Server.hpp"
+
+bool g_isRunning = true;
 
 Server::Server() {
 	// _handler = CmdHandler();
@@ -30,7 +32,16 @@ Server::Server(char *port, char *passwd) {
 }
 
 Server::~Server() {
-
+std::cout << "Server destructor" << std::endl;
+	std::map<int, User *>::iterator it = _connectedUsers.begin();
+	for (; it != _connectedUsers.end(); it++){
+		delete it->second;
+		it->second = NULL;
+	}
+	_connectedUsers.clear();
+	_channels.clear();
+	delete _handler;
+	_handler = NULL;
 }
 
 bool	Server::setPort (char *port){
@@ -97,33 +108,29 @@ void Server::start() {
 	_userFDs.push_back(server_fd);
 
 	std::cout << "Server listening..." << std::endl;
-
-	while (1) { // 1 can be changed to a boolean variable to stop the server
-
+	while (g_isRunning) { // 1 can be changed to a boolean variable to stop the server
+		if (!g_isRunning)
+			break;
 		// Loop waiting for incoming connects or for incoming data on any of the connected sockets.
-		if (poll(_userFDs.begin().base(), _userFDs.size(), -1) < 0)
-			throw std::runtime_error("Error while polling from fd.");
-
+		if (poll(_userFDs.begin().base(), _userFDs.size(), -1) < 0 && g_isRunning == true) {
+			std::cerr << "Error while polling." << std::endl;
+			break;
+		}
 		// One or more descriptors are readable. Need to determine which ones they are.
 		for (std::vector<pollfd>::iterator it = _userFDs.begin(); it != _userFDs.end(); it++) {
+			if (!g_isRunning)
+				break;
 			if (it->revents == 0)
 				continue;
 
-			if ((it->revents & POLLERR) == POLLERR)
+			else if ((it->revents & POLLERR) == POLLERR || (it->revents & POLLHUP) == POLLHUP)
 			{
-				std::cout << "Disconnect from POLLERR" << std::endl;
+				std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
 				UserDisconnect(it->fd);
 				break;
 			}
 
-			if ((it->revents & POLLHUP) == POLLHUP)
-			{
-				std::cout << "Disconnect from POLLHUP" << std::endl;
-				UserDisconnect(it->fd);
-				break;
-			}
-
-			if ((it->revents & POLLIN) == POLLIN) {
+			else if ((it->revents & POLLIN) == POLLIN) {
 
 				if (it->fd == _server_fd) {
 					UserConnect();
@@ -133,15 +140,13 @@ void Server::start() {
 				if (UserMessage(it->fd) == -1 ){
 					std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
 					UserDisconnect(it->fd);
+					break;
 				}
 
-				// if (UserMessage(it->fd) < 0 || _connectedUsers[it->fd]->getState() == DISCONNECTED){
-				// 	UserDisconnect(it->fd);
-				// 	break ;
-				// }
 			}
 		}
 	}
+
 }
 
 void Server::userQuitAllChan(User *user){
@@ -176,6 +181,7 @@ void Server::UserDisconnect(int fd){
 
 	User *userToDelete = _connectedUsers.at(fd);
 	_connectedUsers.erase(fd);
+
 	std::cout << "User erased from connected users" << std::endl;
 
 	std::vector<pollfd>::iterator it = _userFDs.begin();
@@ -189,6 +195,7 @@ void Server::UserDisconnect(int fd){
 		}
 	}
 	delete userToDelete;
+	userToDelete = NULL;
 	std::cout << "nb of people in the server int the end of disconnect funtion: " << _connectedUsers.size() << std::endl;
 	std::cout << "deleted successfully!" << std::endl;
 }
@@ -332,4 +339,20 @@ User *Server::findUserNick(std::string nick){
 			return (it->second);
 	}
 	return (NULL);
+}
+
+void	Server::broadcastQuit(std::string message, User *user){
+
+	std::map<int, User *> *connectedUsers = getConnectedUsers();
+	std::map<int, User *>::iterator it = connectedUsers->begin();
+
+	std::cout << "size of connected users: " << (*connectedUsers).size() << std::endl;
+	// RECUPERE LE MAUVAIS NOMBRE DE USERS DANS LE SERVEUR, ENCORE UN PROBLEME DE POINTEURS ?
+
+	for ( ; it != connectedUsers->end(); it++) {
+
+		if (it->first != user->getFd()){
+			it->second->reply("QUIT " + message);
+		}
+	}
 }
