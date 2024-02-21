@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:16:30 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:09:01 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ class Channel {
 
 		bool 		_i; // Set/remove Invite-only channel. true = yes, false = no
 		std::string _k; // Définir/supprimer la clé du canal (mot de passe)
-		size_t 		_l; //definir / supprimer la limite d'users du chann
+		int		_l; //definir / supprimer la limite d'users du chann
 		bool 		_t; // Set/remove topic protection. true = yes, false = no
 
 
@@ -45,7 +45,7 @@ class Channel {
 		~Channel();
 
 		void    setOperators(User *, bool);
-		void    setLimit(size_t);
+		void    setLimit(int);
 		void    setInviteOnly(bool);
 		void	setTopic(std::string);
 		void	setName(std::string);
@@ -56,7 +56,7 @@ class Channel {
 		bool	getTopicProtection() const;
 		std::string getName() const;
 		std::string getPassword() const;
-		size_t    	getLimit() const;
+		int    	getLimit() const;
 		bool 		getInviteOnly() const;
 		std::vector<User *> getUsers() ;
 		User	*getUserByNick(std::string);

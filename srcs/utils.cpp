@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:13:01 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/21 15:42:55 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:19:35 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ Channel * ChannelExistsAlready(User *user, std::string name) {
 
 	for (; it_s != c->end(); it_s++){
 		if ((*it_s)->getName() == name){
+			std::cout << "limit in channel xists already: " << (*it_s)->getLimit() << std::endl;
 			// std::cout << "looking for channel with " << name << " as name in server" << std::endl;
 			return (*it_s);
 		}

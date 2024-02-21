@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:38:48 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:28:41 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,24 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			break;
 		case 't':
 			if (!chan->isUserOperator(user))
-				return (user->reply("482 " + user->getNickname() + " " + chan->getName() +
-					" :You must have channel halfop access or above to set channel mode t"));
+				return (user->reply("482 " + user->getNickname() + " " + chan->getName() + " :You must have channel halfop access or above to set channel mode t"));
 			chan->setTopicProtection(args[2][0] == '+');
 			user->reply("MODE " + channel + " " + args[2]);
 			break;
 		case 'l':
-			if (args.size() < 3)
-			{
-				user->reply("461 MODE :Not enough parameters");
-				return ;
+			if (args.size() != 4){
+				user->reply(ERR_NEEDMOREPARAMS(chan->getName(), "MODE"));
+				return;
 			}
-			if (args.size() == 3)
-			{
-				chan->setLimit(100);
-				user->reply("MODE " + channel + " " + args[2] + " Channel limit set to 100 (default)");
+			else if (atoi(args[3].c_str()) <= 0) {
+				return (user->reply("461 MODE :Wrong parameters"));
 			}
-			else
-			{
-				chan->setLimit(atoi(args[3].c_str()));
-				user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
-			}
+			std::cout << "args[3].c_str(): " << args[3].c_str() << std::endl;
+			std::cout << "limit st to: " << atoi(args[3].c_str()) << std::endl;
+			chan->setLimit(atoi(args[3].c_str()));
+			user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
 			break;
 		case 'o':
-			std::cout << "toAdd: " << toAdd << std::endl;
 			if (args.size() < 4 || args[3].empty())
 				return (user->reply("461 MODE :Not enough parameters"));
 			if (toAdd == NULL)

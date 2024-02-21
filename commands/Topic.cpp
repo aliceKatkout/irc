@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:46:17 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:28:58 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 	}
 
 	if (chann->getTopicProtection() && !chann->isUserOperator(user))
-		return (user->reply("482 " + channelName + " :You're not channel operator"));
+		return (user->reply("482 " + channelName + " :You're not channel operator\r\n"));
 
 	chann->setTopic(topic);
 	chann->broadcastChan("TOPIC " + channelName + " :" + topic, user);

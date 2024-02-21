@@ -28,7 +28,7 @@ INCLUDES = includes/Server.hpp \
 		includes/Command.hpp \
 		includes/CmdHandler.hpp
 
-FLAGS = -Wall -Wextra -Werror -std=c++98 -g3
+FLAGS = -Wall -Wextra -Werror -std=c++98
 
 all : $(NAME)
 
