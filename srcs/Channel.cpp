@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:52:54 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:16:41 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 
+
+
 Channel::Channel(std::string name, std::string password) : _name(name), _k(password) {
     _l = 100;
 	_i = false;
 	topicSet = false;
+	_t = true;
 }
 
 Channel::~Channel() {
@@ -36,6 +39,14 @@ void    Channel::setOperators(User *toAdd, bool b){
 		_operators.push_back(toAdd);
 	else if (b == false && isUserOperator(toAdd))
 		_operators.erase(std::find(_operators.begin(), _operators.end(), toAdd));
+}
+
+void	Channel::setTopicProtection(bool b){
+	this->_t = b;
+}
+
+bool	Channel::getTopicProtection() const {
+	return (this->_t);
 }
 
 void   Channel::removeUser(User *user){
@@ -169,7 +180,7 @@ bool	Channel::partUser(User *user) {
 		return (false); // remove the channel
 	}
 
-	
+
 
 	return (true);
 

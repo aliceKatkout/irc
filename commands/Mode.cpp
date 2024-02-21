@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/14 19:20:27 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:25:09 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			user->reply("MODE " + channel + " " + args[2]);
 			break;
 		case 't':
-			if (args.size() < 4)
-			{
-				user->reply("461 MODE :Not enough parameters");
-				return ;
-			}
-			chan->setTopic(args[3]);
-			user->reply("MODE " + channel + " " + args[2] + " " + args[3]);
+			if (!chan->isUserOperator(user))
+				return (user->reply("482 " + user->getNickname() + " " + chan->getName() +
+					" :You must have channel halfop access or above to set channel mode t"));
+			chan->setTopicProtection(args[2][0] == '+');
+			user->reply("MODE " + channel + " " + args[2]);
 			break;
 		case 'l':
 			if (args.size() < 3)

@@ -6,7 +6,7 @@
 /*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/13 13:52:40 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:16:30 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class Channel {
 		bool 		_i; // Set/remove Invite-only channel. true = yes, false = no
 		std::string _k; // Définir/supprimer la clé du canal (mot de passe)
 		size_t 		_l; //definir / supprimer la limite d'users du chann
+		bool 		_t; // Set/remove topic protection. true = yes, false = no
 
 
 		std::string _topic;
@@ -50,8 +51,9 @@ class Channel {
 		void	setName(std::string);
 		void	setPassword(std::string);
 		void	setInvitedUsers(std::string);
+		void	setTopicProtection(bool);
 
-
+		bool	getTopicProtection() const;
 		std::string getName() const;
 		std::string getPassword() const;
 		size_t    	getLimit() const;
