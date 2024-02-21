@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:40:41 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:39:32 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,13 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 	
 	for (; its != c->end(); its++){
 		if ((*its)->getName() == channelName){
-			std::cout << channelName << " has to kick " << user->getNickname() << " from its list" << std::endl;
+			// std::cout << channelName << " has to kick " << user->getNickname() << " from its list" << std::endl;
 			channel = (*its);
 			user->reply("PART " + channel->getName() + " " + reason);
 			// channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
 			if (channel->getUsers().size() > 1){
-				std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
+				// std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
 				channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
-				std::cout << "broadcast ok" << std::endl;
 			}
 			if (channel->partUser(user) == false){
 				delete (*its);
@@ -74,7 +73,6 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 			}
 		}
 		else if (its == c->end()){ // devrait rentrer la dedans
-			std::cout << "this channel doesn't exist" << std::endl;
 			user->reply(ERR_NOSUCHCHANNEL(user->getNickname(), channelName));
 		}
 	}
@@ -102,8 +100,8 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 	// 	return ;
 	// }
 
-	if (c->empty() == true)
-		std::cout << "There is no channel left in this server" << std::endl;
+	// if (c->empty() == true)
+		// std::cout << "There is no channel left in this server" << std::endl;
 
 
 	// displayChannels(*c);

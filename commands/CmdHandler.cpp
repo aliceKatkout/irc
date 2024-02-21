@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:12:57 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:41:40 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/Server.hpp"
 
 CmdHandler::CmdHandler () {
-	std::cout << "CmdHandler constructor" << std::endl;
+	// std::cout << "CmdHandler constructor" << std::endl;
     _cmdMap["PING"] = new PingCmd();
 	_cmdMap["NICK"] = new NickCmd();
 	_cmdMap["PASS"] = new PassCmd();
@@ -47,7 +47,7 @@ void CmdHandler::parsing(std::string msg, User *user) {
 
 	args.clear();
 	cmds = split(msg, "\n");
-	std::cout << "parsing : " << cmds[0] << std::endl;
+	// std::cout << "parsing : " << cmds[0] << std::endl;
 	if (user->getState() == DISCONNECTED)
 		return ;
 
@@ -57,7 +57,7 @@ void CmdHandler::parsing(std::string msg, User *user) {
 		cmds.erase(cmds.begin());
 		args[nb] = args[nb][args[nb].size() - 1] == '\r' ? args[nb].substr(0, args[nb].size() - 1) : args[nb];
         if (_cmdMap.find(args[0]) != _cmdMap.end()){
-			std::cout << "executing cmd " << args[0] << std::endl;
+			// std::cout << "executing cmd " << args[0] << std::endl;
             _cmdMap[args[0]]->execute(user, args);
 			if (!user->getIsRegistered())
 				user->welcome();

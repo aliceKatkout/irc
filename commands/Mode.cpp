@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:25:09 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:38:48 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static std::string getChannel(std::vector<std::string> args) {
 }
 
 void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
-	std::cout << "mode: " << args[1] << std::endl;
+	// std::cout << "mode: " << args[1] << std::endl;
 
 	if (args.size() < 3)
 		return (user->reply("461 MODE :Not enough parameters"));
@@ -39,13 +39,13 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 	if (chan == NULL)
 		return(user->reply("403 " + channel + " :No such channel"));
 
-	std::cout << "args size: " << args.size() << std::endl;
+	// std::cout << "args size: " << args.size() << std::endl;
 
 
 	User *toAdd = args.size() < 4 ? (NULL) : (chan->getUserByNick(args[3]));
 
 	char mode = args[2][1];
-	std::cout << "mode: " << mode << std::endl;
+	// std::cout << "mode: " << mode << std::endl;
 	switch (mode) {
 		case 'i':
 		// si le user est un operator il peut set le 'invite only' flag to true

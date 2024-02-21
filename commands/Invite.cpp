@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 18:07:17 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:37:30 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ static bool userIsMemberOfChannel(Channel *channel, User *user){
 			// if the channel is an invite only channel
 			if (channel->getInviteOnly() == true)
 			{
-				std::cout << "the channel is an invite only" << std::endl;
+				// std::cout << "the channel is an invite only" << std::endl;
 				if (channel->isUserOperator(user) == true){
-					std::cout << "the user is the operator" << std::endl;
+					// std::cout << "the user is the operator" << std::endl;
 					return (true);
 				}
 				else{
 					// 473    ERR_INVITEONLYCHAN
 					// "<channel> :Cannot join channel (+i)"
-					std::cout << "the user is not the operator" << std::endl;
+					// std::cout << "the user is not the operator" << std::endl;
 					user->reply("473 " + channel->getName() + " :Cannot join channel (invite only)");
 					return (false);
 				}
@@ -104,7 +104,7 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 				return ;
 			}
 			if (invited != NULL){
-				std::cout << "inviting " << invited->getNickname() << std::endl;
+				// std::cout << "inviting " << invited->getNickname() << std::endl;
 				user->reply("INVITE " + invited->getNickname() + " "  + channelName );
 				user->reply("341 " + user->getNickname() + " " + userInvited + " :" + chann->getName());
 				// user->reply("431 " + channelName + " " + user->getUsername());
@@ -118,7 +118,7 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 		}
 	}
 	else {
-		std::cout << "the channel doesn't exist!" << std::endl;
+		// std::cout << "the channel doesn't exist!" << std::endl;
 		return ;
 	}
 }

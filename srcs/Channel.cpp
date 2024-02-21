@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:16:41 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:36:56 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ Channel::Channel(std::string name, std::string password) : _name(name), _k(passw
 }
 
 Channel::~Channel() {
-	std::cout << "delete channel." << std::endl;
+	// std::cout << "delete channel." << std::endl;
 }
 
 bool	Channel::isUserOperator(User * user) {
 	if (std::find(_operators.begin(), _operators.end(), user) == _operators.end()){
-		std::cout << "false" << std::endl;
+		// std::cout << "false" << std::endl;
 		return (false);
 	}
-	std::cout << "true" << std::endl;
+	// std::cout << "true" << std::endl;
 	return (true);
 }
 
@@ -138,13 +138,12 @@ bool	Channel::addUser(User *user, std::string password) {
 	}
 
 	std::vector<Channel *> *vecChan = user->getChannel();
-	std::cout << "coucou " << std::endl;
-	std::cout << "size: " << (*vecChan).size() <<std::endl;
+	// std::cout << "coucou " << std::endl;
+	// std::cout << "size: " << (*vecChan).size() <<std::endl;
 	if ((*vecChan).size() >= 10) {
 		user->reply("405 " + _name + " :Cannot join channel (+l)");
 		return (false);
 	}
-	std::cout << "non, c'est la" << std::endl;
 
 	this->_joinedUsers.push_back(user);
 	this->_l++;

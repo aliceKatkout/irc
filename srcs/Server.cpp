@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:32:16 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:35:58 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,25 @@ Server::Server(char *port, char *passwd) {
 
 }
 
-static void displayChannels(std::vector<Channel *> c){
-	// Server *s = user->getServer();
+// static void displayChannels(std::vector<Channel *> c){
+// 	// Server *s = user->getServer();
 
-	// if (s->getChannel().size() < 1)
-	// 	std::cout << "There are no channel remaining here" << std::endl;
-	// std::vector<Channel *> c = s->getChannel();
-	std::cout << "enter display channels" << std::endl;
-	std::vector<Channel *>::iterator it = c.begin();
-	for ( ; it != c.end() ; it++) {
-		std::cout << (*it)->getName() << " channel is still in the server" << std::endl;
-	}
-}
+// 	// if (s->getChannel().size() < 1)
+// 	// 	std::cout << "There are no channel remaining here" << std::endl;
+// 	// std::vector<Channel *> c = s->getChannel();
+// 	std::vector<Channel *>::iterator it = c.begin();
+// 	for ( ; it != c.end() ; it++) {
+// 		std::cout << (*it)->getName() << " channel is still in the server" << std::endl;
+// 	}
+// }
 
 
 Server::~Server() {
-std::cout << "Server destructor" << std::endl;
 
-	displayChannels(_channels);
+	// displayChannels(_channels);
 	std::vector<Channel *>::iterator itc = _channels.begin();
 
 	for ( ; itc != _channels.end() ; itc++){
-		std::cout << "channel to delete: " << (*itc)->getName() << std::endl;
 		delete (*itc);
 		*itc = NULL;
 	}
@@ -64,7 +61,6 @@ std::cout << "Server destructor" << std::endl;
 		it->second = NULL;
 	}
 	_connectedUsers.clear();
-	std::cout << "all is deleted" << std::endl;
 	
 	delete _handler;
 	_handler = NULL;
@@ -102,20 +98,19 @@ int Server::UserMessage(int userFd){
 		if (recv(userFd, buff, 100, 0) <= 0) // 0 = disconnected
 		{
 			if (errno != EWOULDBLOCK ) {
-				std::cout << "User " << userFd << " not right" << std::endl;
+				// std::cout << "User " << userFd << " not right" << std::endl;
 				//UserDisconnect(userFd);
 				return (-1);
 			}
 			break ;
 		}
-		std::cout << "buff: " << buff << std::endl;
+		// std::cout << "buff: " << buff << std::endl;
 		msg.append(buff);
 
 		// std::cout << "buff: " << buff << std::endl;
 		// on disconnect reste bloque la dedans et on peut plus rien faire
 
 	}
-	std::cout << "msg: " << msg << std::endl;
 	if (!msg.empty())
 		_handler->parsing(msg, _connectedUsers[userFd]);
 	else {
@@ -135,13 +130,13 @@ void Server::start() {
 	server_fd.events = POLLIN | POLLHUP | POLLERR;
 	_userFDs.push_back(server_fd);
 
-	std::cout << "Server listening..." << std::endl;
+	// std::cout << "Server listening..." << std::endl;
 	while (g_isRunning) { // 1 can be changed to a boolean variable to stop the server
 		if (!g_isRunning)
 			break;
 		// Loop waiting for incoming connects or for incoming data on any of the connected sockets.
 		if (poll(_userFDs.begin().base(), _userFDs.size(), -1) < 0 && g_isRunning == true) {
-			std::cerr << "Error while polling." << std::endl;
+			// std::cerr << "Error while polling." << std::endl;
 			break;
 		}
 		// One or more descriptors are readable. Need to determine which ones they are.
@@ -153,7 +148,7 @@ void Server::start() {
 
 			else if ((it->revents & POLLERR) == POLLERR || (it->revents & POLLHUP) == POLLHUP)
 			{
-				std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
+				// std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
 				UserDisconnect(it->fd);
 				break;
 			}
@@ -166,7 +161,7 @@ void Server::start() {
 				}
 
 				if (UserMessage(it->fd) == -1 ){
-					std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
+					// std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
 					UserDisconnect(it->fd);
 					break;
 				}
@@ -193,15 +188,11 @@ void Server::userQuitAllChan(User *user){
 void Server::UserDisconnect(int fd){
 
 	// add remove from channel if in channel
-	std::cout << "Entering user disconnect..." << std::endl;
-	std::cout << "nb of people in the server int the beginning of disconnect funtion: " << _connectedUsers.size() << std::endl;
 
 	if (_connectedUsers.size() <= 0){
-		std::cout << "no more connected user in the server" << std::endl;
 		return ;
 	}
 	if (userIsConnected(fd) == false){
-		std::cout << "the user is already disconnected" << std::endl;
 		return;
 	}
 
@@ -210,7 +201,6 @@ void Server::UserDisconnect(int fd){
 	User *userToDelete = _connectedUsers.at(fd);
 	_connectedUsers.erase(fd);
 
-	std::cout << "User erased from connected users" << std::endl;
 
 	std::vector<pollfd>::iterator it = _userFDs.begin();
 	for (; it != _userFDs.end(); it++)
@@ -224,8 +214,6 @@ void Server::UserDisconnect(int fd){
 	}
 	delete userToDelete;
 	userToDelete = NULL;
-	std::cout << "nb of people in the server int the end of disconnect funtion: " << _connectedUsers.size() << std::endl;
-	std::cout << "deleted successfully!" << std::endl;
 }
 
 void Server::UserConnect() {
@@ -261,7 +249,6 @@ void Server::UserConnect() {
 
 	this->_connectedUsers.insert(std::pair<int, User *>(client_fd, newUser));
 
-	std::cout << "New client connected." << std::endl;
 }
 
 int Server::init() {
@@ -318,7 +305,7 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 		Channel *newChannel = new Channel(channelName, "");
 		newChannel->setOperators(user, true);
 		_channels.push_back(newChannel);
-		std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
+		// std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 		return (newChannel);
 	}
 
@@ -327,13 +314,13 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 		// std::cout << this->_channels.begin()->getName() << std::endl;
 		for (it = _channels.begin(); it != _channels.end(); it++){
 			if ((*it)->getName() == channelName){
-				std::cout << "Channel " << (*it)->getName() << " already exists!" << std::endl;
+				// std::cout << "Channel " << (*it)->getName() << " already exists!" << std::endl;
 				return (*it);
 			}
 			else{
 				Channel * newChannel = new Channel(channelName, "");
 				_channels.push_back(newChannel);
-				std::cout << "Creating: " << newChannel->getName() << " channel :)" << std::endl;
+				// std::cout << "Creating: " << newChannel->getName() << " channel :)" << std::endl;
 				return (newChannel);
 			}
 		}
@@ -374,7 +361,7 @@ void	Server::broadcastQuit(std::string message, User *user){
 	std::map<int, User *> *connectedUsers = getConnectedUsers();
 	std::map<int, User *>::iterator it = connectedUsers->begin();
 
-	std::cout << "size of connected users: " << (*connectedUsers).size() << std::endl;
+	// std::cout << "size of connected users: " << (*connectedUsers).size() << std::endl;
 	// RECUPERE LE MAUVAIS NOMBRE DE USERS DANS LE SERVEUR, ENCORE UN PROBLEME DE POINTEURS ?
 
 	for ( ; it != connectedUsers->end(); it++) {

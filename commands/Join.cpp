@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:36:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:31:30 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:37:47 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 
     Channel *newChannel = ChannelExistsAlready(user, args.back());
 	if (newChannel != NULL){
-		std::cout << "Channel found!" << std::endl;
+		// std::cout << "Channel found!" << std::endl;
 	}
 	else {
 		newChannel = user->getServer()->createChannel(channelName, user);
@@ -35,7 +35,7 @@ void JoinCmd::execute(User *user, std::vector<std::string> args){
 		password = *(args.begin() + 2);
 
 	if (!newChannel->addUser(user, password)){
-		std::cout << "User not added to chan" << std::endl;
+		// std::cout << "User not added to chan" << std::endl;
 		return ;
 	}
 	user->addChannel(newChannel);
