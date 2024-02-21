@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdHandler.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 17:01:49 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:12:57 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ CmdHandler::CmdHandler () {
 }
 
 CmdHandler::~CmdHandler () {
-
+	// delete chaque commande
+	std::map<std::string, Command *>::iterator it = _cmdMap.begin();
+	for (; it != _cmdMap.end(); it++){
+		delete it->second;
+		it->second = NULL;
+	}
 }
 
 void CmdHandler::parsing(std::string msg, User *user) {

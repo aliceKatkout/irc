@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:02:02 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:32:16 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,45 @@ Server::Server(char *port, char *passwd) {
 
 }
 
+static void displayChannels(std::vector<Channel *> c){
+	// Server *s = user->getServer();
+
+	// if (s->getChannel().size() < 1)
+	// 	std::cout << "There are no channel remaining here" << std::endl;
+	// std::vector<Channel *> c = s->getChannel();
+	std::cout << "enter display channels" << std::endl;
+	std::vector<Channel *>::iterator it = c.begin();
+	for ( ; it != c.end() ; it++) {
+		std::cout << (*it)->getName() << " channel is still in the server" << std::endl;
+	}
+}
+
+
 Server::~Server() {
 std::cout << "Server destructor" << std::endl;
+
+	displayChannels(_channels);
+	std::vector<Channel *>::iterator itc = _channels.begin();
+
+	for ( ; itc != _channels.end() ; itc++){
+		std::cout << "channel to delete: " << (*itc)->getName() << std::endl;
+		delete (*itc);
+		*itc = NULL;
+	}
+	_channels.clear();
+
 	std::map<int, User *>::iterator it = _connectedUsers.begin();
 	for (; it != _connectedUsers.end(); it++){
 		delete it->second;
 		it->second = NULL;
 	}
 	_connectedUsers.clear();
-	_channels.clear();
+	std::cout << "all is deleted" << std::endl;
+	
 	delete _handler;
 	_handler = NULL;
+
+	//delete channels
 }
 
 bool	Server::setPort (char *port){

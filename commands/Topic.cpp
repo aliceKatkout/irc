@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 15:28:03 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:53:59 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 			}
 
 		}
-		else //ajouter si topic n'est pas vide et user is not operator
+		else if (!topic.empty() && !chann->isUserOperator(user)) //ajouter si topic n'est pas vide et user is not operator
 		{
-			user->reply("482 " + *(args.begin()+1) +  " :You're not channel operator\r\n");
+			user->reply("482 " + *(args.begin()+1) +  " :You're not channel operator");
 			// break ;
 		}
 	}

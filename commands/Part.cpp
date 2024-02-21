@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 18:51:57 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:40:41 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 				std::cout << "broadcast ok" << std::endl;
 			}
 			if (channel->partUser(user) == false){
+				delete (*its);
+				*its = NULL;
 				c->erase(its);
 				// c->clear();
 				break;
@@ -81,24 +83,24 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 	// VIRER le channel de la lite des channels dans le user, mais ca fait segfault :
 	
 	// Channel *toRemove = user->getOneChannel(channelName);
-	std::vector<Channel *> *cha = user->getChannel();
-	std::vector<Channel *>::iterator itc = cha->begin();
+	// std::vector<Channel *> *cha = user->getChannel();
+	// std::vector<Channel *>::iterator itc = cha->begin();
 	
-	for ( ; itc != cha->end() ; itc++){
-		// std::cout << "itc: " << (*itc)->getName() << std::endl;
-		if (*itc == channel){
-			std::cout << "removing " << (*itc)->getName() << " from list of channels in the user" << std::endl;
-			// displayChannels(cha);
-			cha->erase(itc);
-			std::cout << "Channel erased" << std::endl;
-			break ;
-		}
-	}
+	// for ( ; itc != cha->end() ; itc++){
+	// 	// std::cout << "itc: " << (*itc)->getName() << std::endl;
+	// 	if (*itc == channel){
+	// 		std::cout << "removing " << (*itc)->getName() << " from list of channels in the user" << std::endl;
+	// 		// displayChannels(cha);
+	// 		cha->erase(itc);
+	// 		std::cout << "Channel erased" << std::endl;
+	// 		break ;
+	// 	}
+	// }
 
-	if (cha->empty() == true){
-		std::cout << "There is no channel left in this server" << std::endl;
-		return ;
-	}
+	// if (cha->empty() == true){
+	// 	std::cout << "There is no channel left in this server" << std::endl;
+	// 	return ;
+	// }
 
 	if (c->empty() == true)
 		std::cout << "There is no channel left in this server" << std::endl;

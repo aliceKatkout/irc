@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 14:48:26 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:52:54 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ Channel::Channel(std::string name, std::string password) : _name(name), _k(passw
 
 Channel::~Channel() {
 	std::cout << "delete channel." << std::endl;
-    delete (this);
 }
 
 bool	Channel::isUserOperator(User * user) {
-	if (std::find(_operators.begin(), _operators.end(), user) == _operators.end())
+	if (std::find(_operators.begin(), _operators.end(), user) == _operators.end()){
+		std::cout << "false" << std::endl;
 		return (false);
+	}
+	std::cout << "true" << std::endl;
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/20 18:03:03 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:17:19 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ User::~User(){
 	// 	close (_fd);
 	// delete (this);
 	// delete _channels;
+
 }
 
 bool User::operator==(const User &rhs) const {
