@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:09:09 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 15:30:23 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:30:21 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int main(int ac, char **av) {
 		return (1);
 	}
 
+	signal(SIGTERM, SIG_IGN);
 	Server server(av[1], av[2]);
 	server.init();
 	signal(SIGINT, (sighandler_t)sigint_handler);

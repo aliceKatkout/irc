@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/22 14:13:07 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:51:12 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ class User {
 		void setGoodPass(bool good_pass);
 		void setIsRegistered(bool is_registered);
 		void setNbOfChannels(int);
+		void setClientBuff(std::string);
+		void clearClientBuff();
 		UserState getState() const;
 		UserState findState();
 		void setState(UserState state);
@@ -59,6 +61,7 @@ class User {
 
 		User *getUserByNick(std::string nickname);
 		int		getNumberOfChannels();
+		std::string getClientBuff() const;
 
 		// void addChannel(Channel *);
 
@@ -78,7 +81,7 @@ class User {
 		int 		_nbOfChannels;
 		// std::vector<Channel *> _channels; // les channels sur lesquels le users est connecte
 
-		/* ajouter a combien de channel le user a le droit de se connecter */
+		std::string _clientBuff;
 
 };
 

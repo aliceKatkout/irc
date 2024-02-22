@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 15:44:09 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:52:52 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,33 +89,42 @@ int Server::UserMessage(int userFd){
 
 	char buff[100];
 	bzero(buff, 100);
-	std::string msg;
+	
+	// std::string msg;
 
+	size_t rec = 0;
+	
 	while (!std::strstr(buff, "\r\n"))
 	{
 		bzero(buff, 100);
-
-		if (recv(userFd, buff, 100, 0) <= 0) // 0 = disconnected
+		rec = recv(userFd, buff, 100, 0);
+		if (rec <= 0) // 0 = disconnected
 		{
 			if (errno != EWOULDBLOCK ) {
 				// std::cout << "User " << userFd << " not right" << std::endl;
 				//UserDisconnect(userFd);
 				return (-1);
 			}
-			break ;
+			if (rec == 0){
+				break ;
+			}
 		}
 		// std::cout << "buff: " << buff << std::endl;
-		msg.append(buff);
-
+		// msg.append(buff);
+		_connectedUsers[userFd]->setClientBuff(buff);
+		
 		// std::cout << "buff: " << buff << std::endl;
 		// on disconnect reste bloque la dedans et on peut plus rien faire
 
 	}
-	if (!msg.empty())
+	std::string msg = _connectedUsers[userFd]->getClientBuff();
+	if (!msg.empty() && std::strstr(buff, "\r\n")){
+		_connectedUsers[userFd]->clearClientBuff();
 		return (_handler->parsing(msg, _connectedUsers[userFd]));
-	else {
-		return (-1);
 	}
+	// else {
+	// 	return (-1);
+	// }
 	return (0);
 }
 

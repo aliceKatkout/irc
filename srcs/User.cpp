@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 14:13:07 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:51:45 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 	_is_registered = false;
 	_state = HANDSHAKE;
 	_nbOfChannels = 0;
+	_clientBuff = "";
 
 
 	// if (server->getChannels().size() == 0){
@@ -95,6 +96,10 @@ Server *User::getServer() const {
 // 	return (&_channels);
 // }
 
+std::string User::getClientBuff() const{
+	return (_clientBuff);
+}
+
 void	User::setNbOfChannels(int nb){
 	_nbOfChannels = nb;
 }
@@ -142,6 +147,14 @@ UserState User::getState() const {
 
 void User::setState(UserState state) {
 	_state = state;
+}
+
+void User::setClientBuff(std::string buff){
+	_clientBuff += buff;
+}
+
+void User::clearClientBuff(){
+	_clientBuff.clear();
 }
 
 void User::welcome() {
