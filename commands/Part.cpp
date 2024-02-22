@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:39:32 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:23:40 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 // static void displayChannels(std::vector<Channel *> c){
 // 	// Server *s = user->getServer();
 
-// 	// if (s->getChannel().size() < 1)
+// 	// if (s->getChannels().size() < 1)
 // 	// 	std::cout << "There are no channel remaining here" << std::endl;
-// 	// std::vector<Channel *> c = s->getChannel();
+// 	// std::vector<Channel *> c = s->getChannels();
 // 	std::vector<Channel *>::iterator it = c.begin();
 // 	for ( ; it != c.end() ; it++) {
 // 		std::cout << (*it)->getName() << " channel is still in the server" << std::endl;
@@ -50,9 +50,9 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 	}
 
 	// Server *s = user->getServer();
-	std::vector<Channel *> *c = user->getServer()->getChannel();
+	std::vector<Channel *> *c = user->getServer()->getChannels();
 	std::vector<Channel *>::iterator its = c->begin();
-	// std::vector<Channel *>::iterator it = user->getServer()->getChannel().begin() ;
+	// std::vector<Channel *>::iterator it = user->getServer()->getChannels().begin() ;
 	
 	for (; its != c->end(); its++){
 		if ((*its)->getName() == channelName){
@@ -60,16 +60,16 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 			channel = (*its);
 			user->reply("PART " + channel->getName() + " " + reason);
 			// channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
-			if (channel->getUsers().size() > 1){
-				// std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
-				channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
-			}
 			if (channel->partUser(user) == false){
 				delete (*its);
 				*its = NULL;
 				c->erase(its);
 				// c->clear();
 				break;
+			}
+			if ((*channel->getUsers()).size() > 1){
+				// std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
+				channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
 			}
 		}
 		else if (its == c->end()){ // devrait rentrer la dedans
@@ -81,7 +81,7 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 	// VIRER le channel de la lite des channels dans le user, mais ca fait segfault :
 	
 	// Channel *toRemove = user->getOneChannel(channelName);
-	// std::vector<Channel *> *cha = user->getChannel();
+	// std::vector<Channel *> *cha = user->getChannels();
 	// std::vector<Channel *>::iterator itc = cha->begin();
 	
 	// for ( ; itc != cha->end() ; itc++){

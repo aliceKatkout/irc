@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:13:01 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/21 17:19:35 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:19:51 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@ std::vector<std::string > split(std::string s, std::string del){
 	return res;
 }
 
-Channel * ChannelExistsAlready(User *user, std::string name) {
-	Server *s = user->getServer();
-	std::vector<Channel *> *c = s->getChannel();
-	std::vector<Channel *>::iterator it_s = c->begin();
-	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannel().begin() ;
+// Channel * ChannelExistsAlready(User *user, std::string name) {
+// 	Server *s = user->getServer();
+// 	std::vector<Channel *> *c = s->getChannels();
+// 	std::vector<Channel *>::iterator it_s = c->begin();
+// 	// std::vector<Channel *>::iterator it_s = user->getServer()->getChannels().begin() ;
 
-	for (; it_s != c->end(); it_s++){
-		if ((*it_s)->getName() == name){
-			std::cout << "limit in channel xists already: " << (*it_s)->getLimit() << std::endl;
-			// std::cout << "looking for channel with " << name << " as name in server" << std::endl;
-			return (*it_s);
-		}
-    }
-	return (NULL);
-}
+// 	for (; it_s != c->end(); it_s++){
+// 		if ((*it_s)->getName() == name){
+// 			// std::cout << "looking for channel with " << name << " as name in server" << std::endl;
+// 			return (*it_s);
+// 		}
+//     }
+// 	return (NULL);
+// }
 

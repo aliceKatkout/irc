@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:04:16 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/14 12:59:46 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:25:01 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
-
-
 
 void KickCmd::execute(User *user, std::vector<std::string> args) {
 	std::cout << args[1] << std::endl;
 	if (args.size() < 3)
 		return( user->reply("461 KICK :Not enough parameters" ));
 
-	Channel *chan = ChannelExistsAlready(user, args[1]);
+	Channel *chan = user->getServer()->findChannelByName(args[1]);
+
 	if (!chan)
 		return (user->reply("403 KICK "+ args[1] +" :No such channel"));
 

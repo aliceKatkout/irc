@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:35:58 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:16:57 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ Server::Server(char *port, char *passwd) {
 // static void displayChannels(std::vector<Channel *> c){
 // 	// Server *s = user->getServer();
 
-// 	// if (s->getChannel().size() < 1)
+// 	// if (s->getChannels().size() < 1)
 // 	// 	std::cout << "There are no channel remaining here" << std::endl;
-// 	// std::vector<Channel *> c = s->getChannel();
+// 	// std::vector<Channel *> c = s->getChannels();
 // 	std::vector<Channel *>::iterator it = c.begin();
 // 	for ( ; it != c.end() ; it++) {
 // 		std::cout << (*it)->getName() << " channel is still in the server" << std::endl;
@@ -130,13 +130,13 @@ void Server::start() {
 	server_fd.events = POLLIN | POLLHUP | POLLERR;
 	_userFDs.push_back(server_fd);
 
-	// std::cout << "Server listening..." << std::endl;
+	std::cout << "Server listening..." << std::endl;
 	while (g_isRunning) { // 1 can be changed to a boolean variable to stop the server
 		if (!g_isRunning)
 			break;
 		// Loop waiting for incoming connects or for incoming data on any of the connected sockets.
 		if (poll(_userFDs.begin().base(), _userFDs.size(), -1) < 0 && g_isRunning == true) {
-			// std::cerr << "Error while polling." << std::endl;
+			std::cerr << "Error while polling." << std::endl;
 			break;
 		}
 		// One or more descriptors are readable. Need to determine which ones they are.
@@ -174,7 +174,7 @@ void Server::start() {
 
 void Server::userQuitAllChan(User *user){
 
-	std::vector<Channel *> *channels = getChannel();
+	std::vector<Channel *> *channels = getChannels();
 
 
 	std::vector<Channel *>::iterator it = channels->begin();
@@ -329,7 +329,7 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 	// _channels.back().introduce();
 }
 
-std::vector<Channel *> *Server::getChannel(){
+std::vector<Channel *> *Server::getChannels(){
 	return (&_channels);
 }
 
@@ -370,4 +370,17 @@ void	Server::broadcastQuit(std::string message, User *user){
 			it->second->reply("QUIT " + message);
 		}
 	}
+}
+
+Channel *Server::findChannelByName(std::string channelName){
+	if (channelName == "")
+		return NULL;
+
+	std::vector<Channel *>::iterator it = getChannels()->begin();
+
+	for (; it != getChannels()->end() ; it++){
+		if ((*it)->getName() == channelName)
+			return (*it);
+	}
+	return (NULL);
 }

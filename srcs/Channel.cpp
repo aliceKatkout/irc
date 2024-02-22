@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 17:32:22 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:45:04 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ User	*Channel::getUserByNick(std::string nickname){
 
 void    Channel::setLimit(int limit){
 	this->_l = limit;
-	std::cout << "limit inside setLimit: " << _l << std::endl;
 }
 
 void	Channel::setInviteOnly(bool b){
@@ -99,8 +98,8 @@ bool Channel::getInviteOnly() const {
 	return (this->_i);
 }
 
-std::vector<User *> Channel::getUsers() {
-	return (_joinedUsers);
+std::vector<User *> *Channel::getUsers() {
+	return (&_joinedUsers);
 }
 
 std::vector<User *>		Channel::getOperators(){
@@ -121,7 +120,7 @@ bool	Channel::addUser(User *user, std::string password) {
 		user->reply("475 " + user->getNickname() + " " + _name + " :Cannot join channel (+k)");
 		return (false);
 	}
-	std::cout << "inside adduser" << std::endl;
+
 	std::vector<std::string> u = this->getInvitedUsers();
 	if (this->getInviteOnly() == true){
 		if (std::find(u.begin(), u.end(), user->getNickname()) == u.end()) {
@@ -129,23 +128,19 @@ bool	Channel::addUser(User *user, std::string password) {
 			return (false);
 		}
 	}
-	std::cout << "size : " << this->_joinedUsers.size() << std::endl;
-	std::cout << "limit 1 : " << getLimit() << std::endl;
-	if (this->_joinedUsers.size() >= (size_t)getLimit()){
-		std::cout << "size : " << this->_joinedUsers.size() << std::endl;
-		std::cout << "limit 2: " << getLimit() << std::endl;
+
+	if (_joinedUsers.size() >= (size_t)getLimit()){
 		user->reply("471 " + user->getNickname() + " " + _name + " :Cannot join channel (+l)");
 		return (false);
 	}
 
-	std::vector<Channel *> *vecChan = user->getChannel();
-
-	if ((*vecChan).size() >= 10) {
+	if (user->getNumberOfChannels() >= 10) {
 		user->reply("405 " + _name + " :Cannot join channel (Too many joined channels)");
 		return (false);
 	}
 
 	this->_joinedUsers.push_back(user);
+	user->setNbOfChannels(user->getNumberOfChannels() + 1);
 	return (true);
 
 }
@@ -194,9 +189,12 @@ void	Channel::setPassword(std::string password){
 }
 
 void	Channel::broadcastChan(std::string message, User *user){
-	for (size_t i = 0; i < getUsers().size(); i++)
+	if (getUsers()->size() < 2)
+		return ;
+	for (size_t i = 0; i < getUsers()->size(); i++)
 	{
-		if (getUsers()[i] != user)
-			getUsers()[i]->write(":" + user->getPrefix() + " " + message);
+		if ((*getUsers())[i] != NULL && (*getUsers())[i] != user){
+			(*getUsers())[i]->write(":" + user->getPrefix() + " " + message);
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:27 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 14:17:19 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:13:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ User::User(int fd, Server *server): _fd(fd), _server(server) {
 		_hostname = "";
 	_is_registered = false;
 	_state = HANDSHAKE;
+	_nbOfChannels = 0;
 
 
-	// if (server->getChannel().size() == 0){
+	// if (server->getChannels().size() == 0){
 	// 	server->createChannel("#general");
 
 	// 	Channel *newChann = server->getLastChannel();
 	// 	this->addChannel(newChann);
 
-	// 	// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannel().back()->getName());
+	// 	// this->reply("003 " + this->getNickname() + " :joins channel" + this->getChannels().back()->getName());
 	// }
 
 }
@@ -48,9 +49,9 @@ bool User::operator==(const User &rhs) const {
 	return _fd == rhs._fd;
 }
 
-void User::addChannel(Channel *channel ){
-	_channels.push_back(channel);
-}
+// void User::addChannel(Channel *channel ){
+// 	_channels.push_back(channel);
+// }
 
 std::string User::getPrefix() const {
 	return _nickname + (_username.empty() ? "" : "!" + _username) + (_hostname.empty() ? "" : "@" + _hostname);
@@ -90,8 +91,12 @@ Server *User::getServer() const {
 	return (this->_server);
 }
 
-std::vector<Channel *> *User::getChannel() {
-	return (&_channels);
+// std::vector<Channel *> *User::getChannels() {
+// 	return (&_channels);
+// }
+
+void	User::setNbOfChannels(int nb){
+	_nbOfChannels = nb;
 }
 
 void User::setNickname(std::string nickname) {
@@ -156,14 +161,14 @@ void User::setInvisible(bool invisible) {
 	_invisible = invisible;
 }
 
-Channel *User::getOneChannel(std::string name) {
-	std::vector<Channel *>::iterator it = _channels.begin();
-	for ( ; it != _channels.end(); it++) {
-		if ((*it)->getName() == name)
-			return (*it);
-	}
-	return (NULL);
-}
+// Channel *User::getOneChannel(std::string name) {
+// 	std::vector<Channel *>::iterator it = _channels.begin();
+// 	for ( ; it != _channels.end(); it++) {
+// 		if ((*it)->getName() == name)
+// 			return (*it);
+// 	}
+// 	return (NULL);
+// }
 
 User *User::getUserByNick(std::string nickname) {
 	std::map<int, User *> *connectedUsers = getServer()->getConnectedUsers();
@@ -172,4 +177,8 @@ User *User::getUserByNick(std::string nickname) {
 			return (it->second);
 	}
 	return (NULL);
+}
+
+int	User::getNumberOfChannels(){
+	return (_nbOfChannels);
 }

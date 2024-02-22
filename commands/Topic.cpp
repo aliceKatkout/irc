@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:05:34 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 16:28:58 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:13:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,22 @@
 
 static Channel *channelExists(std::string channelName, User *user) {
 
-	std::vector<Channel *> *channel = user->getChannel();
+	// std::vector<Channel *> *channel = user->getChannels();
 	// if (!(channel))
 	// 	return (NULL);
+	// std::vector<Channel *>::iterator it_c = channel->begin();
+
+	// // std::cout << (*it_c)->getName() << std::endl;
+
+	// for ( ; it_c != channel->end(); it_c++) {
+	// 	if ((*it_c)->getName() == channelName){
+	// 		return (*it_c);
+	// 	}
+	// }
+
+	std::vector<Channel *> *channel = user->getServer()->getChannels();
+	if (!(channel))
+		return (NULL);
 	std::vector<Channel *>::iterator it_c = channel->begin();
 
 	// std::cout << (*it_c)->getName() << std::endl;
@@ -26,6 +39,7 @@ static Channel *channelExists(std::string channelName, User *user) {
 			return (*it_c);
 		}
 	}
+
 	return (NULL);
 }
 
@@ -48,6 +62,12 @@ void TopicCmd::execute(User *user, std::vector<std::string> args) {
 
 	if (!chann)
 		return (user->reply("403 " + channelName + " :No such channel"));
+
+	std::vector<User *> *toFind = chann->getUsers();
+
+	if (std::find(toFind->begin(), toFind->end(), user) == toFind->end()){
+		return (user->reply("403 " + channelName + " :The user is not in the channel"));
+	}
 
 	if (topic.empty()){
 		if (chann->getTopic() == "")

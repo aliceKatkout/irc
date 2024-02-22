@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:13:58 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/20 14:19:44 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:13:07 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,15 @@ class User {
 		bool getGoodPass() const;
 		bool getIsRegistered() const;
 		Server *getServer() const;
-		std::vector<Channel *> *getChannel() ;
-		Channel *getOneChannel(std::string name);
+		// std::vector<Channel *> *getChannels() ;
+		// Channel *getOneChannel(std::string name);
 
 		void setNickname(std::string nickname);
 		void setUsername(std::string username);
 		void setRealname(std::string realname);
 		void setGoodPass(bool good_pass);
 		void setIsRegistered(bool is_registered);
+		void setNbOfChannels(int);
 		UserState getState() const;
 		UserState findState();
 		void setState(UserState state);
@@ -57,8 +58,9 @@ class User {
 		void setInvisible(bool invisible);
 
 		User *getUserByNick(std::string nickname);
+		int		getNumberOfChannels();
 
-		void addChannel(Channel *);
+		// void addChannel(Channel *);
 
 	private :
 		int _fd;
@@ -73,8 +75,8 @@ class User {
 		Server *_server;
 
 		UserState _state;
-
-		std::vector<Channel *> _channels; // les channels sur lesquels le users est connecte
+		int 		_nbOfChannels;
+		// std::vector<Channel *> _channels; // les channels sur lesquels le users est connecte
 
 		/* ajouter a combien de channel le user a le droit de se connecter */
 

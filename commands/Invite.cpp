@@ -6,34 +6,35 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:44:04 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:37:30 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:22:31 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
-static Channel *channelExists(std::string channelName, User *user) {
+// static Channel *channelExists(std::string channelName, User *user) {
 
-	if (channelName == "")
-		return NULL;
-	std::vector<Channel *> *channel = user->getChannel();
-	std::vector<Channel *>::iterator it_c = channel->begin();
+// 	if (channelName == "")
+// 		return NULL;
+// 	std::vector<Channel *> *channel = user->getServer()->getChannels();
+// 	std::vector<Channel *>::iterator it_c = channel->begin();
 
-	for ( ; it_c != channel->end(); ++it_c) {
-		if ((*it_c)->getName() == channelName){
-			return (*it_c);
-		}
-	}
-	return (NULL);
-}
+// 	for ( ; it_c != channel->end(); ++it_c) {
+		
+// 		if ((*it_c)->getName() == channelName){
+// 			return (*it_c);
+// 		}
+// 	}
+// 	return (NULL);
+// }
 
-static bool userIsMemberOfChannel(Channel *channel, User *user){
+static bool userIsMemberAndOperatorOfChannel(Channel *channel, User *user){
 
-	std::vector<User *> users = channel->getUsers();
-	std::vector<User *>::iterator it_u = users.begin();
+	std::vector<User *> *users = channel->getUsers();
+	std::vector<User *>::iterator it_u = users->begin();
 
-	for ( ; it_u != users.end(); it_u++) {
-		if ((*it_u) == user){
+	for ( ; it_u != users->end(); it_u++) {
+		if (*it_u == user){
 
 			// if the channel is an invite only channel
 			if (channel->getInviteOnly() == true)
@@ -77,10 +78,10 @@ static bool userIsAlreadyOnChannel(Channel *channel, User *user){
 	if (user == NULL)
 		return (false);
 
-	std::vector<User *> u = channel->getUsers();
-	std::vector<User *>::iterator it = u.begin();
+	std::vector<User *> *u = channel->getUsers();
+	std::vector<User *>::iterator it = u->begin();
 
-	for ( ; it != u.end() ; it++) {
+	for ( ; it != u->end() ; it++) {
 		if ((*it) == user){
 			// if is already on channel : 443 mrabourd bouldeneige #trivia :is already on channel
 			return (true);
@@ -94,11 +95,14 @@ void InviteCmd::execute(User *user, std::vector<std::string> args) {
 	std::string userInvited = *(args.begin()+1);
 	std::string channelName = *(args.begin()+2);
 
-	Channel *chann = channelExists(channelName, user);
+	Server *server = user->getServer();
+
+	Channel *chann = server->findChannelByName(channelName);
+	
 	User *invited = invitedUser(user, userInvited);
 
 	if (chann != NULL){
-		if (userIsMemberOfChannel(chann, user) == true){
+		if (userIsMemberAndOperatorOfChannel(chann, user) == true){
 			if (userIsAlreadyOnChannel(chann, invited) == true){
 				user->reply("443 " + invited->getNickname() + " " + chann->getName() + " :is already on channel");
 				return ;

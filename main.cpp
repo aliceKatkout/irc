@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:09:09 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 13:54:18 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:53:14 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void sigint_handler(int signum) {
 	std::cout << "Caught signal " << signum << std::endl;
-	g_isRunning = false;
+	if (signum == SIGINT)
+		g_isRunning = false;
 	return ;
 }
 

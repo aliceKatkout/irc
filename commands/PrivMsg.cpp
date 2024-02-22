@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:42 by avedrenn          #+#    #+#             */
-/*   Updated: 2024/02/12 16:29:36 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:23:51 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
 void PrivMsgCmd::execute(User *user, std::vector<std::string> args) {
+	Server *server = user->getServer();
 	if (args.size() < 2)
 	{
 		user->reply("411 PRIVMSG :No recipient given (PRIVMSG)");
@@ -33,10 +34,10 @@ void PrivMsgCmd::execute(User *user, std::vector<std::string> args) {
 	}
 	if (target[0] == '#' || target[0] == '&')
 	{
-		Channel *chan = user->getOneChannel(target);
+		Channel *chan = server->findChannelByName(target);
 		if (chan == NULL)
 			return (user->reply("401 " + target + " :No such nick/channel"));
-		if (chan->getUsers().size() == 0)
+		if ((*chan->getUsers()).size() == 0)
 			return (user->reply("411 PRIVMSG :No recipient given (PRIVMSG)"));
 		if (!chan->getUserByNick(user->getNickname()))
 			return (user->reply("404 " + target + " :Cannot send to channel"));
