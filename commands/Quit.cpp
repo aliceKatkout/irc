@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:16:46 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 12:38:44 by avedrenn         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:35:03 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Command.hpp"
 
 void QuitCmd::execute(User *user, std::vector<std::string> args) {
-   // Server *server = user->getServer();
+//    Server *server = user->getServer();
 
     std::string reason = "";
 
@@ -26,7 +26,7 @@ void QuitCmd::execute(User *user, std::vector<std::string> args) {
 	}
 
     user->reply("QUIT :" + reason);
+	user->setState(DISCONNECTED);
 
-
-	//server->UserDisconnect(user->getFd());
+	// server->UserDisconnect(user->getFd());
 }

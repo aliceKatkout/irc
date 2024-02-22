@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:52:30 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/21 15:41:40 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:50:12 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ CmdHandler::~CmdHandler () {
 	}
 }
 
-void CmdHandler::parsing(std::string msg, User *user) {
+int CmdHandler::parsing(std::string msg, User *user) {
 
     std::vector<std::string> cmds;
     std::vector<std::string> args;
@@ -49,7 +49,7 @@ void CmdHandler::parsing(std::string msg, User *user) {
 	cmds = split(msg, "\n");
 	// std::cout << "parsing : " << cmds[0] << std::endl;
 	if (user->getState() == DISCONNECTED)
-		return ;
+		return (-1);
 
     while ((int) cmds.size() > 0){
 		args = split(cmds[0], " ");
@@ -62,9 +62,10 @@ void CmdHandler::parsing(std::string msg, User *user) {
 			if (!user->getIsRegistered())
 				user->welcome();
 			if (user->getState() == DISCONNECTED) {
-				user->reply("ERROR :Closing Link");
-				user->getServer()->UserDisconnect(user->getFd());
-				return ;
+				// user->reply("Disconnecting...");
+				
+				//user->getServer()->UserDisconnect(user->getFd());
+				return (-1);
 			}
 		}
 		else if (args[nb] == "")
@@ -73,4 +74,5 @@ void CmdHandler::parsing(std::string msg, User *user) {
 			user->reply("421 " + args[0] + " :Unknown command");
 		}
 	}
+	return (0);
 }

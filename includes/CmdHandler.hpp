@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:51:10 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 13:02:39 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:43:35 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ class CmdHandler {
         CmdHandler ();
         ~CmdHandler( );
 
-        void parsing(std::string, User *);
+        int parsing(std::string, User *);
 };
 
 #endif

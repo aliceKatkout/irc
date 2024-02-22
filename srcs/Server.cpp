@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 14:16:57 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:44:09 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int Server::UserMessage(int userFd){
 
 	}
 	if (!msg.empty())
-		_handler->parsing(msg, _connectedUsers[userFd]);
+		return (_handler->parsing(msg, _connectedUsers[userFd]));
 	else {
 		return (-1);
 	}
@@ -148,7 +148,7 @@ void Server::start() {
 
 			else if ((it->revents & POLLERR) == POLLERR || (it->revents & POLLHUP) == POLLHUP)
 			{
-				// std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
+				std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
 				UserDisconnect(it->fd);
 				break;
 			}
@@ -161,7 +161,7 @@ void Server::start() {
 				}
 
 				if (UserMessage(it->fd) == -1 ){
-					// std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
+					std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
 					UserDisconnect(it->fd);
 					break;
 				}
@@ -175,7 +175,8 @@ void Server::start() {
 void Server::userQuitAllChan(User *user){
 
 	std::vector<Channel *> *channels = getChannels();
-
+	if (channels == NULL)
+		return ;
 
 	std::vector<Channel *>::iterator it = channels->begin();
 
@@ -184,24 +185,21 @@ void Server::userQuitAllChan(User *user){
 	}
 }
 
-/* Probleme: Ne rentre jamais la dedans: */
 void Server::UserDisconnect(int fd){
-
-	// add remove from channel if in channel
-
-	if (_connectedUsers.size() <= 0){
+	if (_connectedUsers.size() < 1){
 		return ;
 	}
 	if (userIsConnected(fd) == false){
 		return;
 	}
+	std::cout << "coucouuuuu" << std::endl;
 
 	userQuitAllChan(_connectedUsers.at(fd));
 
 	User *userToDelete = _connectedUsers.at(fd);
 	_connectedUsers.erase(fd);
 
-
+	std::cout << "coucouuuuu2" << std::endl;
 	std::vector<pollfd>::iterator it = _userFDs.begin();
 	for (; it != _userFDs.end(); it++)
 	{
@@ -212,8 +210,10 @@ void Server::UserDisconnect(int fd){
 			break;
 		}
 	}
+	std::cout << "coucouuuuu3" << std::endl;
 	delete userToDelete;
-	userToDelete = NULL;
+	std::cout << "coucouuuuu4" << std::endl;
+	// userToDelete = NULL;
 }
 
 void Server::UserConnect() {
