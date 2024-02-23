@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/23 11:01:18 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:16:48 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ Server::~Server() {
 		it->second = NULL;
 	}
 	_connectedUsers.clear();
-	
+
 	delete _handler;
 	_handler = NULL;
 
@@ -89,11 +89,9 @@ int Server::UserMessage(int userFd){
 
 	char buff[100];
 	bzero(buff, 100);
-	
-	// std::string msg;
 
 	size_t rec = 0;
-	
+
 	while (!std::strstr(buff, "\r\n"))
 	{
 		bzero(buff, 100);
@@ -101,30 +99,21 @@ int Server::UserMessage(int userFd){
 		if (rec <= 0) // 0 = disconnected
 		{
 			if (errno != EWOULDBLOCK ) {
-				// std::cout << "User " << userFd << " not right" << std::endl;
-				//UserDisconnect(userFd);
 				return (-1);
 			}
 			if (rec == 0){
 				break ;
 			}
 		}
-		// std::cout << "buff: " << buff << std::endl;
-		// msg.append(buff);
 		_connectedUsers[userFd]->setClientBuff(buff);
-		
-		// std::cout << "buff: " << buff << std::endl;
-		// on disconnect reste bloque la dedans et on peut plus rien faire
-
 	}
+
 	std::string msg = _connectedUsers[userFd]->getClientBuff();
+
 	if (!msg.empty() && std::strstr(buff, "\r\n")){
 		_connectedUsers[userFd]->clearClientBuff();
 		return (_handler->parsing(msg, _connectedUsers[userFd]));
 	}
-	// else {
-	// 	return (-1);
-	// }
 	return (0);
 }
 
@@ -157,7 +146,7 @@ void Server::start() {
 
 			else if ((it->revents & POLLERR) == POLLERR || (it->revents & POLLHUP) == POLLHUP)
 			{
-				std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
+				//std::cout << "Disconnect from POLLERR or POLLHUP" << std::endl;
 				UserDisconnect(it->fd);
 				break;
 			}
@@ -170,7 +159,7 @@ void Server::start() {
 				}
 
 				if (UserMessage(it->fd) == -1 ){
-					std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
+					//std::cout << "Disconnect from USERMESSAGE == -1" << std::endl;
 					UserDisconnect(it->fd);
 					break;
 				}
@@ -190,7 +179,8 @@ void Server::userQuitAllChan(User *user){
 	std::vector<Channel *>::iterator it = channels->begin();
 
 	for ( ; it != channels->end() ; it++){
-		(*it)->removeUser(user);
+		if ((*it) && (*it)->getUserByNick(user->getNickname()) != NULL)
+			(*it)->removeUser(user);
 	}
 }
 
@@ -309,7 +299,6 @@ Channel *	Server::createChannel(std::string channelName, User *user){
 	Channel *newChannel = new Channel(channelName, "");
 	newChannel->setOperators(user, true);
 	_channels.push_back(newChannel);
-	// std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
 	return (newChannel);
 }
 
@@ -344,9 +333,6 @@ void	Server::broadcastQuit(std::string message, User *user){
 
 	std::map<int, User *> *connectedUsers = getConnectedUsers();
 	std::map<int, User *>::iterator it = connectedUsers->begin();
-
-	// std::cout << "size of connected users: " << (*connectedUsers).size() << std::endl;
-	// RECUPERE LE MAUVAIS NOMBRE DE USERS DANS LE SERVEUR, ENCORE UN PROBLEME DE POINTEURS ?
 
 	for ( ; it != connectedUsers->end(); it++) {
 

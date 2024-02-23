@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/23 10:53:28 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:05:59 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ Channel::Channel(std::string name, std::string password) : _name(name), _k(passw
 	_i = false;
 	topicSet = false;
 	_t = true;
+	_joinedUsers = new std::vector<User *>;
+	_nbUsers = 0;
 }
 
 Channel::~Channel() {
-	// std::cout << "delete channel." << std::endl;
+	delete _joinedUsers;
 }
 
 bool	Channel::isUserOperator(User * user) {
 	if (std::find(_operators.begin(), _operators.end(), user) == _operators.end()){
-		std::cout << "false" << std::endl;
 		return (false);
 	}
-	std::cout << "true" << std::endl;
 	return (true);
 }
 
@@ -49,15 +49,31 @@ bool	Channel::getTopicProtection() const {
 	return (this->_t);
 }
 
+
+// static void moveItemToBack(std::vector<User *>& v, size_t itemIndex)
+// {
+//    User * tmp(v[itemIndex]);
+//    v.erase(v.begin() + itemIndex);
+//    v.push_back(tmp);
+// }
+
 void   Channel::removeUser(User *user){
-	std::vector<User *>::iterator it = std::find(_joinedUsers.begin(), _joinedUsers.end(), user);
-	if (it != _joinedUsers.end())
-		_joinedUsers.erase(it);
+	std::vector<User *>::iterator it = _joinedUsers->begin();
+	for (; it != _joinedUsers->end(); it++){
+		if (*it && *it == user) {
+			_joinedUsers->erase(it);
+			*it = NULL;
+			break;
+		}
+	}
+
+	user->setNbOfChannels(user->getNumberOfChannels() - 1);
+	setNbUsers(getNbUsers() - 1);
 }
 
 User	*Channel::getUserByNick(std::string nickname){
-	std::vector<User *>::iterator it = _joinedUsers.begin();
-	for (; it != _joinedUsers.end(); it++){
+	std::vector<User *>::iterator it = _joinedUsers->begin();
+	for (; it != _joinedUsers->end(); it++){
 		if ((*it) && (*it)->getNickname() == nickname)
 			return (*it);
 	}
@@ -82,7 +98,6 @@ void	Channel::setInvitedUsers(std::string username){
 }
 
 std::string Channel::getName() const {
-	// std::cout << this->_name << std::endl;
 	return (this->_name);
 }
 
@@ -99,7 +114,7 @@ bool Channel::getInviteOnly() const {
 }
 
 std::vector<User *> *Channel::getUsers() {
-	return (&_joinedUsers);
+	return (_joinedUsers);
 }
 
 std::vector<User *>		*Channel::getOperators(){
@@ -129,7 +144,7 @@ bool	Channel::addUser(User *user, std::string password) {
 		}
 	}
 
-	if (_joinedUsers.size() >= (size_t)getLimit()){
+	if ((*_joinedUsers).size() >= (size_t)getLimit()){
 		user->reply("471 " + user->getNickname() + " " + _name + " :Cannot join channel (+l)");
 		return (false);
 	}
@@ -139,45 +154,43 @@ bool	Channel::addUser(User *user, std::string password) {
 		return (false);
 	}
 
-	this->_joinedUsers.push_back(user);
+	_joinedUsers->push_back(user);
+	setNbUsers(getNbUsers() + 1);
 	user->setNbOfChannels(user->getNumberOfChannels() + 1);
 	return (true);
 
 }
 
-
-
 bool	Channel::partUser(User *user) {
 
-	if (isUserOperator(user) == true)
+	if (isUserOperator(user) == true) {
 		setOperators(user, false);
-
-	std::vector<User *>::iterator it = _joinedUsers.begin();
-	for (; it != _joinedUsers.end(); it++) {
-		if (*it == user){
-			_joinedUsers.erase(it);
-			*it = NULL;
-			break ;
-			// if (_joinedUsers.size() == 0)
-			// 	delete this; // ?? ca marche ca ?
-		}
 	}
 
-	/* remove: déplace les éléments indésirables à la fin de la chaîne,
-	puis retourne un itérateur pointant vers le début de la séquence
-	contenant les éléments non supprimés.*/
 
-	// _joinedUsers.erase(std::remove(_joinedUsers.begin(), _joinedUsers.end(),
-	// 	user), _joinedUsers.end());
+	std::vector<User *>::iterator it = std::find(_joinedUsers->begin(), _joinedUsers->end(), user);
+	if (it != _joinedUsers->end())
+	{
+		User * tmp(*it);
+		_joinedUsers->erase(it);
+		_joinedUsers->push_back(tmp);
+	}
 
-	if (_joinedUsers.empty() == true){
+	removeUser(user);
+
+	if (getUsers()->empty() == true ||  getNbUsers() < 1) {
 		return (false); // remove the channel
 	}
-
-
-
 	return (true);
 
+}
+
+void	Channel::setNbUsers(int nb){
+	this->_nbUsers = nb;
+}
+
+int		Channel::getNbUsers() const {
+	return (_nbUsers);
 }
 
 void	Channel::setName(std::string name){
@@ -189,12 +202,25 @@ void	Channel::setPassword(std::string password){
 }
 
 void	Channel::broadcastChan(std::string message, User *user){
-	if (getUsers()->size() < 1)
+	if (getNbUsers() < 1)
 		return ;
-	for (size_t i = 0; i < getUsers()->size(); i++)
-	{
-		if ((*getUsers())[i] != NULL && (*getUsers())[i] != user){
-			(*getUsers())[i]->write(":" + user->getPrefix() + " " + message);
+
+	std::vector<User *> users = *getUsers();
+
+	std::vector<User *>::iterator it = getUsers()->begin();
+	for ( ; it != getUsers()->end(); it++) {
+		if (*it != NULL && *it != user){
+			(*it)->write(":" + user->getPrefix() + " " + message);
 		}
 	}
+
+
+	// for (int i = 0; i < getNbUsers();  i++)
+	// {
+	// 	if (users[i] != NULL && users[i] != user){
+	// 		std::cout << "Broadcasting to " << users[i]->getNickname() << std::endl;
+	// 		users[i]->write(":" + user->getPrefix() + " " + message);
+	// 	}
+	// }
+
 }

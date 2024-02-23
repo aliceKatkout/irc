@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avedrenn <avedrenn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:01 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/23 10:47:52 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:04:00 by avedrenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ class Channel {
 		std::string 			_name;
 
 		std::vector<User *> 	_operators;
-		std::vector<User *> 	_joinedUsers;
+		std::vector<User *> 	*_joinedUsers;
 
 		bool 		_i; // Set/remove Invite-only channel. true = yes, false = no
 		std::string _k; // Définir/supprimer la clé du canal (mot de passe)
 		int		_l; //definir / supprimer la limite d'users du chann
 		bool 		_t; // Set/remove topic protection. true = yes, false = no
+
+		int		_nbUsers;
 
 
 		std::string _topic;
@@ -52,17 +54,19 @@ class Channel {
 		void	setPassword(std::string);
 		void	setInvitedUsers(std::string);
 		void	setTopicProtection(bool);
+		void   	setNbUsers(int);
 
-		bool	getTopicProtection() const;
-		std::string getName() const;
-		std::string getPassword() const;
-		int    	getLimit() const;
-		bool 		getInviteOnly() const;
+		bool			getTopicProtection() const;
+		std::string 	getName() const;
+		std::string 	getPassword() const;
+		int    			getLimit() const;
+		int				getNbUsers() const;
+		bool 			getInviteOnly() const;
+		User			*getUserByNick(std::string);
+		bool			isUserOperator(User *);
+		std::string 	getTopic();
 		std::vector<User *> *getUsers() ;
-		User	*getUserByNick(std::string);
 		std::vector<User *>		*getOperators();
-		bool	isUserOperator(User *);
-		std::string getTopic();
 		std::vector<std::string> getInvitedUsers();
 
 
