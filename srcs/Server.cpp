@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:04:54 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 16:52:52 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:01:18 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,14 +201,12 @@ void Server::UserDisconnect(int fd){
 	if (userIsConnected(fd) == false){
 		return;
 	}
-	std::cout << "coucouuuuu" << std::endl;
 
 	userQuitAllChan(_connectedUsers.at(fd));
 
 	User *userToDelete = _connectedUsers.at(fd);
 	_connectedUsers.erase(fd);
 
-	std::cout << "coucouuuuu2" << std::endl;
 	std::vector<pollfd>::iterator it = _userFDs.begin();
 	for (; it != _userFDs.end(); it++)
 	{
@@ -219,9 +217,7 @@ void Server::UserDisconnect(int fd){
 			break;
 		}
 	}
-	std::cout << "coucouuuuu3" << std::endl;
 	delete userToDelete;
-	std::cout << "coucouuuuu4" << std::endl;
 	// userToDelete = NULL;
 }
 
@@ -310,32 +306,11 @@ std::string Server::getHostname() const {
 
 Channel *	Server::createChannel(std::string channelName, User *user){
 
-	if (_channels.size() == 0) {
-		Channel *newChannel = new Channel(channelName, "");
-		newChannel->setOperators(user, true);
-		_channels.push_back(newChannel);
-		// std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
-		return (newChannel);
-	}
-
-	else {
-		std::vector<Channel *>::iterator it;
-		// std::cout << this->_channels.begin()->getName() << std::endl;
-		for (it = _channels.begin(); it != _channels.end(); it++){
-			if ((*it)->getName() == channelName){
-				// std::cout << "Channel " << (*it)->getName() << " already exists!" << std::endl;
-				return (*it);
-			}
-			else{
-				Channel * newChannel = new Channel(channelName, "");
-				_channels.push_back(newChannel);
-				// std::cout << "Creating: " << newChannel->getName() << " channel :)" << std::endl;
-				return (newChannel);
-			}
-		}
-	}
-	return (NULL);
-	// _channels.back().introduce();
+	Channel *newChannel = new Channel(channelName, "");
+	newChannel->setOperators(user, true);
+	_channels.push_back(newChannel);
+	// std::cout << "Creating: " << newChannel->getName() << " channel" << std::endl;
+	return (newChannel);
 }
 
 std::vector<Channel *> *Server::getChannels(){

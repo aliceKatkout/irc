@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:51:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 14:23:40 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 10:36:29 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void PartCmd::execute(User *user, std::vector<std::string> args) {
 				// c->clear();
 				break;
 			}
-			if ((*channel->getUsers()).size() > 1){
+			if ((*channel->getUsers()).size() >= 1){
 				// std::cout << "there are " << channel->getUsers().size() << " people in this channel" << std::endl;
 				channel->broadcastChan("PART " + channel->getName() + " " + reason, user);
 			}

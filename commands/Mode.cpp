@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:38:55 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 14:23:24 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 10:46:43 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void ModeCmd::setChannelMode(User *user, std::vector<std::string> args) {
 			if (args.size() < 4 || args[3].empty())
 				return (user->reply("461 MODE :Not enough parameters"));
 			if (toAdd == NULL)
-				return (user->reply("441 MODE " + args[3] + " " + channelName + " :They aren't on that channel"));
+				return (user->reply("MODE " + args[3] + " " + channelName + " :They aren't on that channel"));
 			if (!chan->isUserOperator(user))
 				return (user->reply("MODE " + channelName + " " + args[2] + " :You're not an operator"));
 

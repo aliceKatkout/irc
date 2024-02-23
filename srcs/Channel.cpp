@@ -6,7 +6,7 @@
 /*   By: mrabourd <mrabourd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:21:49 by mrabourd          #+#    #+#             */
-/*   Updated: 2024/02/22 14:45:04 by mrabourd         ###   ########.fr       */
+/*   Updated: 2024/02/23 10:53:28 by mrabourd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ Channel::~Channel() {
 
 bool	Channel::isUserOperator(User * user) {
 	if (std::find(_operators.begin(), _operators.end(), user) == _operators.end()){
-		// std::cout << "false" << std::endl;
+		std::cout << "false" << std::endl;
 		return (false);
 	}
-	// std::cout << "true" << std::endl;
+	std::cout << "true" << std::endl;
 	return (true);
 }
 
@@ -58,7 +58,7 @@ void   Channel::removeUser(User *user){
 User	*Channel::getUserByNick(std::string nickname){
 	std::vector<User *>::iterator it = _joinedUsers.begin();
 	for (; it != _joinedUsers.end(); it++){
-		if ((*it)->getNickname() == nickname)
+		if ((*it) && (*it)->getNickname() == nickname)
 			return (*it);
 	}
 	return (NULL);
@@ -102,8 +102,8 @@ std::vector<User *> *Channel::getUsers() {
 	return (&_joinedUsers);
 }
 
-std::vector<User *>		Channel::getOperators(){
-	return (this->_operators);
+std::vector<User *>		*Channel::getOperators(){
+	return (&this->_operators);
 }
 
 std::string Channel::getTopic() {
@@ -189,7 +189,7 @@ void	Channel::setPassword(std::string password){
 }
 
 void	Channel::broadcastChan(std::string message, User *user){
-	if (getUsers()->size() < 2)
+	if (getUsers()->size() < 1)
 		return ;
 	for (size_t i = 0; i < getUsers()->size(); i++)
 	{
